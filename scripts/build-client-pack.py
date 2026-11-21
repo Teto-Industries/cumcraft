@@ -108,7 +108,9 @@ def main():
     args = parser.parse_args()
 
     mods = json.loads((ROOT / "mods.json").read_text())
-    pack = json.loads((ROOT / "client/pack.json").read_text())
+    pack = json.loads((ROOT / "client/pack.json").read_text()) | json.loads((ROOT / "server.json").read_text())
+    server = pack["server"]
+    server["address"] = f"{server['host']}:{server['port']}"
     args.output_dir.mkdir(parents=True, exist_ok=True)
     for profile in pack["profiles"]:
         output = args.output_dir / f"cumcraft-{profile['id']}.mrpack"

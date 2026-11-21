@@ -9,6 +9,8 @@ let
   mods = lib.filterAttrs (_: mod: lib.elem "server" mod.sides) (
     builtins.fromJSON (builtins.readFile ../mods.json)
   );
+  metadata = builtins.fromJSON (builtins.readFile ../server.json);
+  fabricPackage = "fabric-${lib.replaceStrings [ "." ] [ "_" ] metadata.minecraft}";
   managedConfigs = "${../config}";
   pythonWithTomlkit = pkgs.python3.withPackages (ps: [ ps.tomlkit ]);
   inherit (config.services.cumcraft.easyAuth) passwordFile;
@@ -35,7 +37,8 @@ in
       servers.cum = {
         enable = true;
         autoStart = true;
-        package = pkgs.fabricServers.fabric-26_2.override {
+        package = pkgs.fabricServers.${fabricPackage}.override {
+          loaderVersion = metadata.fabricLoader;
           jre_headless = pkgs.jdk25_headless;
         };
         jvmOpts = "-Xms2G -Xmx4G -XX:MaxDirectMemorySize=1G -XX:MaxMetaspaceSize=512M -Dfabric.modsFolder=.cumcraft-mods";
@@ -43,7 +46,7 @@ in
           difficulty = "normal";
           player-idle-timeout = 0;
           spawn-protection = 0;
-          server-port = 25569;
+          server-port = metadata.server.port;
           motd = "<3";
           online-mode = true;
           max-players = 10;

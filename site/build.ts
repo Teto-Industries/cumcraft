@@ -17,7 +17,10 @@ Bun.plugin({
 });
 
 const { pages } = await import("./page");
-const pack = await Bun.file("../client/pack.json").json();
+const client = await Bun.file("../client/pack.json").json();
+const metadata = await Bun.file("../server.json").json();
+const { host, port } = metadata.server;
+const pack = { ...client, ...metadata, server: { address: `${host}:${port}` } };
 const releases = process.env.CUMCRAFT_RELEASES_FILE
   ? await Bun.file(process.env.CUMCRAFT_RELEASES_FILE).json()
   : [];
