@@ -155,6 +155,7 @@ function Header(props: { locale: Locale; home: string; icon: string }) {
 function Layout(props: {
   locale: Locale;
   section: "home" | "releases";
+  mapUrl?: string;
   children: JSX.Element;
 }) {
   const t = copy[props.locale];
@@ -177,10 +178,11 @@ function Layout(props: {
           href={alternate}
         />
         <script src={`${root}preferences.js`}></script>
+        {props.mapUrl && <script src={`${root}map.js`} defer></script>}
         <link rel="icon" type="image/png" href={icon} />
         <link rel="stylesheet" href={`${root}style.css`} />
       </head>
-      <body>
+      <body class={props.mapUrl ? "map-page" : undefined}>
         <a class="skip" href="#main">
           {t.skip}
         </a>
@@ -193,6 +195,15 @@ function Layout(props: {
             </a>
           </div>
         </footer>
+        {props.mapUrl && (
+          <iframe
+            id="world-map"
+            data-src={props.mapUrl}
+            title={t.worldMap}
+            tabindex="-1"
+            referrerpolicy="no-referrer"
+          />
+        )}
       </body>
     </html>
   );
@@ -231,25 +242,45 @@ function Edition(props: {
   );
 }
 
-function Hero(props: { minecraft: string; locale: Locale }) {
+function MapActions(props: { url: string; locale: Locale }) {
   const t = copy[props.locale];
 
   return (
-    <section class="hero">
-      <h1>{t.headline}</h1>
-      <p>Minecraft {props.minecraft} · Fabric</p>
-    </section>
+    <div class="map-actions">
+      <button
+        type="button"
+        aria-controls="world-map"
+        aria-expanded="false"
+        data-explore={t.exploreMap}
+        data-close={t.closeMap}
+        hidden
+      >
+        {t.exploreMap}
+      </button>
+      <a href={props.url}>{t.exploreMap}</a>
+    </div>
   );
 }
 
-function Home(props: { pack: Pack; latest?: Release; locale: Locale }) {
+function Home(props: {
+  pack: Pack;
+  latest?: Release;
+  locale: Locale;
+  mapUrl?: string;
+}) {
   const t = copy[props.locale];
   const profiles = props.pack.profiles ?? [];
 
   return (
-    <Layout locale={props.locale} section="home">
+    <Layout locale={props.locale} section="home" mapUrl={props.mapUrl}>
       <div class="wrap">
-        <Hero minecraft={props.pack.minecraft} locale={props.locale} />
+        <div class="home-intro">
+          <section class="hero">
+            <h1>{t.headline}</h1>
+            <p>Minecraft {props.pack.minecraft} · Fabric</p>
+          </section>
+          {props.mapUrl && <MapActions url={props.mapUrl} locale={props.locale} />}
+        </div>
         <dl class="facts">
           <div>
             <dt>{t.loader}</dt>
@@ -357,7 +388,12 @@ function Releases(props: { releases: Release[]; locale: Locale }) {
   );
 }
 
-export function pages(pack: Pack, input: Release[], locale: Locale) {
+export function pages(
+  pack: Pack,
+  input: Release[],
+  locale: Locale,
+  mapUrl?: string,
+) {
   const releases = input
     .filter((release) => !release.draft && release.published_at)
     .sort((a, b) => b.published_at.localeCompare(a.published_at));
@@ -369,7 +405,7 @@ export function pages(pack: Pack, input: Release[], locale: Locale) {
       profiles.every((profile) => assetFor(release, profile)),
   );
   return {
-    home: `<!doctype html>${renderToString(() => <Home pack={pack} latest={latest} locale={locale} />)}`,
+    home: `<!doctype html>${renderToString(() => <Home pack={pack} latest={latest} locale={locale} mapUrl={mapUrl} />)}`,
     releases: `<!doctype html>${renderToString(() => <Releases releases={releases} locale={locale} />)}`,
   };
 }

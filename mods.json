@@ -209,6 +209,16 @@
       "client"
     ]
   },
+  "bluemap-5.29-fabric.jar": {
+    "hash": "sha256-R6reIg114wc0IXbKSryDSTpVJ28ghINefKaIDGQMBDA=",
+    "url": "https://cdn.modrinth.com/data/swbUV1cr/versions/SX74rxzP/bluemap-5.29-fabric.jar",
+    "size": 7085342,
+    "sha1": "1fbd340333962fc778d88c23a618e6208d48ce55",
+    "sha512": "032a96971437e43a3722d8d6c026aeb9837117e1a56521d017a68fce8bb5630ceffd98454672b9d6c589a1008fcd2ab4cd48f4af8fadf08755313b1e326bedb1",
+    "sides": [
+      "server"
+    ]
+  },
   "c2me-fabric-mc26.2-0.4.2-alpha.0.13.jar": {
     "hash": "sha256-r7HZHvDGyd1OXPg+94ROeHpA7OokKzaIgBWpdP7I7wE=",
     "url": "https://cdn.modrinth.com/data/VSNURh3q/versions/XQMx5J57/c2me-fabric-mc26.2-0.4.2-alpha.0.13.jar",

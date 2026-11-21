@@ -36,6 +36,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           CUMCRAFT_RELEASES_FILE: ${{ runner.temp }}/releases.json
+          CUMCRAFT_MAP_URL: ${{ vars.CUMCRAFT_MAP_URL }}
         run: |
           gh api --paginate --slurp "repos/$GH_REPO/releases?per_page=100" | jq -e 'add // []' > "$CUMCRAFT_RELEASES_FILE"
           bun install --frozen-lockfile

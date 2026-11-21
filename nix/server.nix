@@ -6,9 +6,10 @@
 }:
 
 let
-  mods = lib.filterAttrs (_: mod: lib.elem "server" mod.sides) (
-    builtins.fromJSON (builtins.readFile ../mods.json)
-  );
+  inherit (config.services.cumcraft) bluemap;
+  mods = lib.filterAttrs (
+    name: mod: lib.elem "server" mod.sides && (name != "bluemap-5.29-fabric.jar" || bluemap.enable)
+  ) (builtins.fromJSON (builtins.readFile ../mods.json));
   metadata = builtins.fromJSON (builtins.readFile ../server.json);
   fabricPackage = "fabric-${lib.replaceStrings [ "." ] [ "_" ] metadata.minecraft}";
   managedConfigs = "${../config}";
@@ -18,6 +19,10 @@ in
 {
   options.services.cumcraft = {
     enable = lib.mkEnableOption "Cumcraft Minecraft server";
+    bluemap = {
+      enable = lib.mkEnableOption "BlueMap, accepting its download and use of Mojang Minecraft client assets";
+      livePlayers = lib.mkEnableOption "publication of live player locations on the BlueMap web map";
+    };
     easyAuth.passwordFile = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
       default = null;
@@ -69,6 +74,17 @@ in
           while IFS= read -r -d "" source; do
             install -CDm 0644 "$source" "config/''${source#${managedConfigs}/}"
           done < <(find ${lib.escapeShellArg managedConfigs} -type f -print0)
+
+          ${lib.optionalString bluemap.enable ''
+            for source in ${./bluemap/config}/*.conf; do
+              install -CDm 0644 "$source" "config/bluemap/$(basename "$source")"
+            done
+            install -CDm 0644 ${pkgs.writeText "bluemap-plugin.conf" ''
+              live-player-markers: ${lib.boolToString bluemap.livePlayers}
+              skin-download: false
+            ''} config/bluemap/plugin.conf
+            install -CDm 0644 ${./bluemap/cumcraft-embed.js} bluemap/web/cumcraft-embed.js
+          ''}
 
           ${pythonWithTomlkit}/bin/python3 ${./configure-distant-horizons.py} ${./distant-horizons.toml}
 
