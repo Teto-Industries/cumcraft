@@ -6,7 +6,9 @@
 }:
 
 let
-  mods = builtins.fromJSON (builtins.readFile ../mods.json);
+  mods = lib.filterAttrs (_: mod: lib.elem "server" mod.sides) (
+    builtins.fromJSON (builtins.readFile ../mods.json)
+  );
   defaults = "${../config}";
   inherit (config.services.cumcraft.easyAuth) passwordFile;
 in

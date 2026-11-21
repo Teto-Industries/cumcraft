@@ -1,0 +1,8 @@
+{
+  "minecraft": "26.2",
+  "fabricLoader": "0.20.1",
+  "server": {
+    "name": "Cumcraft",
+    "address": "mine.cum.army:25569"
+  }
+}
