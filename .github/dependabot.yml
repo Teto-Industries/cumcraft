@@ -14,3 +14,9 @@ updates:
     directory: /site
     schedule:
       interval: weekly
+    # The Solid JSX preset still requires Babel 7.
+    ignore:
+      - dependency-name: "@babel/core"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@babel/preset-typescript"
+        update-types: ["version-update:semver-major"]
