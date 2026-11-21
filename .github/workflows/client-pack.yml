@@ -67,7 +67,7 @@ jobs:
           path: site/dist
 
   deploy-pages:
-    if: github.event_name == 'release' || github.ref == 'refs/heads/main'
+    if: ${{ !cancelled() && needs.site.result == 'success' && (github.event_name == 'release' || github.ref == 'refs/heads/main') }}
     needs: site
     runs-on: ubuntu-latest
     permissions:
