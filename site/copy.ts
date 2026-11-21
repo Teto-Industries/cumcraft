@@ -86,21 +86,21 @@ export const russianProfiles = new Map(
   Object.entries({
     low: {
       name: "Производительность",
-      description: "Профиль настроенный для слабых ПК или Steam Deck",
+      description: "Профиль, оптимизированный для слабых ПК или Steam Deck.",
     },
     "dh-opengl": {
-      name: "Recommended",
-      description: "Основной вариант с шейдерами для норм пк",
+      name: "Рекомендуемая",
+      description: "Основной вариант с шейдерами для ПК средней мощности.",
     },
     "dh-vulkan": {
       name: "Vulkan",
       description:
-        "Попробуй, если твоя видеокарта поддерживает Vulkan, возможно будет больше fps",
+        "Попробуй, если твоя видеокарта поддерживает Vulkan: FPS может быть выше.",
     },
     "voxy-opengl": {
       name: "Voxy",
       description:
-        "recommended option but with Voxy instead of DH, a bit lighter mod that some may prefer",
+        "Как рекомендуемая сборка, но с Voxy вместо Distant Horizons. Voxy менее требователен к ресурсам и может подойти лучше.",
     },
   } satisfies Record<string, ProfileCopy>),
 );
