@@ -54,52 +54,52 @@
     return;
   }
 
+  function closeMenu(menu) {
+    menu.open = false;
+    menu.querySelector("summary").focus();
+  }
+
+  function setupMenu(menu) {
+    function dismiss(event) {
+      if (!menu.contains(event.target)) menu.open = false;
+    }
+
+    menu.addEventListener("keydown", (event) => {
+      if (menu.open && event.key === "Escape") {
+        event.preventDefault();
+        closeMenu(menu);
+      }
+    });
+    menu.addEventListener("click", (event) => {
+      if (event.target.closest("a")) closeMenu(menu);
+    });
+    document.addEventListener("click", dismiss);
+    document.addEventListener("focusin", dismiss);
+  }
+
   function setupPicker(id, initialValue, apply) {
     const picker = document.getElementById(id);
-    const summary = picker.querySelector("summary");
-    const selection = picker.querySelector("[data-selection]");
     const options = picker.querySelectorAll("button");
 
     function select(value) {
       for (const option of options) {
-        const selected = option.value === value;
-        option.setAttribute("aria-pressed", String(selected));
-        if (selected) {
-          selection.textContent = option.textContent.trim();
-          selection.lang = option.lang || root.lang;
-        }
+        option.setAttribute("aria-pressed", String(option.value === value));
       }
-    }
-
-    function close() {
-      picker.open = false;
-      summary.focus();
-    }
-
-    function dismiss(event) {
-      if (!picker.contains(event.target)) picker.open = false;
     }
 
     for (const option of options) {
       option.addEventListener("click", () => {
         select(option.value);
-        close();
+        closeMenu(picker);
         storage.write(id, option.value);
         apply(option.value);
       });
     }
-    picker.addEventListener("keydown", (event) => {
-      if (picker.open && event.key === "Escape") {
-        event.preventDefault();
-        close();
-      }
-    });
-    document.addEventListener("click", dismiss);
-    document.addEventListener("focusin", dismiss);
     select(initialValue);
   }
 
   document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".header-menu").forEach(setupMenu);
     setupPicker("theme", theme, applyTheme);
     setupPicker("language", language, (value) => {
       const url = languageUrl(value);
