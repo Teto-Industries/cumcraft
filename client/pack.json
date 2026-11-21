@@ -1,0 +1,81 @@
+{
+  "minecraft": "26.2",
+  "fabricLoader": "0.20.1",
+  "server": {
+    "name": "Cumcraft",
+    "address": "mine.cum.army:25569"
+  },
+  "options": {
+    "version": 4903,
+    "autoJump": false,
+    "resourcePacks": [
+      "vanilla",
+      "continuity:glass_pane_culling_fix",
+      "continuity:default"
+    ]
+  },
+  "profiles": [
+    {
+      "id": "low",
+      "name": "Performance",
+      "renderer": "OpenGL",
+      "description": "8-chunk render distance, no shaders or distant terrain renderer.",
+      "recommendation": "Start here on Steam Deck, older laptops, or integrated graphics.",
+      "options": {
+        "preferredGraphicsBackend": "opengl",
+        "renderDistance": 8,
+        "simulationDistance": 5,
+        "graphicsPreset": "fast",
+        "renderClouds": "false",
+        "particles": 1,
+        "entityShadows": false,
+        "entityDistanceScaling": 0.75,
+        "biomeBlendRadius": 1,
+        "maxFps": 60
+      }
+    },
+    {
+      "id": "dh-opengl",
+      "name": "Distant Horizons",
+      "renderer": "OpenGL · Iris",
+      "description": "Distant terrain and Complementary Reimagined shaders.",
+      "recommendation": "The default choice for shaders on a dedicated GPU.",
+      "shaders": "iris",
+      "options": {
+        "preferredGraphicsBackend": "opengl",
+        "renderDistance": 12
+      }
+    },
+    {
+      "id": "dh-vulkan",
+      "name": "Distant Horizons · Vulkan",
+      "renderer": "Vulkan · Vitrail",
+      "description": "Distant terrain and Complementary Reimagined on Minecraft’s experimental Vulkan renderer.",
+      "recommendation": "Try this if your GPU supports Vulkan and you want to test the experimental renderer.",
+      "shaders": "vitrail",
+      "options": {
+        "preferredGraphicsBackend": "vulkan",
+        "renderDistance": 12
+      }
+    },
+    {
+      "id": "voxy-opengl",
+      "name": "Voxy",
+      "renderer": "OpenGL · Iris",
+      "description": "Voxy builds a distant view from chunks you explore. Includes Complementary Reimagined shaders.",
+      "recommendation": "Choose this if you have OpenGL 4.6 and want Voxy instead of Distant Horizons.",
+      "shaders": "iris",
+      "options": {
+        "preferredGraphicsBackend": "opengl",
+        "renderDistance": 12
+      }
+    }
+  ],
+  "shaderPack": {
+    "name": "ComplementaryReimagined_r5.9.3.zip",
+    "url": "https://cdn.modrinth.com/data/HVnmMxH1/versions/Bqen1mJX/ComplementaryReimagined_r5.9.3.zip",
+    "size": 553397,
+    "sha1": "838139b54cddb56b2e83cd260d8efd960ac536d6",
+    "sha512": "45304b1d7862afdb2177b7e6226fc9c6737911d17a4ad46cc9c519ca4deb935f05072cd337cd8b19a15bb8062b57b54eceec7bdee4cd572d94858e2946d37d85"
+  }
+}

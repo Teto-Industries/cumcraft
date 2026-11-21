@@ -1,282 +1,772 @@
 {
   "BetterGrassify-1.8.7+fabric.26.2.jar": {
     "hash": "sha256-gj4Ux7QcBlbWaUjrngDM7YKc36wZqS1k9Lgw3wWi3fk=",
-    "url": "https://cdn.modrinth.com/data/m5T5xmUy/versions/r4yqxYQl/BetterGrassify-1.8.7%2Bfabric.26.2.jar"
+    "url": "https://cdn.modrinth.com/data/m5T5xmUy/versions/r4yqxYQl/BetterGrassify-1.8.7%2Bfabric.26.2.jar",
+    "size": 88858,
+    "sha1": "0f4a890d07402280686a518579fa9fa02309e315",
+    "sha512": "7b70e796cea2ee57a6022108092517b6aa39d5a19b8da1de26685ae53b8fbb4717cd91ee1d232c54efa8e210ebe9b760d3dab79bf9a5fdb5ae75d97b461a1fab",
+    "sides": [
+      "client"
+    ]
   },
   "Chunky-Fabric-1.5.3.jar": {
     "hash": "sha256-7N/FWg9n8+xvQIUGh2FclBriJr2I9OBhiKeyaP09qUI=",
-    "url": "https://cdn.modrinth.com/data/fALzjamp/versions/4Eotm6ov/Chunky-Fabric-1.5.3.jar"
+    "url": "https://cdn.modrinth.com/data/fALzjamp/versions/4Eotm6ov/Chunky-Fabric-1.5.3.jar",
+    "size": 354095,
+    "sha1": "fc1f2f374c5c82117599071ed18b6ef9bba2c7fb",
+    "sha512": "b83bfe7b218d0aa6232af977ae741dc1f82b10e50cd12bb759f65cf416b8b62beccb543e587ef0b9670abe03815660f8e091bc6823624d65cf07300571573516",
+    "sides": [
+      "server"
+    ]
   },
   "Clumps-fabric-26.2-26.2.1.jar": {
     "hash": "sha256-3JVEGQq/tlo8ndxdrRUjyd/FpzI0T1KNkIuVCJQ5jow=",
-    "url": "https://cdn.modrinth.com/data/Wnxd13zP/versions/dEMopoOJ/Clumps-fabric-26.2-26.2.1.jar"
+    "url": "https://cdn.modrinth.com/data/Wnxd13zP/versions/dEMopoOJ/Clumps-fabric-26.2-26.2.1.jar",
+    "size": 19950,
+    "sha1": "98e368bacc9d1a607be81d02f78f9afe913e7cfe",
+    "sha512": "a57044f0c9a07b19cd38b85528fd6b3958600c3ed1568d8a7ce32a7a473570362861ef433be4f23b02a43c05d658e9a5a71f9218fbdb963ae76a1714a0439fbe",
+    "sides": [
+      "server"
+    ]
   },
   "ConfigManager-fabric-26.1_26.2-1.1.3.jar": {
     "hash": "sha256-Wf1iNJVB07zL9WNBYwFc8zW9Jy2psXKWSd0v2zgJuyU=",
-    "url": "https://cdn.modrinth.com/data/jlNms3Jp/versions/W4C08wBC/ConfigManager-fabric-26.1_26.2-1.1.3.jar"
+    "url": "https://cdn.modrinth.com/data/jlNms3Jp/versions/W4C08wBC/ConfigManager-fabric-26.1_26.2-1.1.3.jar",
+    "size": 88871,
+    "sha1": "ce2d31f3cb6815fe83c742326430af8dd9f6a479",
+    "sha512": "bfa70defff2530780f0f0aa0de1845dc256d9cab244123e4847a6b24db1f812c47585ed1ddc80b2de91671aada421027b72d44e8b748e2a70ae405af54d94de0",
+    "sides": [
+      "server"
+    ]
   },
-  "Controlling-fabric-26.2-26.2.2.jar": {
-    "hash": "sha256-CItEzOhKfQJHajGUrFu+bzqzHpIa+JQJPE01fryyX8E=",
-    "url": "https://cdn.modrinth.com/data/xv94TkTM/versions/rAp2jljs/Controlling-fabric-26.2-26.2.2.jar"
-  },
-  "CrashAssistant-fabric-26.2-1.11.11.jar": {
-    "hash": "sha256-fcVELPKvmzRD3VhDB3VgVukHNK+AE24LFssyxbJopgs=",
-    "url": "https://cdn.modrinth.com/data/ix1qq8Ux/versions/ageTkUqN/CrashAssistant-fabric-26.2-1.11.11.jar"
+  "Controlling-fabric-26.2-26.2.4.jar": {
+    "hash": "sha256-4dv0U+l3pFwH+HOCrHmLHeG6BU20tSX4XirsJvP1iKA=",
+    "url": "https://cdn.modrinth.com/data/xv94TkTM/versions/sZHXONgm/Controlling-fabric-26.2-26.2.4.jar",
+    "size": 86209,
+    "sha1": "fb95a0c2ef8aad5c5f846aabfca11d86fa4d527f",
+    "sha512": "27147edf57915d88db8d2cbda8a54e97f4dd36bb7379e191d6fec67fe2c42f8f1f96d75a5afc8b84c9177661089ec28f0e89b519321e5d2fcf512a3df27e22c4",
+    "sides": [
+      "client"
+    ]
   },
   "DistantHorizons-3.3.3-26.2-fabric-neoforge.jar": {
     "hash": "sha256-q9S4UExwPWpFF8FU/c74yanaElmaZTs77c+xAHiM0r4=",
-    "url": "https://cdn.modrinth.com/data/uCdwusMi/versions/aAow4a9f/DistantHorizons-3.3.3-26.2-fabric-neoforge.jar"
-  },
-  "EuphoriaPatcher-1.9.3-r5.8.1-fabric.jar": {
-    "hash": "sha256-tCvQDHq24ETSH4Rd7cWKRSTkVkPzaFvxwjQwmOdNZi4=",
-    "url": "https://cdn.modrinth.com/data/4H6sumDB/versions/7GNWrkGL/EuphoriaPatcher-1.9.3-r5.8.1-fabric.jar"
+    "url": "https://cdn.modrinth.com/data/uCdwusMi/versions/aAow4a9f/DistantHorizons-3.3.3-26.2-fabric-neoforge.jar",
+    "size": 27766022,
+    "sha1": "22fa56cc57d6ed045ef3c4a3758ea5207ca5bcff",
+    "sha512": "cc0e5e13b7af9a1b7e3319f9328825cff5a6e4169649231a7acae44e1362034028cfb904e023e417063cf033ef2d7c481f1f0cfff60947dd32842eb529614959",
+    "sides": [
+      "client",
+      "server"
+    ],
+    "profiles": [
+      "dh-opengl",
+      "dh-vulkan"
+    ]
   },
   "FallingTree-26.2-25.jar": {
     "hash": "sha256-q+YaJwj5ugCwY9kYvmMpLmnGK3dD4v5k/GPOiHfxxfI=",
-    "url": "https://cdn.modrinth.com/data/Fb4jn8m6/versions/sOoH5kkd/FallingTree-26.2-25.jar"
+    "url": "https://cdn.modrinth.com/data/Fb4jn8m6/versions/sOoH5kkd/FallingTree-26.2-25.jar",
+    "size": 493214,
+    "sha1": "b094d747558653554ffb9e883bb42b4df7542833",
+    "sha512": "b47a93c6fed4bfc9da70881d6eea5df771c79a679fc2473b0c987935736a3c85b1a5c7ab1a2580d0833413ddc6ca02aa5d5996e9e88bd7b0387a3ff74f049130",
+    "sides": [
+      "server"
+    ]
   },
   "FarmersDelight-26.2-3.6.7+refabricated.jar": {
     "hash": "sha256-pEr/8sGOrlyq+LRVUlz91wTKW9bF/0vGofW/JKqhDfI=",
-    "url": "https://cdn.modrinth.com/data/7vxePowz/versions/BD1gWJYb/FarmersDelight-26.2-3.6.7%2Brefabricated.jar"
+    "url": "https://cdn.modrinth.com/data/7vxePowz/versions/BD1gWJYb/FarmersDelight-26.2-3.6.7%2Brefabricated.jar",
+    "size": 3467478,
+    "sha1": "ee7cd6aa2eb822233a595739fa8b17309dfb765f",
+    "sha512": "d4ff6d63927d85b6f227c66f8a05dc35ae7d52fc25e37827c55644e1bff4735cc71781db37f39e9931b553eda3f7ddfe95fdf651f1e1becf6eaad15d17ab6e3a",
+    "sides": [
+      "client",
+      "server"
+    ]
   },
   "ForgeConfigAPIPort-v26.2.1-mc26.2.x-Fabric.jar": {
     "hash": "sha256-G0sX/EFQSBRHIBFSYEaIx0cm1mMcmmJt0h8sXis98aw=",
-    "url": "https://cdn.modrinth.com/data/ohNO6lps/versions/rSd3GiG8/ForgeConfigAPIPort-v26.2.1-mc26.2.x-Fabric.jar"
+    "url": "https://cdn.modrinth.com/data/ohNO6lps/versions/rSd3GiG8/ForgeConfigAPIPort-v26.2.1-mc26.2.x-Fabric.jar",
+    "size": 609550,
+    "sha1": "a4083de0d8e0c19b993d21f7a576216efb5ceb23",
+    "sha512": "948b8d83de61a11aad2fc0bb0744a8b4848c9b2f0663c9aa015389d9560b3fa78518e609c44ec90278de0e159a92ebd721ccbdebb453aa455c353e5cd19413bf",
+    "sides": [
+      "client",
+      "server"
+    ]
   },
-  "ImmediatelyFast-Fabric-1.16.2+26.2.jar": {
-    "hash": "sha256-QNpEGUzR2r3FOZyOPEYlO2pWjC9PniNjo7OgBpUx13A=",
-    "url": "https://cdn.modrinth.com/data/5ZwdcRci/versions/uJHxuQxy/ImmediatelyFast-Fabric-1.16.2%2B26.2.jar"
+  "ImmediatelyFast-Fabric-1.16.5+26.2.jar": {
+    "hash": "sha256-hc2NGbyXufKvM5iX+ErCavFqsxuqBgJontz6Gd/Bs+k=",
+    "url": "https://cdn.modrinth.com/data/5ZwdcRci/versions/pMWERcSu/ImmediatelyFast-Fabric-1.16.5%2B26.2.jar",
+    "size": 100500,
+    "sha1": "0286260261591fe77ba0d332d5d5a2d2e868c2c6",
+    "sha512": "5836b089072c0fd796613d42c3bd01c7e401b6ad53de80328bb9d74d585de9be0ff0cfc4d6ffa1ed41008750573b0525eff8c064162a2f724ad16817a8fdaf22",
+    "sides": [
+      "client"
+    ]
   },
-  "Ixeris-4.5.2+26.2-fabric.jar": {
-    "hash": "sha256-P89bHZ7jsQO3X6g/UBeZdMYAGjhpm4YssJvD16QzFOA=",
-    "url": "https://cdn.modrinth.com/data/p8RJPJIC/versions/6Tdp16jL/Ixeris-4.5.2%2B26.2-fabric.jar"
+  "InventoryProfilesNext-fabric-26.2-2.3.8.jar": {
+    "hash": "sha256-FCYWvuXv77idHWkI0cMa7P8tp/BV2pGFcwBe2E8Cevs=",
+    "url": "https://cdn.modrinth.com/data/O7RBXm3n/versions/oQFRysLk/InventoryProfilesNext-fabric-26.2-2.3.8.jar",
+    "size": 1485253,
+    "sha1": "012d82375e3d5166df70fbfbcaa5726ef890648d",
+    "sha512": "70a69de47d4fbba7a18e5a681e33ce08941393e5c3afbe02f6a4cd47ada0207177e25a5cf3f2f98bbcfc7943e3f78fcf527b5b714fc70e36af393a4ed9105121",
+    "sides": [
+      "client"
+    ],
+    "disabled": true
+  },
+  "Ixeris-4.6.8+26.2-fabric.jar": {
+    "hash": "sha256-7CeTRsaSas4XkqSug7dwKuVu9yhW/khpZccOUkx0evY=",
+    "url": "https://cdn.modrinth.com/data/p8RJPJIC/versions/WykVq5o6/Ixeris-4.6.8%2B26.2-fabric.jar",
+    "size": 762557,
+    "sha1": "efa737f5ff00d5b7be7c60dd6e9493c49a7e09e5",
+    "sha512": "61b3a8436db5574b934692fafdf5731b1ece99b562c56269d593195efa825c3707223befb5ca38ba0ac18a629d2176c709c9415a7fe8d138e0bdb3ec3707505f",
+    "sides": [
+      "client"
+    ]
   },
   "NoChatReports-FABRIC-26.2-v2.20.1.jar": {
     "hash": "sha256-dUzOHpmRPrP+et7VASyyOjPIT6tK7g+EC600eF9YHic=",
-    "url": "https://cdn.modrinth.com/data/qQyHxfxd/versions/uiY9tUaj/NoChatReports-FABRIC-26.2-v2.20.1.jar"
+    "url": "https://cdn.modrinth.com/data/qQyHxfxd/versions/uiY9tUaj/NoChatReports-FABRIC-26.2-v2.20.1.jar",
+    "size": 239191,
+    "sha1": "0c095e6ee699cb1f5c9732ef632cf93998b1d468",
+    "sha512": "139dd09e04cc66fe4745264ddfbe3249be6e956326c931eb9707f9a640bbc011a4f1fd5684d04ca90e1b473be55772b0279e5c2f935c2f2e85d054e2ab0a6923",
+    "sides": [
+      "client",
+      "server"
+    ]
   },
   "PatPat-1.3.0+26.2+fabric.jar": {
     "hash": "sha256-DG3I3u3UcKHdYCcgK1JippPST9mtRt7Zr4bdvrFBbBY=",
-    "url": "https://cdn.modrinth.com/data/dw7LChq9/versions/NDjYrNet/PatPat-1.3.0%2B26.2%2Bfabric.jar"
+    "url": "https://cdn.modrinth.com/data/dw7LChq9/versions/NDjYrNet/PatPat-1.3.0%2B26.2%2Bfabric.jar",
+    "size": 1212329,
+    "sha1": "e91086708a1141a319aaafcbce149c54f7ea57e3",
+    "sha512": "43c1dc1e7c64347cc4e242115ddf3fe3378b2de259a4aad2d3e8e128988083de935f5c04a229270fbb21b08aa340af8b93f773a2aec6216e995eca54fd755984",
+    "sides": [
+      "client",
+      "server"
+    ]
   },
   "PresenceFootsteps-1.13.3+26.2.jar": {
     "hash": "sha256-8ffjf/xaVs98yYM9jGtIaANAVU1ySYFg3wIcb8NUrxM=",
-    "url": "https://cdn.modrinth.com/data/rcTfTZr3/versions/8TkGmrgl/PresenceFootsteps-1.13.3%2B26.2.jar"
+    "url": "https://cdn.modrinth.com/data/rcTfTZr3/versions/8TkGmrgl/PresenceFootsteps-1.13.3%2B26.2.jar",
+    "size": 5749193,
+    "sha1": "07791ec2f22d779c42cb06e71cff834da9d85456",
+    "sha512": "c0b6a1fc1340b7666903f680e12c45fdd24cb75a34ee5eea815e4f8b77752e3f4ecea1df5971ef87474316c97f94ac424c27a75b8b67ca1100467d6ad6181f79",
+    "sides": [
+      "client"
+    ]
   },
   "Searchables-fabric-26.2-1.0.1.jar": {
     "hash": "sha256-j9IMzhA1MQjQ2dUS3wc22IAsGrt5x051DQE9+jpnYOo=",
-    "url": "https://cdn.modrinth.com/data/fuuu3xnx/versions/bvFby61J/Searchables-fabric-26.2-1.0.1.jar"
+    "url": "https://cdn.modrinth.com/data/fuuu3xnx/versions/bvFby61J/Searchables-fabric-26.2-1.0.1.jar",
+    "size": 78982,
+    "sha1": "73c1917f4ff056254c95f50a5acb18d16384139a",
+    "sha512": "342f6b9ddee7391f0f5c30090dc7b7fe0b9638c86b729d3e989360ccdf5e5a85d729decc3e27efcdaeaad6b4696e9dd8fb48391c803d8324195b6f5194761a70",
+    "sides": [
+      "client"
+    ]
   },
   "animatica-0.6.3+26.2.jar": {
     "hash": "sha256-ZyS0d/NbMre8h41zt9VuaribBCy4Y+0yLCu5qmZL/Ig=",
-    "url": "https://cdn.modrinth.com/data/xEyZuswh/versions/SjuTFuhz/animatica-0.6.3%2B26.2.jar"
+    "url": "https://cdn.modrinth.com/data/xEyZuswh/versions/SjuTFuhz/animatica-0.6.3%2B26.2.jar",
+    "size": 117443,
+    "sha1": "efca21138f620b0c103165b238e93a4ff9daccf0",
+    "sha512": "318b29f83accee30547e027aa333fa6f31850ba959e662c635237290bbe8a04b0b47c99666f534cbcdb485d5d8bf9cb0dd189af4b9841ed89987c49cf3f6bb19",
+    "sides": [
+      "client"
+    ]
   },
-  "bbe-fabric-1.3.7+mc26.2.jar": {
-    "hash": "sha256-apJxi1or8sP6140K75op9s2buSu1yN5FJj36XmAQtuA=",
-    "url": "https://cdn.modrinth.com/data/ONZm0H7Y/versions/IDqHHWrF/bbe-fabric-1.3.7%2Bmc26.2.jar"
+  "balm-fabric-26.2-26.2.0.9.jar": {
+    "hash": "sha256-59lXLR7ezOnhAHOsfY2qr2G4RxYlhzMOymRysxd2Uss=",
+    "url": "https://cdn.modrinth.com/data/MBAkmtvl/versions/qLWYe5p7/balm-fabric-26.2-26.2.0.9.jar",
+    "size": 1196564,
+    "sha1": "f46d8bc124a9e89d86ec14e8b8e8c6a0ab09e474",
+    "sha512": "a558ef7b432faf31e4dd35339d8d2b330343c0c84715ed3890eb1c2df5b7914c6f0beae919c8fc33ba8c2bbf6da4fb98c452c8efc5d90338d3051af70e4513a8",
+    "sides": [
+      "client"
+    ]
+  },
+  "bbe-fabric-1.3.8-beta.1+mc26.2.jar": {
+    "hash": "sha256-AyUslEwxTHZ+dZhQGZgXsBN4jk0JETg0oV0J2R1mn18=",
+    "url": "https://cdn.modrinth.com/data/ONZm0H7Y/versions/Sr2VjbpG/bbe-fabric-1.3.8-beta.1%2Bmc26.2.jar",
+    "size": 206826,
+    "sha1": "ec08648cdda68dc05bf8866289c046ddfefb09a2",
+    "sha512": "c8b41ee9b3eac297d4e699cfb9b042bbc5895cc9e8fca2c1998743e4a59503ac079b5694704337a1d296e5ac3d418220649d6a50a740b15f21559eb7727b257c",
+    "sides": [
+      "client"
+    ]
   },
   "bettermounthud-1.3.1.jar": {
     "hash": "sha256-PU9WxG5h6G7NX0EYCaAa98QLJa6tZ5G3Fr788z4eMzY=",
-    "url": "https://cdn.modrinth.com/data/kqJFAPU9/versions/M3Fe5t0L/bettermounthud-1.3.1.jar"
+    "url": "https://cdn.modrinth.com/data/kqJFAPU9/versions/M3Fe5t0L/bettermounthud-1.3.1.jar",
+    "size": 20780,
+    "sha1": "f86040d5010c7aad1c677c7a7fefe52d3b386abd",
+    "sha512": "c7fff6ddc463178f7154d433a9dfe21443732d1f70f450a5e03860f631adb2f6a445d72fb59ac017f014add4881edf59d9960e9163d6d497d117bd16a8ae5295",
+    "sides": [
+      "client"
+    ]
   },
   "c2me-fabric-mc26.2-0.4.2-alpha.0.13.jar": {
     "hash": "sha256-r7HZHvDGyd1OXPg+94ROeHpA7OokKzaIgBWpdP7I7wE=",
-    "url": "https://cdn.modrinth.com/data/VSNURh3q/versions/XQMx5J57/c2me-fabric-mc26.2-0.4.2-alpha.0.13.jar"
+    "url": "https://cdn.modrinth.com/data/VSNURh3q/versions/XQMx5J57/c2me-fabric-mc26.2-0.4.2-alpha.0.13.jar",
+    "size": 3779880,
+    "sha1": "f531fb2c8774fd30c9fbeedc2d4a60bf9f59995f",
+    "sha512": "052c79f8da23a4215a812e3c3fb592b3992d519e1c5daedd193d66742823855dac65365de31408c18b750bb58990f2650e4402a3abc32cf0e30aab7125adb15b",
+    "sides": [
+      "server"
+    ]
   },
-  "cape-provider-5.5.0.jar": {
-    "hash": "sha256-Yzt8NhgjTEhs3sFeD7gRvflQdS3/DsXZwbFJGoeUS/U=",
-    "url": "https://cdn.modrinth.com/data/orXAsira/versions/molTCsgf/cape-provider-5.5.0.jar"
+  "cape-provider-5.5.1.jar": {
+    "hash": "sha256-+koviQrvXe1xmZRgFx5Q517pAjFLxrgk0FXyd9o51oo=",
+    "url": "https://cdn.modrinth.com/data/orXAsira/versions/Puw7YiUS/cape-provider-5.5.1.jar",
+    "size": 204673,
+    "sha1": "7a105c6ecf9e6404ee9213f4a83f5db4a893fa47",
+    "sha512": "092128ce6c596ce825cd4fa12705d979979684bd55db8330adc179aa666a4f28998e334d870d70ea4519d83596218f0c1fde0bd92ba79b3dd11def076801e089",
+    "sides": [
+      "client"
+    ]
   },
   "cicada-lib-0.15.2+26.2.jar": {
     "hash": "sha256-grTprC1u2j4u0jf6fKzRWou6LNxqUVaYyJ6WOmaVvzQ=",
-    "url": "https://cdn.modrinth.com/data/IwCkru1D/versions/3hUl5ch8/cicada-lib-0.15.2%2B26.2.jar"
+    "url": "https://cdn.modrinth.com/data/IwCkru1D/versions/3hUl5ch8/cicada-lib-0.15.2%2B26.2.jar",
+    "size": 360542,
+    "sha1": "1c191fa39a55aa0f6c194f45e938dd4128c42b5c",
+    "sha512": "9cafe284611cbabcbf465e368809dc25eed2da114d02e7adcea2c77bc3133604f5ef6ddf79165777ff848286a2c1e24aa759e786d624ac2e5b2a2a5ad748354c",
+    "sides": [
+      "client",
+      "server"
+    ]
   },
   "cloth-config-26.2.155.jar": {
     "hash": "sha256-3vS+djnNZnBPfjBNZY6g9r9JD7Sm6qLb8Y7Cw5mdY0k=",
-    "url": "https://cdn.modrinth.com/data/9s6osm5g/versions/Nv3xnWXd/cloth-config-26.2.155.jar"
+    "url": "https://cdn.modrinth.com/data/9s6osm5g/versions/Nv3xnWXd/cloth-config-26.2.155.jar",
+    "size": 1135186,
+    "sha1": "babcf16dbd15e09d326e21ffe85ab3f7d843ef9e",
+    "sha512": "37b1e402f0df5a383656e21a38ee18cdd15cb4ba3fb62fbeba82ef4b959a4479fc32718ac0d9d154a7d9104c5f7315bfa67dbeced0b8ff240b8039d4848d5df1",
+    "sides": [
+      "client"
+    ]
   },
   "continuity-3.0.1+26.2.jar": {
     "hash": "sha256-IJSlK5jiR/Zk7y7Nu0HX3K13ecx6j7h/Dtik+BlsBEY=",
-    "url": "https://cdn.modrinth.com/data/1IjD5062/versions/mgUN5Xz2/continuity-3.0.1%2B26.2.jar"
+    "url": "https://cdn.modrinth.com/data/1IjD5062/versions/mgUN5Xz2/continuity-3.0.1%2B26.2.jar",
+    "size": 1040013,
+    "sha1": "8fa8bc108e84158b0828a4aa59bf906d31676eec",
+    "sha512": "3436b39fcdddce87f8eda0f35095067477636df2667195df3cb8eae2d002d3ff8ac44de97332668ee50e13ad91be5c532cbc6121878f1e6c904c98c1c9c67c0b",
+    "sides": [
+      "client"
+    ]
+  },
+  "controlify-3.5.3+mc26.2-universal.jar": {
+    "hash": "sha256-lxXaJPahO7NOXTWPcutrsfaMap55KzUMKU2BqT+BmmM=",
+    "url": "https://cdn.modrinth.com/data/DOUdJVEm/versions/VDw4mGkG/controlify-3.5.3%2Bmc26.2-universal.jar",
+    "size": 6411915,
+    "sha1": "52a9beb9f9782690f1170f2e72e1764fe3f82199",
+    "sha512": "fa590eeebeb7ce4be828456dd796dd786919b7a8c664a4e509fc1c4a82414a349c598a5c968e4b4974abcdb3db1d32d03a7f38a532d924308a5b382bdf28437a",
+    "sides": [
+      "client"
+    ]
   },
   "coolrain-1.4.0-26.2.jar": {
     "hash": "sha256-t+wxWH0p4ZT4qk7qObJTqOKj74aWXCD2BWBNW5dV9Qs=",
-    "url": "https://cdn.modrinth.com/data/iDyqnQLT/versions/zc88gNk3/coolrain-1.4.0-26.2.jar"
+    "url": "https://cdn.modrinth.com/data/iDyqnQLT/versions/zc88gNk3/coolrain-1.4.0-26.2.jar",
+    "size": 4139861,
+    "sha1": "afa1d97a1b942148b300ce8f1e668cd357bdebb6",
+    "sha512": "02c709c3a6983f38cc5b4fca92b238ebf61c5f5c1c4ae86458905f8e2d2e7064a83786db22d8fb97162ecf3e0646d896e4d6060f77f6356427bb44e17a97f6c5",
+    "sides": [
+      "client"
+    ]
   },
   "cursors_extended-fabric-4.1.7+26.2.jar": {
     "hash": "sha256-+da1WKOtEneJgInwv/w29d/ujf8vZYgoRgAWnmyF0sE=",
-    "url": "https://cdn.modrinth.com/data/o5fhgLeQ/versions/ghvqSaVz/cursors_extended-fabric-4.1.7%2B26.2.jar"
+    "url": "https://cdn.modrinth.com/data/o5fhgLeQ/versions/ghvqSaVz/cursors_extended-fabric-4.1.7%2B26.2.jar",
+    "size": 322391,
+    "sha1": "86d8c9c32d91df3f6710cb3f600a926f6b978abc",
+    "sha512": "913b6f18c94ee63e8e1c8ecc75f96364e4fcc95c69040a50d103c1585510e26aa72cb021e27fb4176ed46247dccd500eedb380e6695bc53636937dadaf70b0f7",
+    "sides": [
+      "client"
+    ]
   },
   "debugify-26.2.0.0.jar": {
     "hash": "sha256-+XLU1j7JvT9UZPHmQlndR8j56MkHs9+2gMi088Ayuuk=",
-    "url": "https://cdn.modrinth.com/data/QwxR6Gcd/versions/V2I3yC58/debugify-26.2.0.0.jar"
+    "url": "https://cdn.modrinth.com/data/QwxR6Gcd/versions/V2I3yC58/debugify-26.2.0.0.jar",
+    "size": 368634,
+    "sha1": "a1b34d3b6f069569df9ad99b1e40eb765f0baa06",
+    "sha512": "41999eeff94c6a69810d65571bb09cb49a6c29a1e134f49fe31fe826e41f7a6cf7997350fb0d175270fe10c81e5e6433738562f8a22a57725a6f76544414e396",
+    "sides": [
+      "client",
+      "server"
+    ]
   },
   "do_a_barrel_roll-fabric-3.8.4+26.2.jar": {
     "hash": "sha256-+ZUKvm1IY3mrvY9516cPLUnsReVzyNJ92Zc/hyvsGJg=",
-    "url": "https://cdn.modrinth.com/data/6FtRfnLg/versions/ytqYgyYh/do_a_barrel_roll-fabric-3.8.4%2B26.2.jar"
+    "url": "https://cdn.modrinth.com/data/6FtRfnLg/versions/ytqYgyYh/do_a_barrel_roll-fabric-3.8.4%2B26.2.jar",
+    "size": 561132,
+    "sha1": "e7ca6f23a7cd18fd06e484b505c26a220377c518",
+    "sha512": "e71673ba9ed4d014242c40010f8337c123659b5b3475c9eb2909ea6f55f2924efd318c73b9381ef6ea49365aec83ead0601270c9fe4884b4880de5cb553763c1",
+    "sides": [
+      "client",
+      "server"
+    ]
   },
   "dynamic-fps-3.11.9+minecraft-26.2.0-fabric.jar": {
     "hash": "sha256-osSGUyDkHesuRixJmYBBBtYgwVCJ1hy8sNZQWVmkpHs=",
-    "url": "https://cdn.modrinth.com/data/LQ3K71Q1/versions/pC2JjFw1/dynamic-fps-3.11.9%2Bminecraft-26.2.0-fabric.jar"
+    "url": "https://cdn.modrinth.com/data/LQ3K71Q1/versions/pC2JjFw1/dynamic-fps-3.11.9%2Bminecraft-26.2.0-fabric.jar",
+    "size": 188740,
+    "sha1": "e8cd9e4fbc6d42091faffc873b0801f1189ed6a5",
+    "sha512": "79b13548d7e9de9abfa23e062724a885e5341f371c500d6570056ecea7db00c2f7ace5a7288179ad8baec575b4aa992b91dccbc940c584cb5cddf0bc7aeb892f",
+    "sides": [
+      "client"
+    ]
   },
   "easyauth-mc26.2-3.4.3-SNAPSHOT.49.jar": {
     "hash": "sha256-ZJ6yhQ8bXHaWJ1Q31ZWQFplfkx3MAPSCKpSXyCKjOo8=",
-    "url": "https://cdn.modrinth.com/data/aZj58GfX/versions/brHsihQ7/easyauth-mc26.2-3.4.3-SNAPSHOT.49.jar"
+    "url": "https://cdn.modrinth.com/data/aZj58GfX/versions/brHsihQ7/easyauth-mc26.2-3.4.3-SNAPSHOT.49.jar",
+    "size": 24256250,
+    "sha1": "5f84368714a4d1787f73766ae7299f3e1816c2f6",
+    "sha512": "40e1a2d000976f2bf388ccbd20173e44548653b73bb7351347822e69c55e26b47dd50ac14013228f234b2adea42f96e831fc16112ffeeb83dc70894bf8d39dda",
+    "sides": [
+      "server"
+    ]
   },
-  "entity_model_features-3.2.6-26.2-fabric.jar": {
-    "hash": "sha256-h2o+T/2gIaYmbfhyCPLZmAMiz4YiPU/h4xPKmWYx8RU=",
-    "url": "https://cdn.modrinth.com/data/4I1XuqiY/versions/xQeW3qQB/entity_model_features-3.2.6-26.2-fabric.jar"
+  "entity_model_features-3.3.8-26.2-fabric.jar": {
+    "hash": "sha256-cUaGzv5Wp+RvoeE+ze3ctV3fu5cVrlsf/XVzwZKNn90=",
+    "url": "https://cdn.modrinth.com/data/4I1XuqiY/versions/uqpavrXj/entity_model_features-3.3.8-26.2-fabric.jar",
+    "size": 650678,
+    "sha1": "eb659600b11ee5f9337001566ca16d2fcfb3f002",
+    "sha512": "1dfe379c021e1478c01817b1e6e8a0ce3aa6db868fbad088da34ea35c4db3ec3ffe2c984b112957923478ac68664d89f3857a710b8558dbce0fbba58c859d3c9",
+    "sides": [
+      "client"
+    ]
   },
-  "entity_texture_features-7.1.1-26.2-fabric.jar": {
-    "hash": "sha256-9Gm8kUMCoTpcdnKWYj32D7DMPU5KAqd8VlQaczrTbjo=",
-    "url": "https://cdn.modrinth.com/data/BVzZfTc1/versions/HLCBKYFD/entity_texture_features-7.1.1-26.2-fabric.jar"
+  "entity_texture_features-7.2.4-26.2-fabric.jar": {
+    "hash": "sha256-NRwPQPqct2D1G4oIGcXsX1RQonh87Y5SAKfGlcsWUA4=",
+    "url": "https://cdn.modrinth.com/data/BVzZfTc1/versions/sTno2gjm/entity_texture_features-7.2.4-26.2-fabric.jar",
+    "size": 776882,
+    "sha1": "724930e588ba5d2cb476c141ac1cd38893ea299e",
+    "sha512": "8a854074af3bb3fd1151e39c3f5d370d2995f4c15212dbb56d84c227e9b7d6c8402a181aaf4701b0637c0deee529f83cc2ed748c04adc5ef77e1734c0a945429",
+    "sides": [
+      "client"
+    ]
   },
-  "entityculling-fabric-1.10.5-mc26.2.jar": {
-    "hash": "sha256-BaNt7Lsbuw94XZdAaMDZwZGXXg2NY34esfL2u4TqsFo=",
-    "url": "https://cdn.modrinth.com/data/NNAgCjsB/versions/iiF6U3Ne/entityculling-fabric-1.10.5-mc26.2.jar"
+  "entityculling-fabric-1.11.2-mc26.2.jar": {
+    "hash": "sha256-7UhUb5Uu37tGc6pEloZQzFlmpXPS5k5yf1jhHLw2zzE=",
+    "url": "https://cdn.modrinth.com/data/NNAgCjsB/versions/RWjup6Jf/entityculling-fabric-1.11.2-mc26.2.jar",
+    "size": 1508311,
+    "sha1": "8a379bf40ab7125756afe7bbdf9501324bc37216",
+    "sha512": "4562dd16ce9213959c41fe58a3dd73a95c9ab9095a0fc7fbaa752b6ce3433fbef5063e7f5f2634b1ff34499261f48d31e878306dac8701425af1d50e726e53fd",
+    "sides": [
+      "client"
+    ]
   },
   "fabric-api-0.154.2+26.2.jar": {
     "hash": "sha256-BebDzJi8U0rvfx8Eg8C7/RRUvRzzd1GHH4/xpm6ddEY=",
-    "url": "https://cdn.modrinth.com/data/P7dR8mSH/versions/Kr4WG5mG/fabric-api-0.154.2%2B26.2.jar"
+    "url": "https://cdn.modrinth.com/data/P7dR8mSH/versions/Kr4WG5mG/fabric-api-0.154.2%2B26.2.jar",
+    "size": 2523877,
+    "sha1": "3b877ba08c963948290098cb4ab718046b011987",
+    "sha512": "7cedad862e8105a7de8db090c0707c25a14a9472654090861dcf490f834862c3212723e762f6f797a0e4683104f4b3a20d3692fb29d7b5c0af437613283d34db",
+    "sides": [
+      "client",
+      "server"
+    ]
   },
   "fabric-carpet-26.2+v260616.jar": {
     "hash": "sha256-9q2pEq9lyRU21LDYCt8mzEOCUyUt2vJZ8sZheuRxMRw=",
-    "url": "https://cdn.modrinth.com/data/TQTTVgYE/versions/bGrLxJ8v/fabric-carpet-26.2%2Bv260616.jar"
+    "url": "https://cdn.modrinth.com/data/TQTTVgYE/versions/bGrLxJ8v/fabric-carpet-26.2%2Bv260616.jar",
+    "size": 1536362,
+    "sha1": "cf66116e59f7fc68a8d9287c619067c685539df1",
+    "sha512": "8b8fac6979bd3153f5cfb4faa6bab52e1357eab814492a6658f3c0e1ac2856ad37a626c0a03a0839c39abb7bf56661f77b09d05d10ac01173bcdd373a33c6265",
+    "sides": [
+      "server"
+    ]
   },
-  "fabric-language-kotlin-1.13.12+kotlin.2.4.0.jar": {
-    "hash": "sha256-NsXdi3KONHDSiCrmMRm5OiBQD8Dqb1yUXBK/ZbWrGDI=",
-    "url": "https://cdn.modrinth.com/data/Ha28R6CL/versions/Pd0xrHCw/fabric-language-kotlin-1.13.12%2Bkotlin.2.4.0.jar"
+  "fabric-language-kotlin-1.14.1+kotlin.2.4.20.jar": {
+    "hash": "sha256-YgwnCb4qJiuDfPl29vhfbtqApWryukJC4L3IOmD+56U=",
+    "url": "https://cdn.modrinth.com/data/Ha28R6CL/versions/eRRZzGMc/fabric-language-kotlin-1.14.1%2Bkotlin.2.4.20.jar",
+    "size": 8142858,
+    "sha1": "62ae40a31b689b52fde399f2143d547a631e942c",
+    "sha512": "91404f87774466ce8604aafea791d8cc97b603bc310dce17c8188f94f7783cca6dc14fc726ce871ca317bfe9033c199d8d858d51284106a00754e952147703b8",
+    "sides": [
+      "client"
+    ]
   },
   "fabricexporter-26.2-1.0.22.jar": {
     "hash": "sha256-3kLxK5jhFcbRsYE8cmIioRc8n4X7DTmEJfuZ1dmUk/w=",
-    "url": "https://cdn.modrinth.com/data/dbVXHSlv/versions/tuPsGk8g/fabricexporter-26.2-1.0.22.jar"
+    "url": "https://cdn.modrinth.com/data/dbVXHSlv/versions/tuPsGk8g/fabricexporter-26.2-1.0.22.jar",
+    "size": 159764,
+    "sha1": "0ef089efd117f0097d0764da295723939d3b07e7",
+    "sha512": "80475cc389900c1d2e777ff1d0dd19776ba474eb2f96b73f1c1dbe8f349606a888ea35c7845cb517beef2ea3eaee0b5ce5ac39bea24a85f1165881b852760870",
+    "sides": [
+      "server"
+    ]
   },
   "fastback-fabric-0.34.0+26.2.0.jar": {
     "hash": "sha256-4gD8eE+9yg/B42OhdxvG3Ce/go5Fm5+OfEgqUL1uMkU=",
-    "url": "https://cdn.modrinth.com/data/ZHKrK8Rp/versions/EVNH1CA6/fastback-fabric-0.34.0%2B26.2.0.jar"
+    "url": "https://cdn.modrinth.com/data/ZHKrK8Rp/versions/EVNH1CA6/fastback-fabric-0.34.0%2B26.2.0.jar",
+    "size": 5597760,
+    "sha1": "01e6df1c661d531e7ac1e40de5a8bc5897c3ae3e",
+    "sha512": "70f5ad680e16e24b4c0130200a71a1301a288ae79672a9243388c1a843ad1215b0701a4fc5038aebb6c8cf744b4f6f61246f969b5f1ecd3cdb7a98bd0ab12b25",
+    "sides": [
+      "server"
+    ]
   },
   "ferritecore-9.0.0-fabric.jar": {
     "hash": "sha256-ITlmxy7ZZ6zHOSvrKKhm+6MB/1a5l2wueAHC233mvyI=",
-    "url": "https://cdn.modrinth.com/data/uXXizFIs/versions/d5ddUdiB/ferritecore-9.0.0-fabric.jar"
+    "url": "https://cdn.modrinth.com/data/uXXizFIs/versions/d5ddUdiB/ferritecore-9.0.0-fabric.jar",
+    "size": 72677,
+    "sha1": "eac76ff0f3753422c61b2c44487d0d195d88d4bc",
+    "sha512": "d81fa97e11784c19d42f89c2f433831d007603dd7193cee45fa177e4a6a9c52b384b198586e04a0f7f63cd996fed713322578bde9a8db57e1188854ae5cbe584",
+    "sides": [
+      "client",
+      "server"
+    ]
   },
-  "iris-fabric-1.11.2+mc26.2.jar": {
-    "hash": "sha256-3w4szdrqF7GR7aMrIcl54TG8nU70+DERO1C0YfxKOAQ=",
-    "url": "https://cdn.modrinth.com/data/YL57xq9U/versions/oaD6KQls/iris-fabric-1.11.2%2Bmc26.2.jar"
+  "inventoryessentials-fabric-26.2-26.2.0.6.jar": {
+    "hash": "sha256-bgDdfn4F02GbdyXsKAHPJc4dcXeqsOKbV6WsSsir52s=",
+    "url": "https://cdn.modrinth.com/data/Boon8xwi/versions/ig2gbg4K/inventoryessentials-fabric-26.2-26.2.0.6.jar",
+    "size": 207018,
+    "sha1": "387d84482b6831e921894e2781ef2f5f56476f64",
+    "sha512": "036b4dbfab2c6a0e03d7fd82262a061f9bd9a34c8df8130f42b27e77d266623fbaa6ff884d213e44ea75ba0be080463df848211cba2a936e543ba413a1ff59d3",
+    "sides": [
+      "client"
+    ],
+    "disabled": true
   },
-  "lambdynamiclights-4.12.2+26.2.jar": {
-    "hash": "sha256-1G0q5fHwqXyn6tiRcGdZ7R2VknnrsR30W3G2tANKONc=",
-    "url": "https://cdn.modrinth.com/data/yBW8D80W/versions/jBLH7Qy8/lambdynamiclights-4.12.2%2B26.2.jar"
+  "iris-fabric-1.11.4+mc26.2.jar": {
+    "hash": "sha256-8ferV8l00ZO6M6ooWGSg3tlJIW9AIRb86vTcdzm03Xw=",
+    "url": "https://cdn.modrinth.com/data/YL57xq9U/versions/gxZWWnKH/iris-fabric-1.11.4%2Bmc26.2.jar",
+    "size": 2821616,
+    "sha1": "bd0b24731a94b8fe164531e6345718d30ab08ed2",
+    "sha512": "dee955580976aebc92373f5c2d88398ad1019b043c6254a41fe7ab8a6ca3a5ff29d58df2b22ec43a31198beb769e814658eef06fbf980066a2e2c216eeafd32a",
+    "sides": [
+      "client"
+    ],
+    "profiles": [
+      "dh-opengl",
+      "voxy-opengl"
+    ]
+  },
+  "lambdynamiclights-4.12.4+26.2.jar": {
+    "hash": "sha256-/bOXHNYo59oKnKIiwq1QHPL1nfG3Pn8Ey8fgMZRomlI=",
+    "url": "https://cdn.modrinth.com/data/yBW8D80W/versions/XVsaQXSm/lambdynamiclights-4.12.4%2B26.2.jar",
+    "size": 1344429,
+    "sha1": "c842011792dbaf95bb6243df1ad7f39c576f944d",
+    "sha512": "1e7c2abf18f4364cc8802c3ce21f9cbadd62074c1cf9829c025fe0d8dd04b6c7b47ca8fe6783b2399939fda0e40001d43dd82b6bced43546e9c26622ef3708c2",
+    "sides": [
+      "client"
+    ]
   },
   "language-reload-1.7.7+26.2.jar": {
     "hash": "sha256-JTS9YA5mhox6TqEgs8wbfInFKT/iT45RhIItRHT8BcA=",
-    "url": "https://cdn.modrinth.com/data/uLbm7CG6/versions/L79IylWm/language-reload-1.7.7%2B26.2.jar"
+    "url": "https://cdn.modrinth.com/data/uLbm7CG6/versions/L79IylWm/language-reload-1.7.7%2B26.2.jar",
+    "size": 77258,
+    "sha1": "261027cef3c476d4fafdf59362179eb8da9019d2",
+    "sha512": "b8516564b2ec47f34569843dc72d93d4053122693377193e3063b38602e760c8e1177239cb1a8d7b04d4c1e1b8476f66a13bac4d956fa9ad4666411476a78fdc",
+    "sides": [
+      "client"
+    ]
+  },
+  "libIPN-fabric-26.2-6.9.0.jar": {
+    "hash": "sha256-UpfloCiEMQP7iad8qL+yeu63kuHph7Wypkq1fCqmqfI=",
+    "url": "https://cdn.modrinth.com/data/onSQdWhM/versions/gCGiN7gp/libIPN-fabric-26.2-6.9.0.jar",
+    "size": 640838,
+    "sha1": "5cbc4674b91bc5e9a51623acdba22a7a9c990db8",
+    "sha512": "8cccc8dcb0f27a441f7910b2ebe56d932a73108639075e7f49ebed7d1669f278cb0a8ecf3453233f369d2ab0feccc620da4864ce66881a046ef798893cdb0de9",
+    "sides": [
+      "client"
+    ]
   },
   "lithium-fabric-0.25.2+mc26.2.jar": {
     "hash": "sha256-dYjUp2mJSY9W4R5jorEXD/9Hbo2cSqyU4xCz59tGng8=",
-    "url": "https://cdn.modrinth.com/data/gvQqBUqZ/versions/UPNexAfy/lithium-fabric-0.25.2%2Bmc26.2.jar"
+    "url": "https://cdn.modrinth.com/data/gvQqBUqZ/versions/UPNexAfy/lithium-fabric-0.25.2%2Bmc26.2.jar",
+    "size": 911988,
+    "sha1": "3bcc94183d7068395de08915fd5fce8d199aaa50",
+    "sha512": "db676376c05b7e912cdae5aad9e51f125adc1554ae2b204599ccb598751921aedbac98e97b9cba0333b6b52488c6b75c915a7dbd50436f97800387fe1aad1c50",
+    "sides": [
+      "client",
+      "server"
+    ]
   },
   "lithostitched-1.7.13-fabric-26.2.jar": {
     "hash": "sha256-oVnsaJRlIcoH1tNBwUMDPuaTvDLDRnPJU7Up5KuZcdM=",
-    "url": "https://cdn.modrinth.com/data/XaDC71GB/versions/vVFCOh7u/lithostitched-1.7.13-fabric-26.2.jar"
+    "url": "https://cdn.modrinth.com/data/XaDC71GB/versions/vVFCOh7u/lithostitched-1.7.13-fabric-26.2.jar",
+    "size": 857483,
+    "sha1": "c6659dbb843702caaf10187111f764d81143ac45",
+    "sha512": "22a6ef66abbc4fbba910cd7bba7e83f50f6cadb425058cbb484b9280c0aee59475bfb4fff41ee5dc939ecb124e2c8c518a84d1a5c58ecb7bf9b0ae856daf64bb",
+    "sides": [
+      "server"
+    ]
   },
   "midnightlib-fabric-1.9.3+26.2.jar": {
     "hash": "sha256-LeCZHBTrZoJap3yrT0sO9/qPuPjgC2qZtvkqjDfljmU=",
-    "url": "https://cdn.modrinth.com/data/codAaoxh/versions/3uBvRFE9/midnightlib-fabric-1.9.3%2B26.2.jar"
+    "url": "https://cdn.modrinth.com/data/codAaoxh/versions/3uBvRFE9/midnightlib-fabric-1.9.3%2B26.2.jar",
+    "size": 60027,
+    "sha1": "150ef19c168ef022b554b4c05bc0fdac13fcb2c3",
+    "sha512": "46a0959737bb54431f0ae0a7dfa2467f26211d27ea2cd1ef7a7750c9a97425f481db46bab6cc861cd3b77accb7dfef3653dc5c683d7dfc07fa7f76824351ce22",
+    "sides": [
+      "client"
+    ]
   },
-  "modmenu-20.0.1.jar": {
-    "hash": "sha256-gb+8oGASxXx0lJBy8v+q0GNgut7k0A3Fm/rqyA3SS9g=",
-    "url": "https://cdn.modrinth.com/data/mOgUt4GM/versions/njXb639R/modmenu-20.0.1.jar"
+  "modmenu-20.0.3.jar": {
+    "hash": "sha256-AIZWBQB/vybUcStAzN1Vsc3rrXmpzPzB/2Ne1SL1uyc=",
+    "url": "https://cdn.modrinth.com/data/mOgUt4GM/versions/iRo7AZXf/modmenu-20.0.3.jar",
+    "size": 616919,
+    "sha1": "9fc381627b471c18d67156e846228f51ff2ea5b4",
+    "sha512": "c8224aa7a460d0c56ccb9978a112e4ad0d3eb17e2796e0c468a2392d220749f4f602838a11b3666145462c26078a879ab8a2fc177aa440f58e189c92a0088d6e",
+    "sides": [
+      "client"
+    ]
   },
   "morechathistory-2.0.0.jar": {
     "hash": "sha256-WpioxbWrn240OT6mK6Ri4XxpbUMZ/e6vmPUW4Rr8NYc=",
-    "url": "https://cdn.modrinth.com/data/8qkXwOnk/versions/qpDhYv1Y/morechathistory-2.0.0.jar"
+    "url": "https://cdn.modrinth.com/data/8qkXwOnk/versions/qpDhYv1Y/morechathistory-2.0.0.jar",
+    "size": 3773,
+    "sha1": "6ce97845f93090dd7556b6e64bb7d63e126b83b4",
+    "sha512": "e85558f3effe8baee6394b61f48981989d22e181a3b8772c0f521022914d4c3603785e0e23a8df4a5e6ce9407c6abb8cf7d73183901908227a5623daadf30d67",
+    "sides": [
+      "client"
+    ]
   },
-  "moreculling-fabric-26.2-1.8.0.jar": {
-    "hash": "sha256-qDeE0H7TbvsWQ6aLMca4Nq/UY5j1TFuOHDgnQaCfsoo=",
-    "url": "https://cdn.modrinth.com/data/51shyZVL/versions/SYFaYeMK/moreculling-fabric-26.2-1.8.0.jar"
+  "moreculling-fabric-26.2-1.8.1.jar": {
+    "hash": "sha256-6gRQVJbk01qMlBmYhLb6+mkFfv5Q8gltKYjBEWPUkSI=",
+    "url": "https://cdn.modrinth.com/data/51shyZVL/versions/D5oVCouK/moreculling-fabric-26.2-1.8.1.jar",
+    "size": 363646,
+    "sha1": "189d90ef598883df8197ea18b510dba21e69bac4",
+    "sha512": "9c331ba5f2ce9c322c41aa577f1029f3420d5507d0d942aadbb43fb9bd82e7da6f72e3a0b26c4ad96394669a99a7feb512b5119b3095fde2e0a437bf68c08b40",
+    "sides": [
+      "client"
+    ]
   },
   "no-gaps-in-yo-items-1.0.1+26.2.jar": {
     "hash": "sha256-QQBMPuoBUgPw0PB66r2/6Q8e58fzJT2YvnufsxfRnDs=",
-    "url": "https://cdn.modrinth.com/data/GPbQOUoO/versions/zL0y7WYQ/no-gaps-in-yo-items-1.0.1%2B26.2.jar"
+    "url": "https://cdn.modrinth.com/data/GPbQOUoO/versions/zL0y7WYQ/no-gaps-in-yo-items-1.0.1%2B26.2.jar",
+    "size": 9331,
+    "sha1": "36124af9b8df3ed4b6b05619fc036221ca6e7fc7",
+    "sha512": "7cc2db7fe94ac5dbfd8c7074508a206e1db080b6efc9c9bf8adc9dde6ae83794d45a2ed3f256e9b251b29585bb2747b7cad6bbfbfa538a3d090ece5e8d7f65fb",
+    "sides": [
+      "client"
+    ]
   },
-  "notenoughanimations-fabric-1.12.4-mc26.2.jar": {
-    "hash": "sha256-hTPyonzpz+0YSFn0+jPEiin9kYMKWi2SKopuNL53cPM=",
-    "url": "https://cdn.modrinth.com/data/MPCX6s5C/versions/67xQnLDS/notenoughanimations-fabric-1.12.4-mc26.2.jar"
+  "notenoughanimations-fabric-1.12.5-mc26.2.jar": {
+    "hash": "sha256-jvEGnUY5KZ5HMHfe0/WmsiBF5YHoqf1Ru8Rw/FBnXJ4=",
+    "url": "https://cdn.modrinth.com/data/MPCX6s5C/versions/ocinaOmO/notenoughanimations-fabric-1.12.5-mc26.2.jar",
+    "size": 1863477,
+    "sha1": "a497dfeb1a7c27c5376a9a7a54ef7634a90d9c3d",
+    "sha512": "9f15eddd257f0ee892fc761fbe416fe513dd53a31857a5cafccb28d92ed9598c4a999d11200fdc2d36e8baaa5ccf5e3665081a72289e11471a0c52800735fa30",
+    "sides": [
+      "client"
+    ]
   },
-  "ok_zoomer-18.0.0-beta.1.jar": {
-    "hash": "sha256-sjdAyS/0z5bJbV2XoiWS0u9YDTwYEhNFscEwFpJX/NA=",
-    "url": "https://cdn.modrinth.com/data/aXf2OSFU/versions/l7k6gYj8/ok_zoomer-18.0.0-beta.1.jar"
+  "ok_zoomer-18.0.0-beta.2.jar": {
+    "hash": "sha256-4MehX2qVg7iRr/VCihNTRKz6qY2NUGndQxpbLhpU4R4=",
+    "url": "https://cdn.modrinth.com/data/aXf2OSFU/versions/fPHmG5Wc/ok_zoomer-18.0.0-beta.2.jar",
+    "size": 230180,
+    "sha1": "c4c49371ca29e0b4b7e773f9adf6d11d79094902",
+    "sha512": "0f908520a84debb1db17e5695d6776877578f19667c3713f59c2f5a65d0606eab7d731174d1991ab4be963c46d6a0fb8a32d6692611ba19287116073719f1942",
+    "sides": [
+      "client"
+    ]
   },
   "optigui-2.3.0-beta.10+26.2.jar": {
     "hash": "sha256-cqhw+Mt8t2iZZfRIO+Z2UI2usYd3XEwqGntsNBmuRlk=",
-    "url": "https://cdn.modrinth.com/data/JuksLGBQ/versions/FC0X8ap5/optigui-2.3.0-beta.10%2B26.2.jar"
+    "url": "https://cdn.modrinth.com/data/JuksLGBQ/versions/FC0X8ap5/optigui-2.3.0-beta.10%2B26.2.jar",
+    "size": 610116,
+    "sha1": "5f83a64181e374222e28815dd95a5cedc902667d",
+    "sha512": "42910eb6bbae735df370418c38f007a075cea79cdceb5c0d95a30c8be49d06938466ff10ae354e5107555540c1c498736da074c028080c44656e02ac286a262b",
+    "sides": [
+      "client"
+    ]
   },
   "paginatedadvancements-2.8.0+26.2.jar": {
     "hash": "sha256-zcW3igi3MXJm3lRke6XbufPz6ugfd9WoexYSMyWu+0k=",
-    "url": "https://cdn.modrinth.com/data/pJogNFap/versions/Ra3zz0eG/paginatedadvancements-2.8.0%2B26.2.jar"
+    "url": "https://cdn.modrinth.com/data/pJogNFap/versions/Ra3zz0eG/paginatedadvancements-2.8.0%2B26.2.jar",
+    "size": 80718,
+    "sha1": "81d503aaa174e0cf1bf8c350dfded5c640ca2aa1",
+    "sha512": "593e7d3b30d8f76cc6c24e19b6ea3b0d22d8c558b9989275bdc4a8cd6dd8bd1bcc4fd68080aede1fa7a7c0522d471af3457fd05d86aaa4308bd046aad24aae4b",
+    "sides": [
+      "client"
+    ]
   },
   "placeholder-api-3.1.0-beta.1+26.2.jar": {
     "hash": "sha256-wsorXDl6DBmKMuevaNLQoBG8LHuurlz/05lu/WXFBp4=",
-    "url": "https://cdn.modrinth.com/data/eXts2L7r/versions/NDqH16LT/placeholder-api-3.1.0-beta.1%2B26.2.jar"
+    "url": "https://cdn.modrinth.com/data/eXts2L7r/versions/NDqH16LT/placeholder-api-3.1.0-beta.1%2B26.2.jar",
+    "size": 254973,
+    "sha1": "99b57ccc1d4323c4ef71887828dac25ce4ce2103",
+    "sha512": "07b6fc802559d54ec6577f6e2788926ef391d755206c2bfb0528280977885cae4bc0c517d8a53eb6f34092015ebe6c41210627d255aa6504662daefa8fb76397",
+    "sides": [
+      "client"
+    ]
   },
   "pulsenet-1.1.0+26.2.jar": {
     "hash": "sha256-Ye6ZaEP6keHYGhUZPdnZwOsgA/ist2FP6+ojtBJwfhw=",
-    "url": "https://cdn.modrinth.com/data/C5TrjUEt/versions/M6MXyE1v/pulsenet-1.1.0%2B26.2.jar"
+    "url": "https://cdn.modrinth.com/data/C5TrjUEt/versions/M6MXyE1v/pulsenet-1.1.0%2B26.2.jar",
+    "size": 177151,
+    "sha1": "86c759e9503cbde2d681d44e2303e143b1a2602c",
+    "sha512": "5d23204a7c39cee0d53c69d9f89ea3d99fa0113b4607e7c8699e494e289ac76bb2e035a622ad4fcdd3fd861d243231cc24a4a48bb57e3ded8af15826e645810d",
+    "sides": [
+      "server"
+    ]
   },
   "puzzle-fabric-2.3.1+26.2.jar": {
     "hash": "sha256-4tlShYcsR2G3llFQGZWNj+vMDbjM+Mlv4dLjQhIpxDc=",
-    "url": "https://cdn.modrinth.com/data/3IuO68q1/versions/O8oBjnDH/puzzle-fabric-2.3.1%2B26.2.jar"
+    "url": "https://cdn.modrinth.com/data/3IuO68q1/versions/O8oBjnDH/puzzle-fabric-2.3.1%2B26.2.jar",
+    "size": 97609,
+    "sha1": "17888efe8c7f9f930f91696cfb25b1317fc4910f",
+    "sha512": "1bc9ba65f41e5c59755b78ec8c933945ac031f3306c8270dcab68b016fe92079617e00c86a8310b07cb9e24477260dfa7c908854354dcc7db53876fc48884abc",
+    "sides": [
+      "client"
+    ]
   },
   "real-arrow-tip-0.3.1+mc26.2.jar": {
     "hash": "sha256-JwCiW9XiA4iAtRDTsOR8hVn6BBa0ZXWPR5tFoeXsD1A=",
-    "url": "https://cdn.modrinth.com/data/vgVfk0m2/versions/GqhOlhir/real-arrow-tip-0.3.1%2Bmc26.2.jar"
-  },
-  "rrls-5.2.7+mc.26.2.jar": {
-    "hash": "sha256-8K7HurgXVYOBXr/UixTJz8HNbKd7EJCBZNH2Tv/ipS4=",
-    "url": "https://cdn.modrinth.com/data/ZP7xHXtw/versions/MDNaKmgK/rrls-5.2.7%2Bmc.26.2.jar"
+    "url": "https://cdn.modrinth.com/data/vgVfk0m2/versions/GqhOlhir/real-arrow-tip-0.3.1%2Bmc26.2.jar",
+    "size": 43407,
+    "sha1": "3d25d292f026c207893745da8751808158bcc06f",
+    "sha512": "3a4da2170b103856db25e506de04fe3e8ab6b92c30c03bf9e39d1571b89a33cb8a9ac63f45cb080eef219ee0e0d3d2100e2fb5fd38733dfde8cd9823b6509b6a",
+    "sides": [
+      "client"
+    ]
   },
   "servercore-fabric-1.5.19+26.2.jar": {
     "hash": "sha256-T3yfs7NbNk2PZQDQTw1UgWVvYXqDvGl0K0fzmt/1lmY=",
-    "url": "https://cdn.modrinth.com/data/4WWQxlQP/versions/edrtnY9v/servercore-fabric-1.5.19%2B26.2.jar"
+    "url": "https://cdn.modrinth.com/data/4WWQxlQP/versions/edrtnY9v/servercore-fabric-1.5.19%2B26.2.jar",
+    "size": 909932,
+    "sha1": "43eda9e44e32e0e736ada0ff125f83cb87cbd59a",
+    "sha512": "aa4cfc93f8e02172910302444330e37713dfcf2047d28e55eb7323a3cd5d51493374a0959aa3e626ec2bf43fc707a755508b83454bb34b6d57d65c069929074b",
+    "sides": [
+      "server"
+    ]
   },
   "shulkerboxtooltip-fabric-5.4.0+26.2.jar": {
     "hash": "sha256-9cHlcOIlEaQKdi72hkLJrlfsioX8+eownwViKQTto20=",
-    "url": "https://cdn.modrinth.com/data/2M01OLQq/versions/IHUNStdu/shulkerboxtooltip-fabric-5.4.0%2B26.2.jar"
+    "url": "https://cdn.modrinth.com/data/2M01OLQq/versions/IHUNStdu/shulkerboxtooltip-fabric-5.4.0%2B26.2.jar",
+    "size": 419105,
+    "sha1": "e67f1fb26f5040118631ec900ffd0761de5282ec",
+    "sha512": "886ed7840009a865246047a9ed4fd37f161bf25f80ed586c889083086beb67e2278b41ff62dfea318d24b338f23a4198a577e09d3504710a6a719f118cbd881c",
+    "sides": [
+      "client",
+      "server"
+    ]
   },
   "skinrestorer-2.9.0+26.1-fabric.jar": {
     "hash": "sha256-qAtZWaackrgX1BGq5mI3mtEPPk8exQ4B6AG/Lp1TpXA=",
-    "url": "https://cdn.modrinth.com/data/ghrZDhGW/versions/lICMyGKE/skinrestorer-2.9.0%2B26.1-fabric.jar"
+    "url": "https://cdn.modrinth.com/data/ghrZDhGW/versions/lICMyGKE/skinrestorer-2.9.0%2B26.1-fabric.jar",
+    "size": 258612,
+    "sha1": "08da5c99ea64e32fe6e9463f8d0024fc241a7915",
+    "sha512": "5c81e5ea294924f71ac56f65761bdff2ccbeb1098c1c3119b87b10eacb0d1cb1f1c26c46f8307975b2dfbd2d6daa4a055235d9f6638dccb0d1f585e65e02c8d4",
+    "sides": [
+      "server"
+    ]
   },
-  "skyboxify-3.1+26.2-fabric.jar": {
-    "hash": "sha256-gD/PCJHVMMQ74IyThEYTI6+wRywh+TbCQh2QRqXHoIM=",
-    "url": "https://cdn.modrinth.com/data/DWuwk8aA/versions/Sll7nH2l/skyboxify-3.1%2B26.2-fabric.jar"
+  "skyboxify-3.4+26.2-fabric.jar": {
+    "hash": "sha256-CbjlT84s6AHs5iPo/nhfWYHhKe40A61WVPu+FiX0C74=",
+    "url": "https://cdn.modrinth.com/data/DWuwk8aA/versions/XPGqw2i5/skyboxify-3.4%2B26.2-fabric.jar",
+    "size": 306354,
+    "sha1": "920db8c64dfa4ed85c823b0cd2ef52722f64ae22",
+    "sha512": "40224f6cddb4f63f16c39ff054321417747ecf78599351bd18916c4f959d6c8275c9a8dd36fe60fecd1984d3dfb1bc6fed0966267e637dd58e6a528edf6d9367",
+    "sides": [
+      "client"
+    ]
   },
-  "sodium-extra-fabric-0.9.3+mc26.2.jar": {
-    "hash": "sha256-ze8ErYEK7u+rS/77x7xIWbBqK+ZR1dq34FX35mH4SlA=",
-    "url": "https://cdn.modrinth.com/data/PtjYWJkn/versions/Fu02wj4x/sodium-extra-fabric-0.9.3%2Bmc26.2.jar"
+  "sodium-extra-fabric-0.9.4+mc26.2.jar": {
+    "hash": "sha256-JvdEsJZtLuhMx2eq6oqxBu13jQ8qQTC0zjIDMqVbSDw=",
+    "url": "https://cdn.modrinth.com/data/PtjYWJkn/versions/kGXOsmfx/sodium-extra-fabric-0.9.4%2Bmc26.2.jar",
+    "size": 484469,
+    "sha1": "e1a6d6af9081898d79eae0921098f8da2fc4f14a",
+    "sha512": "7d45a24acc950e57efe5ff59b12d3ab3245733712120e4457b048f71ee856e5cb0d1169bb4bcc02e63000b8e1818b8ce040291a61c23ae7c23f0be2d5810dae7",
+    "sides": [
+      "client"
+    ]
   },
-  "sodium-fabric-0.9.1+mc26.2.jar": {
-    "hash": "sha256-3kBsegyl50jfvkR0AnhACIKkTjEJ4lhLJD7ALUADNEs=",
-    "url": "https://cdn.modrinth.com/data/AANobbMI/versions/2Yom1N68/sodium-fabric-0.9.1%2Bmc26.2.jar"
+  "sodium-fabric-0.9.2+mc26.2.jar": {
+    "hash": "sha256-FqXpHbSXUPjARuzKO48q9aKOpvm2WBtC8SPKj9oghk8=",
+    "url": "https://cdn.modrinth.com/data/AANobbMI/versions/xJZxADzI/sodium-fabric-0.9.2%2Bmc26.2.jar",
+    "size": 1885572,
+    "sha1": "62a70961a5b3e06938e06ab5f2dc4c5a51cf3323",
+    "sha512": "9b7a7aade8824543ce2a804fddfd04e37f57d1f91c00574e7dc87e554eb1835d888313ee6f715a7599bd729840cf01fd74e02aeae87b4e5a3c10c34a016e407c",
+    "sides": [
+      "client"
+    ]
   },
   "sodium-shadowy-path-blocks-fabric-7.0.0.jar": {
     "hash": "sha256-bEcz9q1lUZID4wSR54cvtTQxdUpKiRrenblR4HiFM58=",
-    "url": "https://cdn.modrinth.com/data/EIa1eiMm/versions/ygm51jhU/sodium-shadowy-path-blocks-fabric-7.0.0.jar"
+    "url": "https://cdn.modrinth.com/data/EIa1eiMm/versions/ygm51jhU/sodium-shadowy-path-blocks-fabric-7.0.0.jar",
+    "size": 67690,
+    "sha1": "1399156a64c7bfbc38fa21af935495cfb74923c3",
+    "sha512": "8e8b87f5c50d0c183ff9aff5bbfc8334498b6f8da093de4adbf18773602f0c1de0d0bb71d1f5af35e7b811b3e788a55db525b67ea52ba0de6935f2e46f321a9e",
+    "sides": [
+      "client"
+    ]
   },
   "soundcontroller-fabric-1.4.0-mc26.2.jar": {
     "hash": "sha256-kmtee08YPo7E2+Y40FiBw6jX4VOGDcEX1OZcb5w6H3g=",
-    "url": "https://cdn.modrinth.com/data/uY9zbflw/versions/5YXU2rID/soundcontroller-fabric-1.4.0-mc26.2.jar"
+    "url": "https://cdn.modrinth.com/data/uY9zbflw/versions/5YXU2rID/soundcontroller-fabric-1.4.0-mc26.2.jar",
+    "size": 146740,
+    "sha1": "5b7da7bb65fbb6b85cf2aee4a9e2bc5a972263f5",
+    "sha512": "7aa9b069c2356d3df95679a0507085f6c3ed7fa4ddbde44ae4f9f2c5a66e900c8efba7a612174652428a57b845bb7c8f88f5bfb975ef03b007f87ee3f5b5bab2",
+    "sides": [
+      "client"
+    ]
   },
   "traverse-9.1.0-beta.1.jar": {
     "hash": "sha256-dUPDkKGHGtcTCuOKr9eyMJk8lEPZvlwQIW4d2CkJGI0=",
-    "url": "https://cdn.modrinth.com/data/kXygSBVI/versions/tOPsMZRR/traverse-9.1.0-beta.1.jar"
+    "url": "https://cdn.modrinth.com/data/kXygSBVI/versions/tOPsMZRR/traverse-9.1.0-beta.1.jar",
+    "size": 5911065,
+    "sha1": "dfee608eb7a63c742ede701f637a7ada0b6a88f3",
+    "sha512": "fdfb24b71493d656e6582dc88f9789250b3ac387382426d6f9ea57dc78a3ed493342742089539506a64efe2b831a77082130add9466fca869486ae29f4531a49",
+    "sides": [
+      "client",
+      "server"
+    ]
+  },
+  "vitrail-0.13.0-beta+mc26.2.jar": {
+    "hash": "sha256-b1A2lr9lIDf4ioypzsg773OOYZEE8xsUyRFJUXT/RaA=",
+    "url": "https://cdn.modrinth.com/data/oSIKhgz3/versions/jmyfnI6L/vitrail-0.13.0-beta%2Bmc26.2.jar",
+    "size": 1868999,
+    "sha1": "f928198a74822505f539197cfb58475e8d954e98",
+    "sha512": "db1bebb55f7e7848894d6116b03f1cf46bf935bf858719daf3d742159cecc4a3b5e5c83ff6afef43069425ecbbec1c7633eb5db51cc8bf5c7e793e78462e8ddb",
+    "sides": [
+      "client"
+    ],
+    "profiles": [
+      "dh-vulkan"
+    ]
   },
   "vmp-fabric-mc26.2-0.2.0+beta.7.236-all.jar": {
     "hash": "sha256-4brrXhoJSMn8SUFbk+uqxABzVQlLQy6hUbPIzOf/5ng=",
-    "url": "https://cdn.modrinth.com/data/wnEe9KBa/versions/d6FfpWFI/vmp-fabric-mc26.2-0.2.0%2Bbeta.7.236-all.jar"
+    "url": "https://cdn.modrinth.com/data/wnEe9KBa/versions/d6FfpWFI/vmp-fabric-mc26.2-0.2.0%2Bbeta.7.236-all.jar",
+    "size": 412247,
+    "sha1": "dcf1295db267f7b519ecdd7d1c9499910c7e6fc0",
+    "sha512": "2e0fd87e66f35f00f634176d4072a6c6d1eee965d1817833709ad3ea73e4f2719fa152d5e95b5ab8216b064c7db124b7f13838ebea87d92f7a72df82839e9bd5",
+    "sides": [
+      "server"
+    ]
+  },
+  "voxy-0.2.19-beta.jar": {
+    "hash": "sha256-oG5Nk9uI3CLWzebf4eWNhCiuJx0fQyu7Qwc1M29LXBI=",
+    "url": "https://cdn.modrinth.com/data/fxxUqruK/versions/LzyXnE51/voxy-0.2.19-beta.jar",
+    "size": 12662161,
+    "sha1": "a345fbd2b2d1e378452763e2864f1056b212ac98",
+    "sha512": "9071acefff00f952b049134f7ee8b5c8be27646ade992274f9a32e4adf7ad0932f9755530fa212a8e65cc23b3ed5dc643af139be83fcb89c778d8c8e723b9c3a",
+    "sides": [
+      "client"
+    ],
+    "profiles": [
+      "voxy-opengl"
+    ]
   },
   "yet_another_config_lib_v3-3.9.5+26.2-fabric.jar": {
     "hash": "sha256-Cq7bY+OYqy6NG2FDnawO1u35E/0Q/EemzVbwGBHbcoM=",
-    "url": "https://cdn.modrinth.com/data/1eAoo2KR/versions/LlSShNCR/yet_another_config_lib_v3-3.9.5%2B26.2-fabric.jar"
+    "url": "https://cdn.modrinth.com/data/1eAoo2KR/versions/LlSShNCR/yet_another_config_lib_v3-3.9.5%2B26.2-fabric.jar",
+    "size": 1121528,
+    "sha1": "e5d90b4f2cc508056097249d71fc9482ae73c111",
+    "sha512": "bf709e5d1db2f104abb1e45d27dec39f10e0e2d546ec1e5df3a49b464c6f2b2daf39633e26e94e7869ae2a555258e5c4ee2d796c7d6d0e26300052a8de15052a",
+    "sides": [
+      "client",
+      "server"
+    ]
   }
 }
