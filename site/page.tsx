@@ -269,7 +269,9 @@ function Home(props: {
   mapUrl?: string;
 }) {
   const t = copy[props.locale];
-  const profiles = props.pack.profiles ?? [];
+  const profiles = (props.pack.profiles ?? []).toSorted(
+    (a, b) => Number(b.id === "dh-opengl") - Number(a.id === "dh-opengl"),
+  );
 
   return (
     <Layout locale={props.locale} section="home" mapUrl={props.mapUrl}>

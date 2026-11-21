@@ -44,7 +44,7 @@ a {
 }
 .top,
 .facts,
-.edition,
+.edition:not(:last-child),
 .release {
   border-bottom: 1px solid GrayText;
 }
@@ -301,5 +301,5 @@ h3 {
   margin-top: 1rem;
 }
 .footer {
-  padding-block: 1rem 2rem;
+  padding-block: 1rem;
 }
