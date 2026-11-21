@@ -16,13 +16,18 @@
     syncViewer();
   });
 
-  toggle.addEventListener("click", () => {
-    exploring = !exploring;
+  function setExploring(value) {
+    exploring = value;
     page.toggleAttribute("data-exploring", exploring);
     toggle.setAttribute("aria-expanded", String(exploring));
     toggle.textContent = exploring ? toggle.dataset.close : toggle.dataset.explore;
     frame.tabIndex = exploring ? 0 : -1;
     syncViewer();
+  }
+
+  toggle.addEventListener("click", () => setExploring(!exploring));
+  window.addEventListener("site:sectionchange", () => {
+    if (exploring) setExploring(false);
   });
 
   toggle.hidden = false;

@@ -4,6 +4,8 @@ import type { JSX } from "@solidjs/web";
 import sanitizeHtml from "sanitize-html";
 import { copy, russianProfiles, type Locale } from "./copy";
 
+type Section = "home" | "editions" | "releases";
+
 type Profile = {
   id: string;
   name: string;
@@ -114,33 +116,33 @@ function Preferences(props: { locale: Locale }) {
   );
 }
 
-function Navigation(props: { locale: Locale; home: string; inline?: boolean }) {
+function Navigation(props: { locale: Locale; home: string; section: Section; inline?: boolean }) {
   const t = copy[props.locale];
 
   return (
     <nav class={props.inline ? "inline-nav" : undefined} aria-label={t.nav}>
-      <a href={`${props.home}editions/`}>{t.editions}</a>
-      <a href={`${props.home}releases/`}>{t.releases}</a>
+      <a href={`${props.home}editions/`} data-route="editions" aria-current={props.section === "editions" ? "page" : undefined}>{t.editions}</a>
+      <a href={`${props.home}releases/`} data-route="releases" aria-current={props.section === "releases" ? "page" : undefined}>{t.releases}</a>
     </nav>
   );
 }
 
-function Header(props: { locale: Locale; home: string; icon: string }) {
+function Header(props: { locale: Locale; home: string; icon: string; section: Section }) {
   return (
     <header class="top">
       <div class="wrap nav">
-        <a class="brand" href={props.home} aria-label="Cumcraft">
+        <a class="brand" href={props.home} data-route="home" aria-label="Cumcraft" aria-current={props.section === "home" ? "page" : undefined}>
           <img src={props.icon} alt="" width="40" height="40" />
           <span>Cumcraft</span>
         </a>
-        <Navigation locale={props.locale} home={props.home} inline />
+        <Navigation locale={props.locale} home={props.home} section={props.section} inline />
         <div class="header-controls">
           <HeaderMenu
             id="compact-nav"
             label={copy[props.locale].nav}
             icon="M4 6h16M4 12h16M4 18h16"
           >
-            <Navigation locale={props.locale} home={props.home} />
+            <Navigation locale={props.locale} home={props.home} section={props.section} />
           </HeaderMenu>
           <Preferences locale={props.locale} />
         </div>
@@ -151,9 +153,12 @@ function Header(props: { locale: Locale; home: string; icon: string }) {
 
 function Layout(props: {
   locale: Locale;
-  section: "home" | "editions" | "releases";
+  section: Section;
   mapUrl?: string;
-  children: JSX.Element;
+  pack: Pack;
+  profiles: Profile[];
+  latest?: Release;
+  releases: Release[];
 }) {
   const t = copy[props.locale];
   const route = props.section === "home" ? "" : `${props.section}/`;
@@ -180,6 +185,7 @@ function Layout(props: {
           href={alternate}
         />
         <script src={`${root}preferences.js`}></script>
+        <script src={`${root}tabs.js`} defer></script>
         {props.mapUrl && <script src={`${root}map.js`} defer></script>}
         <link rel="icon" type="image/png" href={icon} />
         <link rel="stylesheet" href={`${root}style.css`} />
@@ -188,8 +194,18 @@ function Layout(props: {
         <a class="skip" href="#main">
           {t.skip}
         </a>
-        <Header locale={props.locale} home={home} icon={icon} />
-        <main id="main">{props.children}</main>
+        <Header locale={props.locale} home={home} icon={icon} section={props.section} />
+        <main id="main">
+          <div class="wrap" data-panel="home" data-title={title.home} hidden={props.section !== "home"}>
+            <Home pack={props.pack} latest={props.latest} locale={props.locale} mapUrl={props.mapUrl} home={home} />
+          </div>
+          <div class="wrap" data-panel="editions" data-title={title.editions} hidden={props.section !== "editions"}>
+            <Editions profiles={props.profiles} latest={props.latest} locale={props.locale} home={home} />
+          </div>
+          <div class="wrap" data-panel="releases" data-title={title.releases} hidden={props.section !== "releases"}>
+            <Releases releases={props.releases} locale={props.locale} />
+          </div>
+        </main>
         <footer>
           <div class="wrap footer">
             <a href="https://github.com/Teto-Industries/cumcraft">
@@ -267,7 +283,7 @@ function MapActions(props: { url: string; locale: Locale }) {
   );
 }
 
-function GettingStarted(props: { locale: Locale }) {
+function GettingStarted(props: { locale: Locale; home: string }) {
   const t = copy[props.locale];
 
   return (
@@ -289,7 +305,7 @@ function GettingStarted(props: { locale: Locale }) {
         </li>
         <li>
           <h3>{t.downloadEdition}</h3>
-          <a class="editions-link" href="./editions/">{t.chooseEdition}</a>
+          <a class="editions-link" href={`${props.home}editions/`} data-route="editions">{t.chooseEdition}</a>
         </li>
         <li>
           <h3>{t.importPack}</h3>
@@ -305,39 +321,38 @@ function Home(props: {
   latest?: Release;
   locale: Locale;
   mapUrl?: string;
+  home: string;
 }) {
   const t = copy[props.locale];
 
   return (
-    <Layout locale={props.locale} section="home" mapUrl={props.mapUrl}>
-      <div class="wrap">
-        <div class="home-intro">
-          <section class="hero">
-            <h1>{t.headline}</h1>
-            <p>Minecraft {props.pack.minecraft} · Fabric</p>
-          </section>
-          {props.mapUrl && <MapActions url={props.mapUrl} locale={props.locale} />}
-        </div>
-        <dl class="facts">
-          <div>
-            <dt>{t.loader}</dt>
-            <dd>Fabric {props.pack.fabricLoader}</dd>
-          </div>
-          <div>
-            <dt>{t.server}</dt>
-            <dd>{props.pack.server.address}</dd>
-          </div>
-          <div>
-            <dt>{t.latest}</dt>
-            <dd>
-              {props.latest?.tag_name ?? t.unpublished}
-              {props.latest?.prerelease && ` · ${t.prerelease}`}
-            </dd>
-          </div>
-        </dl>
-        <GettingStarted locale={props.locale} />
+    <>
+      <div class="home-intro">
+        <section class="hero">
+          <h1>{t.headline}</h1>
+          <p>Minecraft {props.pack.minecraft} · Fabric</p>
+        </section>
+        {props.mapUrl && <MapActions url={props.mapUrl} locale={props.locale} />}
       </div>
-    </Layout>
+      <dl class="facts">
+        <div>
+          <dt>{t.loader}</dt>
+          <dd>Fabric {props.pack.fabricLoader}</dd>
+        </div>
+        <div>
+          <dt>{t.server}</dt>
+          <dd>{props.pack.server.address}</dd>
+        </div>
+        <div>
+          <dt>{t.latest}</dt>
+          <dd>
+            {props.latest?.tag_name ?? t.unpublished}
+            {props.latest?.prerelease && ` · ${t.prerelease}`}
+          </dd>
+        </div>
+      </dl>
+      <GettingStarted locale={props.locale} home={props.home} />
+    </>
   );
 }
 
@@ -345,26 +360,27 @@ function Editions(props: {
   profiles: Profile[];
   latest?: Release;
   locale: Locale;
+  home: string;
 }) {
   const t = copy[props.locale];
 
   return (
-    <Layout locale={props.locale} section="editions">
-      <div class="wrap">
-        <section class="hero">
-          <h1>{t.chooseEdition}</h1>
-          {props.latest && (
-            <p class="meta">
-              {props.latest.tag_name}
-              {props.latest.prerelease && ` · ${t.prerelease}`}
-            </p>
-          )}
-        </section>
-        {!props.latest && (
-          <p class="notice">
-            {t.noPack} <a href="../releases/">{t.checkReleases}</a>.
+    <>
+      <section class="hero">
+        <h1>{t.chooseEdition}</h1>
+        {props.latest && (
+          <p class="meta">
+            {props.latest.tag_name}
+            {props.latest.prerelease && ` · ${t.prerelease}`}
           </p>
         )}
+      </section>
+      {!props.latest && (
+        <p class="notice">
+          {t.noPack} <a href={`${props.home}releases/`} data-route="releases">{t.checkReleases}</a>.
+        </p>
+      )}
+      <div>
         {props.profiles.map((profile) => (
           <Edition
             profile={profile}
@@ -373,7 +389,7 @@ function Editions(props: {
           />
         ))}
       </div>
-    </Layout>
+    </>
   );
 }
 
@@ -381,72 +397,70 @@ function Releases(props: { releases: Release[]; locale: Locale }) {
   const t = copy[props.locale];
 
   return (
-    <Layout locale={props.locale} section="releases">
-      <div class="wrap">
-        <section class="hero">
-          <div class="meta">{t.archive}</div>
-          <h1>{t.changelog}.</h1>
-          <p>{t.archiveIntroduction}</p>
-        </section>
-        <section aria-label={t.published}>
-          {props.releases.length === 0 ? (
-            <p class="notice">{t.noReleases}</p>
-          ) : (
-            props.releases.map((release) => (
-              <article class="release">
-                <h2>{release.name || release.tag_name}</h2>
-                <div class="meta">
-                  <time datetime={release.published_at}>
-                    {date(release.published_at, props.locale)}
-                  </time>
-                  {release.name &&
-                    release.name !== release.tag_name &&
-                    ` · ${release.tag_name}`}
-                  {release.prerelease && ` · ${t.prerelease}`}
-                </div>
-                <div class="release-content">
-                  {release.body ? (
-                    <div
-                      class="markdown"
-                      innerHTML={sanitizeHtml(
-                        marked.parse(release.body, { async: false }),
-                      )}
-                    />
-                  ) : (
-                    <p>{t.noNotes}</p>
-                  )}
-                  {release.assets.filter(
-                    (asset) =>
-                      asset.name.endsWith(".mrpack") &&
-                      safeUrl(asset.browser_download_url),
-                  ).length > 0 && (
-                    <div class="asset-list">
-                      <h3>{t.downloads}</h3>
-                      {release.assets
-                        .filter(
-                          (asset) =>
-                            asset.name.endsWith(".mrpack") &&
-                            safeUrl(asset.browser_download_url),
-                        )
-                        .map((asset) => (
-                          <a href={asset.browser_download_url}>
-                            {asset.name} <span>↗</span>
-                          </a>
-                        ))}
-                    </div>
-                  )}
-                  {safeUrl(release.html_url) && (
-                    <a class="source-link" href={release.html_url}>
-                      {t.viewSource} <span aria-hidden="true">↗</span>
-                    </a>
-                  )}
-                </div>
-              </article>
-            ))
-          )}
-        </section>
-      </div>
-    </Layout>
+    <>
+      <section class="hero">
+        <div class="meta">{t.archive}</div>
+        <h1>{t.changelog}.</h1>
+        <p>{t.archiveIntroduction}</p>
+      </section>
+      <section aria-label={t.published}>
+        {props.releases.length === 0 ? (
+          <p class="notice">{t.noReleases}</p>
+        ) : (
+          props.releases.map((release) => (
+            <article class="release">
+              <h2>{release.name || release.tag_name}</h2>
+              <div class="meta">
+                <time datetime={release.published_at}>
+                  {date(release.published_at, props.locale)}
+                </time>
+                {release.name &&
+                  release.name !== release.tag_name &&
+                  ` · ${release.tag_name}`}
+                {release.prerelease && ` · ${t.prerelease}`}
+              </div>
+              <div class="release-content">
+                {release.body ? (
+                  <div
+                    class="markdown"
+                    innerHTML={sanitizeHtml(
+                      marked.parse(release.body, { async: false }),
+                    )}
+                  />
+                ) : (
+                  <p>{t.noNotes}</p>
+                )}
+                {release.assets.filter(
+                  (asset) =>
+                    asset.name.endsWith(".mrpack") &&
+                    safeUrl(asset.browser_download_url),
+                ).length > 0 && (
+                  <div class="asset-list">
+                    <h3>{t.downloads}</h3>
+                    {release.assets
+                      .filter(
+                        (asset) =>
+                          asset.name.endsWith(".mrpack") &&
+                          safeUrl(asset.browser_download_url),
+                      )
+                      .map((asset) => (
+                        <a href={asset.browser_download_url}>
+                          {asset.name} <span>↗</span>
+                        </a>
+                      ))}
+                  </div>
+                )}
+                {safeUrl(release.html_url) && (
+                  <a class="source-link" href={release.html_url}>
+                    {t.viewSource} <span aria-hidden="true">↗</span>
+                  </a>
+                )}
+              </div>
+            </article>
+          ))
+        )}
+      </section>
+    </>
   );
 }
 
@@ -465,9 +479,13 @@ export function pages(
       profiles.length > 0 &&
       profiles.every((profile) => assetFor(release, profile)),
   );
+  const render = (section: Section) =>
+    `<!doctype html>${renderToString(() => (
+      <Layout locale={locale} section={section} mapUrl={mapUrl} pack={pack} profiles={profiles} latest={latest} releases={releases} />
+    ))}`;
   return {
-    home: `<!doctype html>${renderToString(() => <Home pack={pack} latest={latest} locale={locale} mapUrl={mapUrl} />)}`,
-    editions: `<!doctype html>${renderToString(() => <Editions profiles={profiles} latest={latest} locale={locale} />)}`,
-    releases: `<!doctype html>${renderToString(() => <Releases releases={releases} locale={locale} />)}`,
+    home: render("home"),
+    editions: render("editions"),
+    releases: render("releases"),
   };
 }

@@ -49,5 +49,6 @@ await Promise.all([
   copyFile("style.css", "dist/style.css"),
   copyFile("preferences.js", "dist/preferences.js"),
   copyFile("map.js", "dist/map.js"),
+  copyFile("tabs.js", "dist/tabs.js"),
   copyFile("../server-icon.png", "dist/server-icon.png"),
 ]);
