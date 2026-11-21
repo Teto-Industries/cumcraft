@@ -9,3 +9,8 @@ updates:
     directory: /
     schedule:
       interval: weekly
+
+  - package-ecosystem: bun
+    directory: /site
+    schedule:
+      interval: weekly
