@@ -41,7 +41,7 @@ if (window.parent !== window) {
     position ||= map.data.startPos;
     app.setPerspectiveView(0);
     const controls = app.mapViewer.controlsManager;
-    controls.position.set(position.x, position.y, position.z);
+    controls.position.set(position.x, position.y ?? 0, position.z);
     controls.distance = 150;
     controls.rotation = 0;
     controls.angle = 0.7;
