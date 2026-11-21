@@ -292,7 +292,10 @@ function Home(props: {
           </div>
           <div>
             <dt>{t.latest}</dt>
-            <dd>{props.latest?.tag_name ?? t.unpublished}</dd>
+            <dd>
+              {props.latest?.tag_name ?? t.unpublished}
+              {props.latest?.prerelease && ` · ${t.prerelease}`}
+            </dd>
           </div>
         </dl>
         <section id="editions">
@@ -400,7 +403,6 @@ export function pages(
   const profiles = pack.profiles ?? [];
   const latest = releases.find(
     (release) =>
-      !release.prerelease &&
       profiles.length > 0 &&
       profiles.every((profile) => assetFor(release, profile)),
   );
