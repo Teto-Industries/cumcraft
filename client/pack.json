@@ -2,6 +2,11 @@
   "options": {
     "version": 5023,
     "autoJump": false,
+    "guiScale": 3,
+    "lang": "rpr",
+    "skipMultiplayerWarning": true,
+    "soundCategory_master": 0.38,
+    "soundCategory_music": 0.35,
     "resourcePacks": [
       "vanilla",
       "continuity:glass_pane_culling_fix",
