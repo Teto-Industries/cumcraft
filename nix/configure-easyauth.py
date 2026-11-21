@@ -37,7 +37,11 @@ def configure_easyauth(directory, password_file):
         if not password or "\n" in password:
             sys.exit("EasyAuth password file must contain a single nonempty line")
         update_settings(directory / "technical.conf", {"global-password": password})
-        policy["enable-global-password"] = True
+        policy.update({
+            "enable-global-password": True,
+            "single-use-global-password": True,
+            "session-timeout": -1,
+        })
     update_settings(directory / "main.conf", policy)
 
 
