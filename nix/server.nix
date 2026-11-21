@@ -9,8 +9,7 @@ let
   mods = lib.filterAttrs (_: mod: lib.elem "server" mod.sides) (
     builtins.fromJSON (builtins.readFile ../mods.json)
   );
-  defaults = "${../config}";
-  managedConfigs = "${../config-managed}";
+  managedConfigs = "${../config}";
   pythonWithTomlkit = pkgs.python3.withPackages (ps: [ ps.tomlkit ]);
   inherit (config.services.cumcraft.easyAuth) passwordFile;
 in
@@ -64,15 +63,6 @@ in
           }) mods
         );
         extraStartPre = ''
-          while IFS= read -r -d "" source; do
-            target="config/''${source#${defaults}/}"
-            if [ ! -e "$target" ] && [ ! -L "$target" ]; then
-              mkdir -p "$(dirname "$target")"
-              cp "$source" "$target"
-              chmod u+w "$target"
-            fi
-          done < <(find ${lib.escapeShellArg defaults} -type f -print0)
-
           while IFS= read -r -d "" source; do
             install -CDm 0644 "$source" "config/''${source#${managedConfigs}/}"
           done < <(find ${lib.escapeShellArg managedConfigs} -type f -print0)
