@@ -119,11 +119,8 @@ function Navigation(props: { locale: Locale; home: string; inline?: boolean }) {
 
   return (
     <nav class={props.inline ? "inline-nav" : undefined} aria-label={t.nav}>
-      <a href={`${props.home}#editions`}>{t.editions}</a>
+      <a href={`${props.home}editions/`}>{t.editions}</a>
       <a href={`${props.home}releases/`}>{t.releases}</a>
-      <a href="https://github.com/Teto-Industries/cumcraft">
-        GitHub <span aria-hidden="true">↗</span>
-      </a>
     </nav>
   );
 }
@@ -154,15 +151,20 @@ function Header(props: { locale: Locale; home: string; icon: string }) {
 
 function Layout(props: {
   locale: Locale;
-  section: "home" | "releases";
+  section: "home" | "editions" | "releases";
   mapUrl?: string;
   children: JSX.Element;
 }) {
   const t = copy[props.locale];
-  const onReleases = props.section === "releases";
-  const home = onReleases ? "../" : "./";
+  const route = props.section === "home" ? "" : `${props.section}/`;
+  const home = route ? "../" : "./";
   const root = props.locale === "ru" ? `${home}../` : home;
-  const alternate = `${root}${props.locale === "en" ? "ru/" : ""}${onReleases ? "releases/" : ""}`;
+  const alternate = `${root}${props.locale === "en" ? "ru/" : ""}${route}`;
+  const title = {
+    home: t.homeTitle,
+    editions: t.editionsTitle,
+    releases: t.releasesTitle,
+  };
   const icon = `${root}server-icon.png`;
 
   return (
@@ -171,7 +173,7 @@ function Layout(props: {
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content={t.description} />
-        <title>{onReleases ? t.releasesTitle : t.homeTitle}</title>
+        <title>{title[props.section]}</title>
         <link
           rel="alternate"
           hreflang={props.locale === "en" ? "ru" : "en"}
@@ -190,6 +192,9 @@ function Layout(props: {
         <main id="main">{props.children}</main>
         <footer>
           <div class="wrap footer">
+            <a href="https://github.com/Teto-Industries/cumcraft">
+              GitHub <span aria-hidden="true">↗</span>
+            </a>
             <a href="https://github.com/Teto-Industries/cumcraft/issues">
               {t.issue} <span aria-hidden="true">↗</span>
             </a>
@@ -221,7 +226,7 @@ function Edition(props: {
 
   return (
     <article class="edition">
-      <h3>{profile.name}</h3>
+      <h2>{profile.name}</h2>
       <div class="meta">
         {props.profile.renderer}
         {props.profile.id === "dh-vulkan" && ` · ${t.experimental}`}
@@ -262,6 +267,39 @@ function MapActions(props: { url: string; locale: Locale }) {
   );
 }
 
+function GettingStarted(props: { locale: Locale }) {
+  const t = copy[props.locale];
+
+  return (
+    <section aria-labelledby="getting-started">
+      <h2 id="getting-started">{t.gettingStarted}</h2>
+      <ol class="join-steps">
+        <li>
+          <h3>{t.installLauncher}</h3>
+          <p>
+            {t.ownsMinecraft}{" "}
+            <a href="https://prismlauncher.org/download/linux/">{t.downloadPrism}</a>
+          </p>
+          <p>
+            {t.noAccount}{" "}
+            <a href="https://github.com/Diegiwg/PrismLauncher-Cracked/releases/latest">
+              {t.downloadCrackedPrism}
+            </a>
+          </p>
+        </li>
+        <li>
+          <h3>{t.downloadEdition}</h3>
+          <a class="editions-link" href="./editions/">{t.chooseEdition}</a>
+        </li>
+        <li>
+          <h3>{t.importPack}</h3>
+          <p>{t.importPackHint}</p>
+        </li>
+      </ol>
+    </section>
+  );
+}
+
 function Home(props: {
   pack: Pack;
   latest?: Release;
@@ -269,7 +307,6 @@ function Home(props: {
   mapUrl?: string;
 }) {
   const t = copy[props.locale];
-  const profiles = props.pack.profiles ?? [];
 
   return (
     <Layout locale={props.locale} section="home" mapUrl={props.mapUrl}>
@@ -298,21 +335,43 @@ function Home(props: {
             </dd>
           </div>
         </dl>
-        <section id="editions">
-          <h2>{t.chooseEdition}</h2>
-          {!props.latest && (
-            <p class="notice">
-              {t.noPack} <a href="./releases/">{t.checkReleases}</a>.
+        <GettingStarted locale={props.locale} />
+      </div>
+    </Layout>
+  );
+}
+
+function Editions(props: {
+  profiles: Profile[];
+  latest?: Release;
+  locale: Locale;
+}) {
+  const t = copy[props.locale];
+
+  return (
+    <Layout locale={props.locale} section="editions">
+      <div class="wrap">
+        <section class="hero">
+          <h1>{t.chooseEdition}</h1>
+          {props.latest && (
+            <p class="meta">
+              {props.latest.tag_name}
+              {props.latest.prerelease && ` · ${t.prerelease}`}
             </p>
           )}
-          {profiles.map((profile) => (
-            <Edition
-              profile={profile}
-              locale={props.locale}
-              asset={props.latest && assetFor(props.latest, profile)}
-            />
-          ))}
         </section>
+        {!props.latest && (
+          <p class="notice">
+            {t.noPack} <a href="../releases/">{t.checkReleases}</a>.
+          </p>
+        )}
+        {props.profiles.map((profile) => (
+          <Edition
+            profile={profile}
+            locale={props.locale}
+            asset={props.latest && assetFor(props.latest, profile)}
+          />
+        ))}
       </div>
     </Layout>
   );
@@ -408,6 +467,7 @@ export function pages(
   );
   return {
     home: `<!doctype html>${renderToString(() => <Home pack={pack} latest={latest} locale={locale} mapUrl={mapUrl} />)}`,
+    editions: `<!doctype html>${renderToString(() => <Editions profiles={profiles} latest={latest} locale={locale} />)}`,
     releases: `<!doctype html>${renderToString(() => <Releases releases={releases} locale={locale} />)}`,
   };
 }

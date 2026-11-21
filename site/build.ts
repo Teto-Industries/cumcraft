@@ -40,9 +40,11 @@ await Promise.all([
   ...(["en", "ru"] as const).map(async (locale) => {
     const root = locale === "en" ? "dist" : "dist/ru";
     const output = pages(pack, releases, locale, mapUrl?.href);
-    await mkdir(`${root}/releases`, { recursive: true });
-    await Bun.write(`${root}/index.html`, output.home);
-    await Bun.write(`${root}/releases/index.html`, output.releases);
+    for (const [section, html] of Object.entries(output)) {
+      const directory = section === "home" ? root : `${root}/${section}`;
+      await mkdir(directory, { recursive: true });
+      await Bun.write(`${directory}/index.html`, html);
+    }
   }),
   copyFile("style.css", "dist/style.css"),
   copyFile("preferences.js", "dist/preferences.js"),
