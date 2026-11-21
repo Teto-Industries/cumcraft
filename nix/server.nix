@@ -17,9 +17,9 @@ in
       type = lib.types.nullOr lib.types.str;
       default = null;
       description = ''
-        Runtime path to the EasyAuth global password. When set, Cumcraft enables
-        global-password login and reads the password at server startup. Otherwise
-        it leaves the existing global-password settings alone.
+        Runtime path to the EasyAuth global password used for registration by
+        players who do not use premium auto-login. If unset, Cumcraft leaves
+        the existing global-password settings alone.
       '';
     };
   };
@@ -42,7 +42,7 @@ in
           spawn-protection = 0;
           server-port = 25569;
           motd = "<3";
-          online-mode = false;
+          online-mode = true;
           max-players = 10;
           white-list = true;
           enable-status = true;
