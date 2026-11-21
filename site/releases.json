@@ -1,5 +1,32 @@
 [
   {
+    "tag_name": "v0.2.0",
+    "name": "Cumcraft v0.2.0",
+    "body": "Refreshes the Minecraft 26.3 mod pack: Chunky 1.5.66, ConfigManager 1.1.4, Fabric Language Kotlin 1.14.2, and Animatica 0.7.0 beta 4. Performance and Vulkan use Sodium 0.9.3 and Sodium Extra 0.9.6. The Iris editions keep their compatible beta pair. Fabric Loader 0.20.1 and Fabric API 0.166.2+26.3 were already current.",
+    "published_at": "2026-11-21T22:39:59Z",
+    "draft": false,
+    "prerelease": false,
+    "html_url": "https://github.com/Teto-Industries/cumcraft/releases/tag/v0.2.0",
+    "assets": [
+      {
+        "name": "cumcraft-dh-opengl.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.2.0/cumcraft-dh-opengl.mrpack"
+      },
+      {
+        "name": "cumcraft-dh-vulkan.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.2.0/cumcraft-dh-vulkan.mrpack"
+      },
+      {
+        "name": "cumcraft-low.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.2.0/cumcraft-low.mrpack"
+      },
+      {
+        "name": "cumcraft-voxy-opengl.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.2.0/cumcraft-voxy-opengl.mrpack"
+      }
+    ]
+  },
+  {
     "tag_name": "v0.1.0",
     "name": "Cumcraft v0.1.0",
     "body": "Minecraft Java 26.3 with Fabric Loader 0.20.1. All four editions include the Traverse compatibility port, so existing worlds retain their Traverse content. Import the new pack as a separate instance to keep your old saves and settings intact.",
