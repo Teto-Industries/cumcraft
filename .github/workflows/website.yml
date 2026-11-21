@@ -38,7 +38,7 @@ jobs:
           gh api --paginate --slurp "repos/$GH_REPO/releases?per_page=100" | jq -e 'add // []' > "$CUMCRAFT_RELEASES_FILE"
           bun install --frozen-lockfile
           bun run build
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: site/dist
 
