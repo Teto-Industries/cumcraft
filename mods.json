@@ -267,8 +267,9 @@
     "hash": "sha256-kmtee08YPo7E2+Y40FiBw6jX4VOGDcEX1OZcb5w6H3g=",
     "url": "https://cdn.modrinth.com/data/uY9zbflw/versions/5YXU2rID/soundcontroller-fabric-1.4.0-mc26.2.jar"
   },
-  "traverse-26.2.jar": {
-    "hash": "sha256-Cv8zpruWECf79tIqCaPEm3rfpcEmn4mSLn2HI6wSyRk="
+  "traverse-9.1.0-beta.1.jar": {
+    "hash": "sha256-dUPDkKGHGtcTCuOKr9eyMJk8lEPZvlwQIW4d2CkJGI0=",
+    "url": "https://cdn.modrinth.com/data/kXygSBVI/versions/tOPsMZRR/traverse-9.1.0-beta.1.jar"
   },
   "vmp-fabric-mc26.2-0.2.0+beta.7.236-all.jar": {
     "hash": "sha256-4brrXhoJSMn8SUFbk+uqxABzVQlLQy6hUbPIzOf/5ng=",

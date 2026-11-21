@@ -7,9 +7,6 @@
 
 let
   mods = builtins.fromJSON (builtins.readFile ../mods.json);
-  publicMods = lib.filterAttrs (_: mod: mod ? url) mods;
-  localMods = lib.filterAttrs (_: mod: !(mod ? url)) mods;
-  localPaths = map (name: "mods/${name}") (builtins.attrNames localMods);
   defaults = "${../config}";
   inherit (config.services.cumcraft.easyAuth) passwordFile;
 in
@@ -38,15 +35,7 @@ in
         package = pkgs.fabricServers.fabric-26_2.override {
           jre_headless = pkgs.jdk25_headless;
         };
-        jvmOpts = lib.concatStringsSep " " (
-          [
-            "-Xms2G -Xmx4G -XX:MaxDirectMemorySize=1G -XX:MaxMetaspaceSize=512M"
-            "-Dfabric.modsFolder=.cumcraft-mods"
-          ]
-          ++ lib.optional (localPaths != [ ]) (
-            lib.escapeShellArg "-Dfabric.addMods=${lib.concatStringsSep ":" localPaths}"
-          )
-        );
+        jvmOpts = "-Xms2G -Xmx4G -XX:MaxDirectMemorySize=1G -XX:MaxMetaspaceSize=512M -Dfabric.modsFolder=.cumcraft-mods";
         serverProperties = {
           difficulty = "normal";
           player-idle-timeout = 0;
@@ -68,16 +57,9 @@ in
               inherit name;
               inherit (mod) url hash;
             };
-          }) publicMods
+          }) mods
         );
         extraStartPre = ''
-          ${lib.concatMapStringsSep "\n" (path: ''
-            if ! test -r ${lib.escapeShellArg path}; then
-              echo ${lib.escapeShellArg "Missing or unreadable host-local mod: ${path}"} >&2
-              exit 1
-            fi
-          '') localPaths}
-
           while IFS= read -r -d "" source; do
             target="config/''${source#${defaults}/}"
             if [ ! -e "$target" ] && [ ! -L "$target" ]; then
