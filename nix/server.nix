@@ -10,6 +10,8 @@ let
     builtins.fromJSON (builtins.readFile ../mods.json)
   );
   defaults = "${../config}";
+  managedConfigs = "${../config-managed}";
+  pythonWithTomlkit = pkgs.python3.withPackages (ps: [ ps.tomlkit ]);
   inherit (config.services.cumcraft.easyAuth) passwordFile;
 in
 {
@@ -70,6 +72,12 @@ in
               chmod u+w "$target"
             fi
           done < <(find ${lib.escapeShellArg defaults} -type f -print0)
+
+          while IFS= read -r -d "" source; do
+            install -CDm 0644 "$source" "config/''${source#${managedConfigs}/}"
+          done < <(find ${lib.escapeShellArg managedConfigs} -type f -print0)
+
+          ${pythonWithTomlkit}/bin/python3 ${./configure-distant-horizons.py} ${./distant-horizons.toml}
 
           ${pkgs.python3}/bin/python3 ${./configure-easyauth.py} ${
             lib.optionalString (passwordFile != null) (lib.escapeShellArg passwordFile)
