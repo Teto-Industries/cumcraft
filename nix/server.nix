@@ -10,6 +10,7 @@ let
   mods = lib.filterAttrs (
     name: mod: lib.elem "server" mod.sides && (name != "bluemap-5.29-fabric.jar" || bluemap.enable)
   ) (builtins.fromJSON (builtins.readFile ../mods.json));
+  traverse = ../client/overrides/mods/traverse-9.1.0-beta.1+cumcraft.26.3.jar;
   metadata = builtins.fromJSON (builtins.readFile ../server.json);
   fabricPackage = "fabric-${lib.replaceStrings [ "." ] [ "_" ] metadata.minecraft}";
   managedConfigs = "${../config}";
@@ -69,6 +70,12 @@ in
               inherit (mod) url hash;
             };
           }) mods
+          ++ [
+            {
+              name = baseNameOf traverse;
+              path = traverse;
+            }
+          ]
         );
         extraStartPre = ''
           while IFS= read -r -d "" source; do
