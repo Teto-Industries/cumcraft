@@ -43,27 +43,45 @@ const date = (value: string, locale: Locale) =>
     timeZone: "UTC",
   });
 
+function HeaderMenu(props: {
+  id: string;
+  label: string;
+  icon: string;
+  children: JSX.Element;
+}) {
+  return (
+    <details class="header-menu" id={props.id} name="header-menus">
+      <summary aria-label={props.label}>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          aria-hidden="true"
+        >
+          <path d={props.icon} />
+        </svg>
+        <span>{props.label}</span>
+      </summary>
+      <div class="menu-options">{props.children}</div>
+    </details>
+  );
+}
+
 function Picker(props: {
   id: string;
   label: string;
+  icon: string;
   options: { value: string; label: string; lang?: Locale }[];
 }) {
   return (
-    <details class="preference" id={props.id} name="preferences">
-      <summary>
-        <span>
-          {props.label}: <span data-selection />
-        </span>
-        <span aria-hidden="true">▾</span>
-      </summary>
-      <div class="preference-options">
-        {props.options.map((option) => (
-          <button type="button" value={option.value} lang={option.lang}>
-            {option.label}
-          </button>
-        ))}
-      </div>
-    </details>
+    <HeaderMenu id={props.id} label={props.label} icon={props.icon}>
+      {props.options.map((option) => (
+        <button type="button" value={option.value} lang={option.lang}>
+          {option.label}
+        </button>
+      ))}
+    </HeaderMenu>
   );
 }
 
@@ -75,6 +93,7 @@ function Preferences(props: { locale: Locale }) {
       <Picker
         id="theme"
         label={t.theme}
+        icon="M12 3a9 9 0 1 0 0 18 9 9 0 1 0 0-18Zm0 0v18m0-15 6 6m-6-2 7 7m-7-3 5 5"
         options={[
           { value: "system", label: t.automaticTheme },
           { value: "light", label: t.light },
@@ -84,6 +103,7 @@ function Preferences(props: { locale: Locale }) {
       <Picker
         id="language"
         label={t.language}
+        icon="M12 3a9 9 0 1 0 0 18 9 9 0 1 0 0-18Zm0 0c-5 0-5 18 0 18s5-18 0-18ZM3 12h18"
         options={[
           { value: "browser", label: t.automaticLanguage },
           { value: "en", label: "English", lang: "en" },
@@ -94,24 +114,39 @@ function Preferences(props: { locale: Locale }) {
   );
 }
 
-function Header(props: { locale: Locale; home: string; icon: string }) {
+function Navigation(props: { locale: Locale; home: string; inline?: boolean }) {
   const t = copy[props.locale];
 
   return (
+    <nav class={props.inline ? "inline-nav" : undefined} aria-label={t.nav}>
+      <a href={`${props.home}#editions`}>{t.editions}</a>
+      <a href={`${props.home}releases/`}>{t.releases}</a>
+      <a href="https://github.com/Teto-Industries/cumcraft">
+        GitHub <span aria-hidden="true">↗</span>
+      </a>
+    </nav>
+  );
+}
+
+function Header(props: { locale: Locale; home: string; icon: string }) {
+  return (
     <header class="top">
       <div class="wrap nav">
-        <a class="brand" href={props.home}>
-          <img class="mark" src={props.icon} alt="" width="32" height="32" />
-          Cumcraft
+        <a class="brand" href={props.home} aria-label="Cumcraft">
+          <img src={props.icon} alt="" width="40" height="40" />
+          <span>Cumcraft</span>
         </a>
-        <nav aria-label={t.nav}>
-          <a href={`${props.home}#editions`}>{t.editions}</a>
-          <a href={`${props.home}releases/`}>{t.releases}</a>
-          <a href="https://github.com/Teto-Industries/cumcraft">
-            GitHub <span aria-hidden="true">↗</span>
-          </a>
-        </nav>
-        <Preferences locale={props.locale} />
+        <Navigation locale={props.locale} home={props.home} inline />
+        <div class="header-controls">
+          <HeaderMenu
+            id="compact-nav"
+            label={copy[props.locale].nav}
+            icon="M4 6h16M4 12h16M4 18h16"
+          >
+            <Navigation locale={props.locale} home={props.home} />
+          </HeaderMenu>
+          <Preferences locale={props.locale} />
+        </div>
       </div>
     </header>
   );
