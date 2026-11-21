@@ -1,5 +1,5 @@
 import { transformFileAsync } from "@babel/core";
-import { cp, mkdir, rm, copyFile } from "node:fs/promises";
+import { mkdir, rm, copyFile } from "node:fs/promises";
 
 Bun.plugin({
   name: "solid-ssr",
@@ -34,5 +34,4 @@ await Promise.all([
   copyFile("style.css", "dist/style.css"),
   copyFile("preferences.js", "dist/preferences.js"),
   copyFile("../server-icon.png", "dist/server-icon.png"),
-  cp("fonts", "dist/fonts", { recursive: true }),
 ]);

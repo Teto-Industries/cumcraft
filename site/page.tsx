@@ -9,7 +9,6 @@ type Profile = {
   name: string;
   renderer: string;
   description: string;
-  recommendation: string;
 };
 type Pack = {
   minecraft: string;
@@ -44,49 +43,53 @@ const date = (value: string, locale: Locale) =>
     timeZone: "UTC",
   });
 
+function Picker(props: {
+  id: string;
+  label: string;
+  options: { value: string; label: string; lang?: Locale }[];
+}) {
+  return (
+    <details class="preference" id={props.id} name="preferences">
+      <summary>
+        <span>
+          {props.label}: <span data-selection />
+        </span>
+        <span aria-hidden="true">▾</span>
+      </summary>
+      <div class="preference-options">
+        {props.options.map((option) => (
+          <button type="button" value={option.value} lang={option.lang}>
+            {option.label}
+          </button>
+        ))}
+      </div>
+    </details>
+  );
+}
+
 function Preferences(props: { locale: Locale }) {
   const t = copy[props.locale];
 
   return (
     <div class="preferences" id="preferences" hidden>
-      <label class="preference">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          aria-hidden="true"
-        >
-          <path d="M12 3a9 9 0 1 0 0 18 9 9 0 1 0 0-18zm0 0v18m0-15 6 6m-6-2 7 7m-7-3 5 5" />
-        </svg>
-        <select id="theme" aria-label={t.theme}>
-          <option value="system">{t.automaticTheme}</option>
-          <option value="light">{t.light}</option>
-          <option value="dark">{t.dark}</option>
-        </select>
-      </label>
-      <label class="preference">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          aria-hidden="true"
-        >
-          <circle cx="12" cy="12" r="9" />
-          <ellipse cx="12" cy="12" rx="4" ry="9" />
-          <path d="M3 12h18" />
-        </svg>
-        <select id="language" aria-label={t.language}>
-          <option value="browser">{t.automaticLanguage}</option>
-          <option value="en" lang="en">
-            English
-          </option>
-          <option value="ru" lang="ru">
-            Русский
-          </option>
-        </select>
-      </label>
+      <Picker
+        id="theme"
+        label={t.theme}
+        options={[
+          { value: "system", label: t.automaticTheme },
+          { value: "light", label: t.light },
+          { value: "dark", label: t.dark },
+        ]}
+      />
+      <Picker
+        id="language"
+        label={t.language}
+        options={[
+          { value: "browser", label: t.automaticLanguage },
+          { value: "en", label: "English", lang: "en" },
+          { value: "ru", label: "Русский", lang: "ru" },
+        ]}
+      />
     </div>
   );
 }
@@ -162,7 +165,6 @@ function Layout(props: {
 
 function Edition(props: {
   profile: Profile;
-  number: number;
   asset?: Asset;
   locale: Locale;
 }) {
@@ -172,18 +174,15 @@ function Edition(props: {
     props.profile;
 
   return (
-    <article class="card">
-      <div class="card-top">
-        <span class="number">
-          0{props.number} / {props.profile.renderer}
-        </span>
-        {props.profile.id === "dh-vulkan" && (
-          <span class="badge">{t.experimental}</span>
-        )}
-      </div>
+    <article class="edition">
       <h3>{profile.name}</h3>
-      <p>{profile.description}</p>
-      <p class="recommendation">{profile.recommendation}</p>
+      <div class="meta">
+        {props.profile.renderer}
+        {props.profile.id === "dh-vulkan" && ` · ${t.experimental}`}
+      </div>
+      <p lang={props.profile.id === "voxy-opengl" ? "en" : undefined}>
+        {profile.description}
+      </p>
       {props.asset && (
         <a
           class="download"
@@ -202,26 +201,8 @@ function Hero(props: { minecraft: string; locale: Locale }) {
 
   return (
     <section class="hero">
-      <div>
-        <div class="eyebrow">
-          <span class="dot" /> MINECRAFT {props.minecraft} · FABRIC
-        </div>
-        <h1>{t.headline}</h1>
-        <p class="lede">{t.introduction}</p>
-        <div class="actions">
-          <a class="button primary" href="#editions">
-            {t.chooseEdition} <span aria-hidden="true">↓</span>
-          </a>
-        </div>
-      </div>
-      <div class="hero-panel" aria-hidden="true">
-        <div class="terrain">
-          <div class="sun" />
-          <div class="mountain back" />
-          <div class="mountain front" />
-          <div class="horizon" />
-        </div>
-      </div>
+      <h1>{t.headline}</h1>
+      <p>Minecraft {props.minecraft} · Fabric</p>
     </section>
   );
 }
@@ -234,39 +215,34 @@ function Home(props: { pack: Pack; latest?: Release; locale: Locale }) {
     <Layout locale={props.locale} section="home">
       <div class="wrap">
         <Hero minecraft={props.pack.minecraft} locale={props.locale} />
-        <div class="facts">
+        <dl class="facts">
           <div>
-            <span>{t.loader}</span>
-            <strong>Fabric {props.pack.fabricLoader}</strong>
-          </div>
-          <div>
-            <span>{t.server}</span>
-            <strong>{props.pack.server.address}</strong>
+            <dt>{t.loader}</dt>
+            <dd>Fabric {props.pack.fabricLoader}</dd>
           </div>
           <div>
-            <span>{t.latest}</span>
-            <strong>{props.latest?.tag_name ?? t.unpublished}</strong>
+            <dt>{t.server}</dt>
+            <dd>{props.pack.server.address}</dd>
           </div>
-        </div>
-        <section id="editions" class="section">
-          <div class="section-head">
-            <h2>{t.chooseEdition}</h2>
+          <div>
+            <dt>{t.latest}</dt>
+            <dd>{props.latest?.tag_name ?? t.unpublished}</dd>
           </div>
+        </dl>
+        <section id="editions">
+          <h2>{t.chooseEdition}</h2>
           {!props.latest && (
             <p class="notice">
               {t.noPack} <a href="./releases/">{t.checkReleases}</a>.
             </p>
           )}
-          <div class="cards">
-            {profiles.map((profile, index) => (
-              <Edition
-                profile={profile}
-                locale={props.locale}
-                number={index + 1}
-                asset={props.latest && assetFor(props.latest, profile)}
-              />
-            ))}
-          </div>
+          {profiles.map((profile) => (
+            <Edition
+              profile={profile}
+              locale={props.locale}
+              asset={props.latest && assetFor(props.latest, profile)}
+            />
+          ))}
         </section>
       </div>
     </Layout>
@@ -279,29 +255,26 @@ function Releases(props: { releases: Release[]; locale: Locale }) {
   return (
     <Layout locale={props.locale} section="releases">
       <div class="wrap">
-        <section class="release-hero">
-          <div class="eyebrow">{t.archive}</div>
-          <h1>
-            {t.changelog}
-            <span class="accent">.</span>
-          </h1>
-          <p class="lede">{t.archiveIntroduction}</p>
+        <section class="hero">
+          <div class="meta">{t.archive}</div>
+          <h1>{t.changelog}.</h1>
+          <p>{t.archiveIntroduction}</p>
         </section>
-        <section class="release-list" aria-label={t.published}>
+        <section aria-label={t.published}>
           {props.releases.length === 0 ? (
             <p class="notice">{t.noReleases}</p>
           ) : (
             props.releases.map((release) => (
               <article class="release">
-                <div class="release-meta">
-                  <time class="eyebrow" datetime={release.published_at}>
+                <h2>{release.name || release.tag_name}</h2>
+                <div class="meta">
+                  <time datetime={release.published_at}>
                     {date(release.published_at, props.locale)}
                   </time>
-                  <h2>{release.name || release.tag_name}</h2>
-                  <span class="tag">{release.tag_name}</span>
-                  {release.prerelease && (
-                    <span class="tag">{t.prerelease}</span>
-                  )}
+                  {release.name &&
+                    release.name !== release.tag_name &&
+                    ` · ${release.tag_name}`}
+                  {release.prerelease && ` · ${t.prerelease}`}
                 </div>
                 <div class="release-content">
                   {release.body ? (
