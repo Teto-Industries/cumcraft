@@ -30,18 +30,15 @@ def update_settings(path, settings):
 
 
 def configure_easyauth(directory, password_file):
-    policy = {"premium-auto-login": False}
+    policy = {"premium-auto-login": True, "session-timeout": 86400}
     directory.mkdir(parents=True, exist_ok=True)
+    update_settings(directory / "extended.conf", {"forced-offline-uuid": True})
     if password_file is not None:
         password = password_file.read_text().removesuffix("\n")
         if not password or "\n" in password:
             sys.exit("EasyAuth password file must contain a single nonempty line")
         update_settings(directory / "technical.conf", {"global-password": password})
-        policy.update({
-            "enable-global-password": True,
-            "single-use-global-password": True,
-            "session-timeout": -1,
-        })
+        policy.update({"enable-global-password": True, "single-use-global-password": True})
     update_settings(directory / "main.conf", policy)
 
 
