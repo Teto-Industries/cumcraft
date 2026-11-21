@@ -6,7 +6,7 @@
   "dependencies": {
     "@solidjs/web": "2.0.3",
     "solid-js": "2.0.3",
-    "marked": "15.0.12",
+    "marked": "18.2.1",
     "sanitize-html": "2.17.0"
   },
   "devDependencies": {
