@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.28.5",
-    "@babel/preset-typescript": "7.28.5",
+    "@babel/preset-typescript": "8.0.7",
     "babel-preset-solid": "2.0.0-rc.2"
   }
 }
