@@ -1,0 +1,64 @@
+_version = 5
+
+[server]
+	realTimeUpdateDistanceRadiusInChunks = 256
+	levelKeyPrefix = ""
+	maxSyncOnLoadRequestDistance = 4096
+	synchronizeOnLoad = true
+	maxGenerationRequestDistance = 4096
+	sendLevelKeys = true
+	generationRequestRateLimit = 20
+	syncOnLoadRateLimit = 50
+	enableRealTimeUpdates = true
+	globalBandwidthLimit = 0
+	playerBandwidthLimit = 500
+	enableAdaptiveTransferSpeed = false
+
+	[common.lodBuilding]
+		worldCompression = "VISUALLY_EQUAL"
+		databaseSyncMode = "NORMAL"
+		dataCompression = "Z_STD_BLOCK"
+		disableUnchangedChunkCheck = false
+
+	[common.multiThreading]
+		numberOfThreads = 2
+		threadRunTimeRatio = "1.0"
+		threadPriority = 5
+
+	[common.logging]
+		logRendererEventToFile = "INFO"
+		logWorldGenEventToFile = "INFO"
+		logRendererGLEventToChat = "ERROR"
+		globalChatMaxLevel = "ERROR"
+		logWorldGenChunkLoadEventToFile = "INFO"
+		logRendererGLEventToFile = "INFO"
+		logNetworkEventToFile = "INFO"
+		logConnectionConfigChangesToFile = "WARN"
+		globalFileMaxLevel = "INFO"
+
+		[common.logging.warning]
+			showExplicitGcDisabledWarning = false
+			showSlowWorldGenSettingWarnings = true
+			showUpdateQueueOverloadedChatWarning = false
+			logExplicitGcDisabledWarning = false
+			showLowMemoryWarningOnStartup = true
+			showReplayWarningOnStartup = true
+			showModCompatibilityWarningsOnStartup = true
+			showHighVanillaRenderDistanceWarning = true
+			showPoolInsufficientMemoryWarning = true
+			logGarbageCollectorWarning = true
+			showGarbageCollectorWarning = true
+
+	[common.worldGenerator]
+		showGenerationProgress = "DISABLED"
+		surfaceRegenMaxDistancePercent = "-1.0"
+		generationMaxChunkRadius = 0
+		limitIfServerUnhealthy = true
+		generationProgressDisplayIntervalInSeconds = 2
+		generationProgressIncludeChunksPerSecond = true
+		chunkGeneratorMode = "FEATURES"
+		generatorPlan = "SURFACE_THEN_CHUNKS"
+		pauseIfMovingQuickly = true
+		generationProgressDisableMessageDisplayTimeInSeconds = 20
+		generationCenterChunkZ = 0
+		generationCenterChunkX = 0
