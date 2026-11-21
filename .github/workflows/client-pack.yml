@@ -20,7 +20,7 @@ jobs:
         env:
           VERSION: ${{ github.event.release.tag_name || github.sha }}
         run: python3 scripts/build-client-pack.py --version "$VERSION" --output-dir dist
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: cumcraft-mrpacks
           path: dist/*.mrpack
