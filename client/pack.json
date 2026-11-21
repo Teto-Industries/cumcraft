@@ -13,8 +13,7 @@
       "id": "low",
       "name": "Performance",
       "renderer": "OpenGL",
-      "description": "8-chunk render distance, no shaders or distant terrain renderer.",
-      "recommendation": "Start here on Steam Deck, older laptops, or integrated graphics.",
+      "description": "A profile tuned for low-end PCs or Steam Deck",
       "options": {
         "preferredGraphicsBackend": "opengl",
         "renderDistance": 8,
@@ -30,10 +29,9 @@
     },
     {
       "id": "dh-opengl",
-      "name": "Distant Horizons",
+      "name": "Recommended",
       "renderer": "OpenGL · Iris",
-      "description": "Distant terrain and Complementary Reimagined shaders.",
-      "recommendation": "The default choice for shaders on a dedicated GPU.",
+      "description": "The default option with shaders for a decent PC",
       "shaders": "iris",
       "options": {
         "preferredGraphicsBackend": "opengl",
@@ -42,10 +40,9 @@
     },
     {
       "id": "dh-vulkan",
-      "name": "Distant Horizons · Vulkan",
+      "name": "Vulkan",
       "renderer": "Vulkan · Vitrail",
-      "description": "Distant terrain and Complementary Reimagined on Minecraft’s experimental Vulkan renderer.",
-      "recommendation": "Try this if your GPU supports Vulkan and you want to test the experimental renderer.",
+      "description": "Try this if your GPU supports Vulkan; you might get more FPS",
       "shaders": "vitrail",
       "options": {
         "preferredGraphicsBackend": "vulkan",
@@ -56,8 +53,7 @@
       "id": "voxy-opengl",
       "name": "Voxy",
       "renderer": "OpenGL · Iris",
-      "description": "Voxy builds a distant view from chunks you explore. Includes Complementary Reimagined shaders.",
-      "recommendation": "Choose this if you have OpenGL 4.6 and want Voxy instead of Distant Horizons.",
+      "description": "recommended option but with Voxy instead of DH, a bit lighter mod that some may prefer",
       "shaders": "iris",
       "options": {
         "preferredGraphicsBackend": "opengl",

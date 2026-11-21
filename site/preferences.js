@@ -54,19 +54,55 @@
     return;
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const themeSelect = document.getElementById("theme");
-    const languageSelect = document.getElementById("language");
-    themeSelect.value = theme;
-    languageSelect.value = language;
+  function setupPicker(id, initialValue, apply) {
+    const picker = document.getElementById(id);
+    const summary = picker.querySelector("summary");
+    const selection = picker.querySelector("[data-selection]");
+    const options = picker.querySelectorAll("button");
 
-    themeSelect.addEventListener("change", () => {
-      storage.write("theme", themeSelect.value);
-      applyTheme(themeSelect.value);
+    function select(value) {
+      for (const option of options) {
+        const selected = option.value === value;
+        option.setAttribute("aria-pressed", String(selected));
+        if (selected) {
+          selection.textContent = option.textContent.trim();
+          selection.lang = option.lang || root.lang;
+        }
+      }
+    }
+
+    function close() {
+      picker.open = false;
+      summary.focus();
+    }
+
+    function dismiss(event) {
+      if (!picker.contains(event.target)) picker.open = false;
+    }
+
+    for (const option of options) {
+      option.addEventListener("click", () => {
+        select(option.value);
+        close();
+        storage.write(id, option.value);
+        apply(option.value);
+      });
+    }
+    picker.addEventListener("keydown", (event) => {
+      if (picker.open && event.key === "Escape") {
+        event.preventDefault();
+        close();
+      }
     });
-    languageSelect.addEventListener("change", () => {
-      storage.write("language", languageSelect.value);
-      const url = languageUrl(languageSelect.value);
+    document.addEventListener("click", dismiss);
+    document.addEventListener("focusin", dismiss);
+    select(initialValue);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    setupPicker("theme", theme, applyTheme);
+    setupPicker("language", language, (value) => {
+      const url = languageUrl(value);
       if (url) location.replace(url);
     });
     document.getElementById("preferences").hidden = false;

@@ -14,8 +14,6 @@ const en = {
   light: "Light",
   dark: "Dark",
   headline: "Join Cumcraft.",
-  introduction:
-    "Four editions for one server. All include controller support and connected textures.",
   chooseEdition: "Choose an edition",
   loader: "Mod loader",
   server: "Server",
@@ -57,8 +55,6 @@ export const copy = {
     light: "Светлая",
     dark: "Тёмная",
     headline: "Присоединяйся к Cumcraft.",
-    introduction:
-      "Четыре сборки для одного сервера. Во всех есть поддержка геймпада и соединённые текстуры.",
     chooseEdition: "Выбрать сборку",
     loader: "Загрузчик модов",
     server: "Сервер",
@@ -84,37 +80,27 @@ export const copy = {
 type ProfileCopy = {
   name: string;
   description: string;
-  recommendation: string;
 };
 
 export const russianProfiles = new Map(
   Object.entries({
     low: {
       name: "Производительность",
-      description:
-        "Дальность прорисовки — 8 чанков, без шейдеров и отрисовки далёкого ландшафта.",
-      recommendation:
-        "Для Steam Deck, старых ноутбуков и устройств со встроенной графикой.",
+      description: "Профиль настроенный для слабых ПК или Steam Deck",
     },
     "dh-opengl": {
-      name: "Distant Horizons",
-      description:
-        "Отрисовка далёкого ландшафта и шейдеры Complementary Reimagined.",
-      recommendation: "Основной вариант с шейдерами для дискретной видеокарты.",
+      name: "Recommended",
+      description: "Основной вариант с шейдерами для норм пк",
     },
     "dh-vulkan": {
-      name: "Distant Horizons · Vulkan",
+      name: "Vulkan",
       description:
-        "Далёкий ландшафт и шейдеры Complementary Reimagined на экспериментальном рендерере Vulkan.",
-      recommendation:
-        "Попробуй, если твоя видеокарта поддерживает Vulkan и тебе интересен новый рендерер.",
+        "Попробуй, если твоя видеокарта поддерживает Vulkan, возможно будет больше fps",
     },
     "voxy-opengl": {
       name: "Voxy",
       description:
-        "Voxy строит далёкий ландшафт из чанков, которые ты посетил. Включены шейдеры Complementary Reimagined.",
-      recommendation:
-        "Для тех, кто хочет Voxy вместо Distant Horizons и может запустить OpenGL 4.6.",
+        "recommended option but with Voxy instead of DH, a bit lighter mod that some may prefer",
     },
   } satisfies Record<string, ProfileCopy>),
 );
