@@ -21,17 +21,27 @@ const pack = await Bun.file("../client/pack.json").json();
 const releases = process.env.CUMCRAFT_RELEASES_FILE
   ? await Bun.file(process.env.CUMCRAFT_RELEASES_FILE).json()
   : [];
+const configuredMap = process.env.CUMCRAFT_MAP_URL?.trim();
+const mapUrl = configuredMap ? new URL(configuredMap) : undefined;
+if (
+  mapUrl &&
+  mapUrl.protocol !== "https:" &&
+  !(mapUrl.protocol === "http:" && ["localhost", "127.0.0.1", "[::1]"].includes(mapUrl.hostname))
+) {
+  throw new Error("CUMCRAFT_MAP_URL must use HTTPS (HTTP is allowed for localhost previews)");
+}
 await rm("dist", { recursive: true, force: true });
 await mkdir("dist", { recursive: true });
 await Promise.all([
   ...(["en", "ru"] as const).map(async (locale) => {
     const root = locale === "en" ? "dist" : "dist/ru";
-    const output = pages(pack, releases, locale);
+    const output = pages(pack, releases, locale, mapUrl?.href);
     await mkdir(`${root}/releases`, { recursive: true });
     await Bun.write(`${root}/index.html`, output.home);
     await Bun.write(`${root}/releases/index.html`, output.releases);
   }),
   copyFile("style.css", "dist/style.css"),
   copyFile("preferences.js", "dist/preferences.js"),
+  copyFile("map.js", "dist/map.js"),
   copyFile("../server-icon.png", "dist/server-icon.png"),
 ]);
