@@ -9,12 +9,12 @@
       "client"
     ]
   },
-  "Chunky-Fabric-1.5.3.jar": {
-    "hash": "sha256-7N/FWg9n8+xvQIUGh2FclBriJr2I9OBhiKeyaP09qUI=",
-    "url": "https://cdn.modrinth.com/data/fALzjamp/versions/4Eotm6ov/Chunky-Fabric-1.5.3.jar",
-    "size": 354095,
-    "sha1": "fc1f2f374c5c82117599071ed18b6ef9bba2c7fb",
-    "sha512": "b83bfe7b218d0aa6232af977ae741dc1f82b10e50cd12bb759f65cf416b8b62beccb543e587ef0b9670abe03815660f8e091bc6823624d65cf07300571573516",
+  "Chunky-Fabric-1.5.66.jar": {
+    "hash": "sha256-",
+    "url": "https://cdn.modrinth.com/data/fALzjamp/versions/86FKD9qx/Chunky-Fabric-1.5.66.jar",
+    "size": 442176,
+    "sha1": "f78eca46c3882ee637d3ba3982da217776f55fc7",
+    "sha512": "6f0323daa69d61bd3b3fbe9d8b713664d9b7c69182183f8dcff6362b43783639778a96e32215dbfd329588f06b60a5d93656dbb1d391c660db203482aa972d5e",
     "sides": [
       "server"
     ]
@@ -29,12 +29,12 @@
       "server"
     ]
   },
-  "ConfigManager-fabric-26.1_26.2-1.1.3.jar": {
-    "hash": "sha256-Wf1iNJVB07zL9WNBYwFc8zW9Jy2psXKWSd0v2zgJuyU=",
-    "url": "https://cdn.modrinth.com/data/jlNms3Jp/versions/W4C08wBC/ConfigManager-fabric-26.1_26.2-1.1.3.jar",
-    "size": 88871,
-    "sha1": "ce2d31f3cb6815fe83c742326430af8dd9f6a479",
-    "sha512": "bfa70defff2530780f0f0aa0de1845dc256d9cab244123e4847a6b24db1f812c47585ed1ddc80b2de91671aada421027b72d44e8b748e2a70ae405af54d94de0",
+  "ConfigManager-fabric-26.3-1.1.4.jar": {
+    "hash": "sha256-",
+    "url": "https://cdn.modrinth.com/data/jlNms3Jp/versions/okecULrz/ConfigManager-fabric-26.3-1.1.4.jar",
+    "size": 87391,
+    "sha1": "13fe50ecc8aba1e684e5d30c0287bfb868d135c0",
+    "sha512": "afa99b575ec46f79929710dbca2b2afab1567a217753a91f33b6d27d35734070cb1af2e509e602850d7848985686284d4dcd7211c7a1b8048bee663b33e24de6",
     "sides": [
       "server"
     ]
@@ -169,12 +169,12 @@
       "client"
     ]
   },
-  "animatica-0.6.3+26.3.jar": {
-    "hash": "sha256-IJNGTWny5O0dwR4Dto0R6ESf7fjY0vrGWVi0NE6c2eI=",
-    "url": "https://cdn.modrinth.com/data/xEyZuswh/versions/doj27VCh/animatica-0.6.3%2B26.3.jar",
-    "size": 117502,
-    "sha1": "c24b269d5cb523800bce90920de13ce7f042ba80",
-    "sha512": "e4e7e824803a9bd946318575ca4d1b55f78cb588fd08f621000deaa89bac2579d3d73aa410e3969bba709fac41c15cf1b71bb9e8c2217d904139b584924a043f",
+  "animatica-0.7.0+beta.4+26.3-fabric.jar": {
+    "hash": "sha256-",
+    "url": "https://cdn.modrinth.com/data/xEyZuswh/versions/pNFpFu4g/animatica-0.7.0%2Bbeta.4%2B26.3-fabric.jar",
+    "size": 131966,
+    "sha1": "433c6b79e0d416c6c126e573531cd671836e40d0",
+    "sha512": "d3b2b895e0c039a1948338ac3300365e850aac56177f208c913c5edff952f6b2b111ec278eb9e14e51c8ea7ae2e68b4a41a6686e95e0930d67d1a420a4bd36d8",
     "sides": [
       "client"
     ]
@@ -393,12 +393,12 @@
       "server"
     ]
   },
-  "fabric-language-kotlin-1.14.1+kotlin.2.4.20.jar": {
-    "hash": "sha256-YgwnCb4qJiuDfPl29vhfbtqApWryukJC4L3IOmD+56U=",
-    "url": "https://cdn.modrinth.com/data/Ha28R6CL/versions/eRRZzGMc/fabric-language-kotlin-1.14.1%2Bkotlin.2.4.20.jar",
-    "size": 8142858,
-    "sha1": "62ae40a31b689b52fde399f2143d547a631e942c",
-    "sha512": "91404f87774466ce8604aafea791d8cc97b603bc310dce17c8188f94f7783cca6dc14fc726ce871ca317bfe9033c199d8d858d51284106a00754e952147703b8",
+  "fabric-language-kotlin-1.14.2+kotlin.2.4.21.jar": {
+    "hash": "sha256-",
+    "url": "https://cdn.modrinth.com/data/Ha28R6CL/versions/SKW1BTL3/fabric-language-kotlin-1.14.2%2Bkotlin.2.4.21.jar",
+    "size": 8142878,
+    "sha1": "f1d4ab6ecd54d9782521333a87eb50724ecb03e0",
+    "sha512": "7fb475c4a7e7bdf8d0aca4b5798a58a354c51443d5b1fbde3e8cf34dfbf7191ef4238b5f07d08ec9490ec180b371624523326c3ad45d4ed2b2be541de9407e5d",
     "sides": [
       "client"
     ]
@@ -689,6 +689,24 @@
     "sha512": "0581abb6d1b5dd042f97e05bba262242a2ed211832ea17415b762ec191e5d21093ca3770c2a2a18b45ba850dd458023480692618c1164074a7a80a8063d4d36d",
     "sides": [
       "client"
+    ],
+    "profiles": [
+      "dh-opengl",
+      "voxy-opengl"
+    ]
+  },
+  "sodium-extra-fabric-0.9.6+mc26.3.jar": {
+    "hash": "sha256-",
+    "url": "https://cdn.modrinth.com/data/PtjYWJkn/versions/OoLJ6law/sodium-extra-fabric-0.9.6%2Bmc26.3.jar",
+    "size": 483057,
+    "sha1": "34944ad8c8cda5cdb3ed16d0e899b8a2854dbf42",
+    "sha512": "6ce614d734a6e1f379f881bb36e0191ec9b1d1f75df47bec0972b15f5651eda4002074f348a6d7016c29cfa6182152884f5c34682ce36344e6f969ab3eefea71",
+    "sides": [
+      "client"
+    ],
+    "profiles": [
+      "low",
+      "dh-vulkan"
     ]
   },
   "sodium-fabric-0.9.3-beta.3+mc26.3.jar": {
@@ -699,6 +717,24 @@
     "sha512": "c5ae8fc39fb36ee2e4b74fd8dae712b334052ccf6be7908d9b79233d9a772a070d9296f1bb439e79d0863a298a9684e94ae18e3d45174b8ec779b1f63b7ca964",
     "sides": [
       "client"
+    ],
+    "profiles": [
+      "dh-opengl",
+      "voxy-opengl"
+    ]
+  },
+  "sodium-fabric-0.9.3+mc26.3.jar": {
+    "hash": "sha256-",
+    "url": "https://cdn.modrinth.com/data/AANobbMI/versions/tFcTKXDx/sodium-fabric-0.9.3%2Bmc26.3.jar",
+    "size": 1914989,
+    "sha1": "818009279d57d8c8c4fa814e685e7c9122f7677f",
+    "sha512": "fa087631e4677b571336974452ba2d21360c4f844325c1fe1695ee3907c3679212aea9081405c6793d55930b88661d62b615342453719a27cf11184946603dc4",
+    "sides": [
+      "client"
+    ],
+    "profiles": [
+      "low",
+      "dh-vulkan"
     ]
   },
   "sodium-shadowy-path-blocks-fabric-8.0.0.jar": {
