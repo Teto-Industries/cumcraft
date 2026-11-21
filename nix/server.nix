@@ -11,9 +11,21 @@ let
   localMods = lib.filterAttrs (_: mod: !(mod ? url)) mods;
   localPaths = map (name: "mods/${name}") (builtins.attrNames localMods);
   defaults = "${../config}";
+  inherit (config.services.cumcraft.easyAuth) passwordFile;
 in
 {
-  options.services.cumcraft.enable = lib.mkEnableOption "Cumcraft Minecraft server";
+  options.services.cumcraft = {
+    enable = lib.mkEnableOption "Cumcraft Minecraft server";
+    easyAuth.passwordFile = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = ''
+        Runtime path to the EasyAuth global password. When set, Cumcraft enables
+        global-password login and reads the password at server startup. Otherwise
+        it leaves the existing global-password settings alone.
+      '';
+    };
+  };
 
   config = lib.mkIf config.services.cumcraft.enable {
     services.minecraft-servers = {
@@ -74,6 +86,10 @@ in
               chmod u+w "$target"
             fi
           done < <(find ${lib.escapeShellArg defaults} -type f -print0)
+
+          ${pkgs.python3}/bin/python3 ${./configure-easyauth.py} ${
+            lib.optionalString (passwordFile != null) (lib.escapeShellArg passwordFile)
+          }
 
           if [ ! -e server-icon.png ] && [ ! -L server-icon.png ]; then
             cp ${../server-icon.png} server-icon.png
