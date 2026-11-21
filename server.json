@@ -1,0 +1,9 @@
+{
+  "minecraft": "26.2",
+  "fabricLoader": "0.20.1",
+  "server": {
+    "name": "Cumcraft",
+    "host": "mine.cum.army",
+    "port": 25569
+  }
+}
