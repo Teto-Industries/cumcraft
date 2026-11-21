@@ -68,7 +68,11 @@ def client_files(mods, pack, profile):
 
 def write_defaults(archive, pack, profile):
     options = pack["options"] | profile["options"]
-    defaults = "".join(f"{key}:{json.dumps(value, separators=(',', ':'))}\n" for key, value in options.items())
+    # Minecraft stores the language code as plain text, not a JSON string.
+    defaults = "".join(
+        f"{key}:{value if key == 'lang' else json.dumps(value, separators=(',', ':'))}\n"
+        for key, value in options.items()
+    )
     write_entry(archive, "overrides/options.txt", defaults.encode())
     write_entry(archive, "overrides/servers.dat", servers_dat(pack["server"]))
 
