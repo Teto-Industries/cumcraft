@@ -7,7 +7,10 @@
     nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nix-minecraft, ... }: {
+  outputs = { nixpkgs, nix-minecraft, ... }: {
+    packages = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (system: {
+      website = nixpkgs.legacyPackages.${system}.callPackage ./nix/website.nix { };
+    });
     nixosModules.default = {
       imports = [
         nix-minecraft.nixosModules.minecraft-servers

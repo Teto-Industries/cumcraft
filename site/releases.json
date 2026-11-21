@@ -1,0 +1,56 @@
+[
+  {
+    "tag_name": "v0.1.0",
+    "name": "Cumcraft v0.1.0",
+    "body": "Minecraft Java 26.3 with Fabric Loader 0.20.1. All four editions include the Traverse compatibility port, so existing worlds retain their Traverse content. Import the new pack as a separate instance to keep your old saves and settings intact.",
+    "published_at": "2026-11-21T22:27:46Z",
+    "draft": false,
+    "prerelease": false,
+    "html_url": "https://github.com/Teto-Industries/cumcraft/releases/tag/v0.1.0",
+    "assets": [
+      {
+        "name": "cumcraft-dh-opengl.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.1.0/cumcraft-dh-opengl.mrpack"
+      },
+      {
+        "name": "cumcraft-dh-vulkan.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.1.0/cumcraft-dh-vulkan.mrpack"
+      },
+      {
+        "name": "cumcraft-low.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.1.0/cumcraft-low.mrpack"
+      },
+      {
+        "name": "cumcraft-voxy-opengl.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.1.0/cumcraft-voxy-opengl.mrpack"
+      }
+    ]
+  },
+  {
+    "tag_name": "v0.1.0-beta.1",
+    "name": "Cumcraft v0.1.0-beta.1",
+    "body": "First public beta for Minecraft 26.2 on Fabric.\n\n- Four Modrinth pack editions: Performance, Recommended, Vulkan (experimental), and Voxy.\n- The [live world map](https://teto-industries.github.io/cumcraft/) starts on an online Overworld player or falls back to spawn.\n- Report beta issues on [GitHub](https://github.com/Teto-Industries/cumcraft/issues).",
+    "published_at": "2026-11-21T21:05:52Z",
+    "draft": false,
+    "prerelease": true,
+    "html_url": "https://github.com/Teto-Industries/cumcraft/releases/tag/v0.1.0-beta.1",
+    "assets": [
+      {
+        "name": "cumcraft-dh-opengl.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.1.0-beta.1/cumcraft-dh-opengl.mrpack"
+      },
+      {
+        "name": "cumcraft-dh-vulkan.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.1.0-beta.1/cumcraft-dh-vulkan.mrpack"
+      },
+      {
+        "name": "cumcraft-low.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.1.0-beta.1/cumcraft-low.mrpack"
+      },
+      {
+        "name": "cumcraft-voxy-opengl.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.1.0-beta.1/cumcraft-voxy-opengl.mrpack"
+      }
+    ]
+  }
+]

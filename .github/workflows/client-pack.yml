@@ -33,6 +33,9 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
       - uses: actions/download-artifact@v8
         with:
           name: cumcraft-mrpacks
@@ -42,6 +45,16 @@ jobs:
           GH_REPO: ${{ github.repository }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}
         run: gh release upload "$RELEASE_TAG" ./*.mrpack --clobber
+      - name: Update release data for Starflake
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          bash scripts/update-site-releases.sh
+          if git diff --quiet -- site/releases.json; then exit 0; fi
+          git -c user.name=github-actions -c user.email=github-actions@github.com \
+            commit -m 'Update website release data' -- site/releases.json
+          git push
 
   release-site:
     needs: publish
