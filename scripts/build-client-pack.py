@@ -99,7 +99,7 @@ def build_profile(output, version, pack, profile, mods):
         "formatVersion": 1,
         "game": "minecraft",
         "versionId": version,
-        "name": f"{pack['server']['name']} – {profile['name']}",
+        "name": f"{pack['server']['name']} – {profile['name']} ({version})",
         "files": files,
         "dependencies": {"minecraft": pack["minecraft"], "fabric-loader": pack["fabricLoader"]},
     }
@@ -107,6 +107,7 @@ def build_profile(output, version, pack, profile, mods):
     overrides = ROOT / "client/overrides"
     with zipfile.ZipFile(output, "w") as archive:
         write_entry(archive, "modrinth.index.json", (json.dumps(index, indent=2) + "\n").encode())
+        write_entry(archive, "icon.png", (ROOT / "server-icon.png").read_bytes())
         for path in sorted(overrides.rglob("*")):
             if path.is_file():
                 write_entry(archive, f"overrides/{path.relative_to(overrides).as_posix()}", path.read_bytes())
@@ -125,7 +126,8 @@ def main():
     server["address"] = f"{server['host']}:{server['port']}"
     args.output_dir.mkdir(parents=True, exist_ok=True)
     for profile in pack["profiles"]:
-        output = args.output_dir / f"cumcraft-{profile['id']}.mrpack"
+        # Prism Launcher uses the filename as the default name for local imports.
+        output = args.output_dir / f"cumcraft-{profile['id']}-{args.version}.mrpack"
         build_profile(output, args.version, pack, profile, mods)
 
 

@@ -32,12 +32,17 @@ type Release = {
 };
 
 const safeUrl = (url: string) => (/^https:\/\//i.test(url) ? url : "");
-const assetFor = (release: Release, profile: Profile) =>
-  release.assets.find(
-    (asset) =>
-      asset.name === `cumcraft-${profile.id}.mrpack` &&
-      safeUrl(asset.browser_download_url),
+const assetFor = (release: Release, profile: Profile) => {
+  const basename = `cumcraft-${profile.id}`;
+  const findAsset = (name: string) =>
+    release.assets.find(
+      (asset) => asset.name === name && safeUrl(asset.browser_download_url),
+    );
+  return (
+    findAsset(`${basename}-${release.tag_name}.mrpack`) ??
+    findAsset(`${basename}.mrpack`)
   );
+};
 const date = (value: string, locale: Locale) =>
   new Date(value).toLocaleDateString(locale, {
     year: "numeric",
