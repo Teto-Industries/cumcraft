@@ -29,14 +29,7 @@
   }
 
   const solid = "button, summary, input, select, textarea, img, svg, canvas, video, iframe";
-
-  function hasColor(color: string) {
-    return color !== "transparent" && !/^rgba\(.*?,\s*0\)$|\/ 0\)$/.test(color);
-  }
-
-  function borderWidth(width: string, color: string) {
-    return hasColor(color) ? parseFloat(width) : 0;
-  }
+  const contentSurfaces = '.menu-options, .map-actions a, .editions-link, .map-page[data-ready] > [data-drag="landmark"] > .wrap';
 
   function visibleBoxes(element: HTMLElement, moving = false) {
     const boxes: DOMRect[] = [];
@@ -54,26 +47,11 @@
       if (style.display === "none" || Number(style.opacity) === 0) return;
 
       const visible = style.visibility === "visible";
-      if (visible) {
-        const solidBox = node.matches(solid);
-        const filled = solidBox || hasColor(style.backgroundColor) || style.backgroundImage !== "none";
-        const top = borderWidth(style.borderTopWidth, style.borderTopColor);
-        const right = borderWidth(style.borderRightWidth, style.borderRightColor);
-        const bottom = borderWidth(style.borderBottomWidth, style.borderBottomColor);
-        const left = borderWidth(style.borderLeftWidth, style.borderLeftColor);
-        if (filled || top || right || bottom || left) {
-          for (const rect of node.getClientRects()) {
-            if (filled) add(rect.x, rect.y, rect.width, rect.height);
-            else {
-              add(rect.x, rect.y, rect.width, top);
-              add(rect.right - right, rect.y, right, rect.height);
-              add(rect.x, rect.bottom - bottom, rect.width, bottom);
-              add(rect.x, rect.y, left, rect.height);
-            }
-          }
-        }
-        if (solidBox) return;
+      const solidBox = visible && node.matches(solid);
+      if (solidBox || (visible && node.matches(contentSurfaces))) {
+        for (const rect of node.getClientRects()) add(rect.x, rect.y, rect.width, rect.height);
       }
+      if (solidBox) return;
 
       if (node instanceof HTMLDetailsElement && !node.open) {
         const summary = [...node.children].find((child) => child.localName === "summary");
@@ -81,10 +59,9 @@
         return;
       }
 
-      const visibleText = visible && hasColor(style.color);
       for (const child of node.childNodes) {
         if (child instanceof Element) visit(child);
-        if (!visibleText || !(child instanceof Text)) continue;
+        if (!visible || !(child instanceof Text)) continue;
         // Measure rendered word fragments, not line boxes or whitespace between words.
         for (const word of child.data.matchAll(/\S+/gu)) {
           range.setStart(child, word.index);
@@ -100,6 +77,13 @@
 
   function measureDragBody(element: HTMLElement): DragBody {
     const boxes = visibleBoxes(element, true);
+    if (element.dataset.drag === "landmark") {
+      const wrap = [...element.children].find((child) => child.matches(".wrap") && child.getClientRects().length);
+      if (wrap) {
+        const rect = wrap.getBoundingClientRect();
+        return { boxes, bounds: new DOMRect(rect.x + window.scrollX, rect.y + window.scrollY, rect.width, rect.height), x: 0, y: 0 };
+      }
+    }
     let left = Infinity, top = Infinity, right = -Infinity, bottom = -Infinity;
     for (const box of boxes) {
       left = Math.min(left, box.left);
@@ -143,8 +127,8 @@
     );
   }
 
-  // Limit outward movement without snapping a block back inside the page.
-  function pageDelta(start: number, size: number, delta: number, limit: number) {
+  // Limit outward movement without snapping a block back inside its bounds.
+  function boundedDelta(start: number, size: number, delta: number, limit: number) {
     const min = size > limit ? grip - size : 0;
     const max = size > limit ? limit - grip : limit - size;
     if (delta < 0) return Math.max(delta, Math.min(0, min - start));
@@ -174,8 +158,14 @@
 
   function translate(element: HTMLElement, body: DragBody, dx: number, dy: number, others?: DOMRect[]) {
     const rect = body.bounds;
-    let x = rect ? pageDelta(rect.left + body.x, rect.width, dx, root.scrollWidth) : dx;
-    let y = rect ? pageDelta(rect.top + body.y, rect.height, dy, root.scrollHeight) : dy;
+    const landmark = element.dataset.drag === "landmark";
+    const left = landmark ? window.scrollX : 0;
+    // The header must remain reachable from the top of every tab.
+    const top = landmark && !element.matches("header") ? window.scrollY : 0;
+    const width = landmark ? root.clientWidth : root.scrollWidth;
+    const height = landmark ? root.clientHeight : root.scrollHeight;
+    let x = rect ? boundedDelta(rect.left + body.x - left, rect.width, dx, width) : dx;
+    let y = rect ? boundedDelta(rect.top + body.y - top, rect.height, dy, height) : dy;
     if (others) {
       x = collisionDelta(body, x, "x", others);
       y = collisionDelta(body, y, "y", others, x);
