@@ -96,7 +96,7 @@ public final class RemoveTraverse {
                     if (name.endsWith(".mca")) rewriteRegion(path, relative);
                     else if (name.endsWith(".dat") || name.endsWith(".dat_old") || name.endsWith(".nbt")) rewriteFile(path, relative);
                     else if (name.endsWith(".json")) data.rewriteJson(path, relative);
-                    else if (name.endsWith(".zip") && relative.startsWith("datapacks")) inspectArchive(path);
+                    else if (relative.startsWith("datapacks")) inspectDatapackFile(path, name);
                 } catch (IOException e) {
                     throw new IOException("Failed processing " + relative + ": " + e.getMessage(), e);
                 }
@@ -147,6 +147,13 @@ public final class RemoveTraverse {
                     throw new IOException("Chunk " + pos + ": " + e.getMessage(), e);
                 }
             }
+        }
+    }
+
+    private static void inspectDatapackFile(Path path, String name) throws IOException {
+        if (name.endsWith(".zip")) inspectArchive(path);
+        else if (name.endsWith(".mcfunction") && hasTraverseReference(Files.readString(path))) {
+            throw new IOException("Datapack function references Traverse; update it before migrating");
         }
     }
 

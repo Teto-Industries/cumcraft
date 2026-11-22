@@ -146,16 +146,25 @@ final class TraverseData {
     }
 
     private Tag rewriteTag(Tag tag) throws IOException {
+        return rewriteTag(tag, false);
+    }
+
+    private Tag rewriteTag(Tag tag, boolean textComponent) throws IOException {
         if (tag instanceof CompoundTag compound) {
             Map<String, Tag> renamed = null;
             for (var entry : compound.entrySet()) {
                 String key = entry.getKey();
-                // Text content is not an identifier (signs, books, item names).
-                if (key.equals("text")) continue;
+                // Literal text is not an identifier.
+                if (key.equals("text") || (textComponent && key.equals("fallback"))) continue;
                 if (key.equals("Command") && entry.getValue().asString().orElse("").contains(PREFIX)) {
                     throw new IOException("Command block or minecart command references Traverse; update it before migrating");
                 }
-                Tag converted = rewriteTag(entry.getValue());
+                Tag converted = switch (key) {
+                    case "front_text", "back_text", "minecraft:sign_text_front", "minecraft:sign_text_back" ->
+                        rewriteSignText(entry.getValue());
+                    case "extra", "with" -> rewriteTag(entry.getValue(), textComponent);
+                    default -> rewriteTag(entry.getValue());
+                };
                 String mapped = replaceId(key);
                 if (mapped.equals(key)) {
                     if (converted != entry.getValue()) entry.setValue(converted);
@@ -173,12 +182,21 @@ final class TraverseData {
         } else if (tag instanceof ListTag list) {
             for (int i = 0; i < list.size(); ++i) {
                 Tag original = list.get(i);
-                Tag mapped = rewriteTag(original);
+                Tag mapped = rewriteTag(original, textComponent);
                 if (mapped != original) list.set(i, mapped);
             }
-        } else if (tag instanceof StringTag string) {
+        } else if (!textComponent && tag instanceof StringTag string) {
             String mapped = replaceId(string.value());
             if (!mapped.equals(string.value())) return StringTag.valueOf(mapped);
+        }
+        return tag;
+    }
+
+    private Tag rewriteSignText(Tag tag) throws IOException {
+        if (tag instanceof CompoundTag signText) {
+            // Sign lines may be bare strings, but structured components can still contain item IDs.
+            rewriteTag(signText.getListOrEmpty("messages"), true);
+            rewriteTag(signText.getListOrEmpty("filtered_messages"), true);
         }
         return tag;
     }
@@ -240,6 +258,15 @@ final class TraverseData {
             String mapped = replaceId(key);
             if (mapped.equals(key)) continue;
             JsonElement value = object.remove(key);
+            if (advancement && key.equals("traverse:recipes/decorations/fir_shelf")) {
+                var criteria = value.getAsJsonObject().getAsJsonObject("criteria");
+                if (criteria != null) {
+                    JsonElement obtained = criteria.remove("has_stripped_fir_log");
+                    if (obtained != null && !criteria.has("has_stripped_spruce_log")) {
+                        criteria.add("has_stripped_spruce_log", obtained);
+                    }
+                }
+            }
             JsonElement existing = object.get(mapped);
             if (existing == null) {
                 object.add(mapped, value);
