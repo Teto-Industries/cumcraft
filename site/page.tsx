@@ -3,6 +3,7 @@ import { marked } from "marked";
 import type { JSX } from "@solidjs/web";
 import sanitizeHtml from "sanitize-html";
 import { copy, russianProfiles, type Locale } from "./copy";
+import { mods, type Mod } from "./mods";
 
 type Profile = {
   id: string;
@@ -118,6 +119,7 @@ function Navigation(props: { locale: Locale; home: string; inline?: boolean }) {
   return (
     <nav class={props.inline ? "inline-nav" : undefined} aria-label={t.nav}>
       <a href={`${props.home}#editions`}>{t.editions}</a>
+      <a href={`${props.home}#mods`}>{t.mods}</a>
       <a href={`${props.home}releases/`}>{t.releases}</a>
       <a href="https://github.com/Teto-Industries/cumcraft">
         GitHub <span aria-hidden="true">↗</span>
@@ -207,15 +209,16 @@ function Layout(props: {
   );
 }
 
+const localizedProfile = (profile: Profile, locale: Locale) =>
+  (locale === "ru" && russianProfiles.get(profile.id)) || profile;
+
 function Edition(props: {
   profile: Profile;
   asset?: Asset;
   locale: Locale;
 }) {
   const t = copy[props.locale];
-  const profile =
-    (props.locale === "ru" && russianProfiles.get(props.profile.id)) ||
-    props.profile;
+  const profile = localizedProfile(props.profile, props.locale);
 
   return (
     <article class="edition">
@@ -260,6 +263,62 @@ function MapActions(props: { url: string; locale: Locale }) {
   );
 }
 
+function ModList(props: {
+  entries: readonly Mod[];
+  locale: Locale;
+  profiles?: Profile[];
+}) {
+  return (
+    <ul class="mod-list" role="list">
+      {props.entries.map(([slug, name, description, editions]) => {
+        const names = props.profiles
+          ?.filter((profile) => editions?.includes(profile.id))
+          .map((profile) => localizedProfile(profile, props.locale).name);
+
+        return (
+          <li class={description ? "mod-feature" : undefined}>
+            <a href={`https://modrinth.com/mod/${slug}`}>
+              {name} <span aria-hidden="true">↗</span>
+            </a>
+            {description && <p>{description[props.locale]}</p>}
+            {names && names.length > 0 && (
+              <p class="mod-editions">{names.join(" · ")}</p>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+function Mods(props: { locale: Locale; profiles: Profile[] }) {
+  const t = copy[props.locale];
+
+  return (
+    <section id="mods" aria-labelledby="mods-title">
+      <h2 id="mods-title">{t.mods}</h2>
+      <p class="mods-intro">{t.modsIntro}</p>
+      <div class="mod-group">
+        <h3>{t.modGameplay}</h3>
+        <ModList entries={mods.gameplay} locale={props.locale} />
+      </div>
+      <div class="mod-group">
+        <h3>{t.modGraphics}</h3>
+        <ModList entries={mods.graphics} locale={props.locale} profiles={props.profiles} />
+      </div>
+      <div class="mod-group">
+        <h3>{t.modInventory}</h3>
+        <p class="mods-intro">{t.modInventoryIntro}</p>
+        <ModList entries={mods.inventory} locale={props.locale} />
+      </div>
+      <details class="mod-group mod-technical">
+        <summary>{t.modTechnical}</summary>
+        <ModList entries={mods.technical} locale={props.locale} />
+      </details>
+    </section>
+  );
+}
+
 function Home(props: {
   pack: Pack;
   latest?: Release;
@@ -296,6 +355,7 @@ function Home(props: {
             />
           ))}
         </section>
+        <Mods locale={props.locale} profiles={profiles} />
       </div>
     </Layout>
   );

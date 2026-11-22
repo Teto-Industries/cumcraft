@@ -275,6 +275,58 @@ h3 {
   display: inline-block;
   margin-top: 0.5rem;
 }
+#mods {
+  scroll-margin-block-start: 1rem;
+}
+.mods-intro {
+  margin-block: 0.375rem 0;
+  max-inline-size: 65ch;
+  text-wrap: pretty;
+}
+.mod-group {
+  margin-block-start: 1.5rem;
+  border-block-start: 1px solid GrayText;
+  padding-block-start: 1rem;
+}
+.mod-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 0.25rem 1.25rem;
+  list-style: none;
+  margin-block: 0.75rem 0;
+  padding: 0;
+  font-size: 0.875rem;
+}
+.mod-list a {
+  display: inline-block;
+  padding-block: 0.125rem;
+}
+.mod-feature {
+  padding-block-end: 0.625rem;
+}
+.mod-feature a {
+  font-weight: 600;
+}
+.mod-feature p {
+  margin: 0.125rem 0 0;
+  text-wrap: pretty;
+}
+.mod-feature .mod-editions {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.mod-technical {
+  padding-block-start: 0;
+  border-block-end: 1px solid GrayText;
+}
+.mod-technical summary {
+  padding-block: 0.625rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.mod-technical[open] .mod-list {
+  margin-block: 0.25rem 1rem;
+}
 .markdown pre {
   overflow: auto;
   border: 1px solid GrayText;
