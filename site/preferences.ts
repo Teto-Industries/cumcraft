@@ -1,15 +1,18 @@
 (() => {
+  type Theme = "light" | "dark" | "system";
+  type Language = "en" | "ru" | "browser";
+
   const root = document.documentElement;
-  const alternate = document.querySelector('link[rel="alternate"]');
+  const alternate = document.querySelector<HTMLLinkElement>('link[rel="alternate"]')!;
   const storage = {
-    read(name) {
+    read(name: string) {
       try {
         return localStorage.getItem(`cumcraft:${name}`);
       } catch {
         return null;
       }
     },
-    write(name, value) {
+    write(name: string, value: string) {
       try {
         localStorage.setItem(`cumcraft:${name}`, value);
       } catch {
@@ -18,12 +21,12 @@
     },
   };
 
-  function applyTheme(theme) {
+  function applyTheme(theme: string) {
     if (theme === "light" || theme === "dark") root.dataset.theme = theme;
     else delete root.dataset.theme;
   }
 
-  function languageUrl(preference) {
+  function languageUrl(preference: string) {
     const locale =
       preference === "browser"
         ? (navigator.languages
@@ -40,9 +43,9 @@
 
   const savedTheme = storage.read("theme");
   const savedLanguage = storage.read("language");
-  const theme =
+  const theme: Theme =
     savedTheme === "light" || savedTheme === "dark" ? savedTheme : "system";
-  const language =
+  const language: Language =
     savedLanguage === "en" || savedLanguage === "ru"
       ? savedLanguage
       : "browser";
@@ -54,14 +57,14 @@
     return;
   }
 
-  function closeMenu(menu) {
+  function closeMenu(menu: HTMLDetailsElement) {
     menu.open = false;
-    menu.querySelector("summary").focus();
+    menu.querySelector("summary")!.focus();
   }
 
-  function setupMenu(menu) {
-    function dismiss(event) {
-      if (!menu.contains(event.target)) menu.open = false;
+  function setupMenu(menu: HTMLDetailsElement) {
+    function dismiss(event: Event) {
+      if (!(event.target instanceof Node) || !menu.contains(event.target)) menu.open = false;
     }
 
     menu.addEventListener("keydown", (event) => {
@@ -71,17 +74,17 @@
       }
     });
     menu.addEventListener("click", (event) => {
-      if (event.target.closest("a")) closeMenu(menu);
+      if (event.target instanceof Element && event.target.closest("a")) closeMenu(menu);
     });
     document.addEventListener("click", dismiss);
     document.addEventListener("focusin", dismiss);
   }
 
-  function setupPicker(id, initialValue, apply) {
-    const picker = document.getElementById(id);
+  function setupPicker(id: string, initialValue: string, apply: (value: string) => void) {
+    const picker = document.querySelector<HTMLDetailsElement>(`#${id}`)!;
     const options = picker.querySelectorAll("button");
 
-    function select(value) {
+    function select(value: string) {
       for (const option of options) {
         option.setAttribute("aria-pressed", String(option.value === value));
       }
@@ -99,12 +102,12 @@
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".header-menu").forEach(setupMenu);
+    document.querySelectorAll<HTMLDetailsElement>(".header-menu").forEach(setupMenu);
     setupPicker("theme", theme, applyTheme);
     setupPicker("language", language, (value) => {
       const url = languageUrl(value);
       if (url) location.replace(url);
     });
-    document.getElementById("preferences").hidden = false;
+    document.getElementById("preferences")!.hidden = false;
   });
 })();

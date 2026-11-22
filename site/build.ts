@@ -47,8 +47,11 @@ await Promise.all([
     }
   }),
   copyFile("style.css", "dist/style.css"),
-  copyFile("preferences.js", "dist/preferences.js"),
-  copyFile("map.js", "dist/map.js"),
-  copyFile("tabs.js", "dist/tabs.js"),
+  Bun.build({
+    entrypoints: ["preferences.ts", "map.ts", "tabs.ts", "drag.ts"],
+    outdir: "dist",
+    target: "browser",
+    format: "iife",
+  }),
   copyFile("../server-icon.png", "dist/server-icon.png"),
 ]);

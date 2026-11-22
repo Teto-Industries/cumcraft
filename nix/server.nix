@@ -15,6 +15,9 @@ let
   fabricPackage = "fabric-${lib.replaceStrings [ "." ] [ "_" ] metadata.minecraft}";
   managedConfigs = "${../config}";
   pythonWithTomlkit = pkgs.python3.withPackages (ps: [ ps.tomlkit ]);
+  bluemapEmbed = pkgs.runCommand "cumcraft-embed.js" { nativeBuildInputs = [ pkgs.bun ]; } ''
+    bun build --target=browser --format=iife --outfile="$out" ${./bluemap/cumcraft-embed.ts}
+  '';
   inherit (config.services.cumcraft.easyAuth) passwordFile;
 in
 {
@@ -90,7 +93,7 @@ in
               live-player-markers: ${lib.boolToString bluemap.livePlayers}
               skin-download: false
             ''} config/bluemap/plugin.conf
-            install -CDm 0644 ${./bluemap/cumcraft-embed.js} bluemap/web/cumcraft-embed.js
+            install -CDm 0644 ${bluemapEmbed} bluemap/web/cumcraft-embed.js
           ''}
 
           ${pythonWithTomlkit}/bin/python3 ${./configure-distant-horizons.py} ${./distant-horizons.toml}

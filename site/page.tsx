@@ -53,7 +53,7 @@ function HeaderMenu(props: {
   children: JSX.Element;
 }) {
   return (
-    <details class="header-menu" id={props.id} name="header-menus">
+    <details class="header-menu" id={props.id} name="header-menus" data-drag="">
       <summary aria-label={props.label}>
         <svg
           viewBox="0 0 24 24"
@@ -80,7 +80,7 @@ function Picker(props: {
   return (
     <HeaderMenu id={props.id} label={props.label} icon={props.icon}>
       {props.options.map((option) => (
-        <button type="button" value={option.value} lang={option.lang}>
+        <button type="button" value={option.value} lang={option.lang} data-drag="">
           {option.label}
         </button>
       ))}
@@ -122,18 +122,18 @@ function Navigation(props: { locale: Locale; home: string; section: Section; inl
 
   return (
     <nav class={props.inline ? "inline-nav" : undefined} aria-label={t.nav}>
-      <a href={`${props.home}editions/`} data-route="editions" aria-current={props.section === "editions" ? "page" : undefined}>{t.editions}</a>
-      <a href={`${props.home}mods/`} data-route="mods" aria-current={props.section === "mods" ? "page" : undefined}>{t.mods}</a>
-      <a href={`${props.home}releases/`} data-route="releases" aria-current={props.section === "releases" ? "page" : undefined}>{t.releases}</a>
+      <a href={`${props.home}editions/`} data-route="editions" data-drag="" aria-current={props.section === "editions" ? "page" : undefined}>{t.editions}</a>
+      <a href={`${props.home}mods/`} data-route="mods" data-drag="" aria-current={props.section === "mods" ? "page" : undefined}>{t.mods}</a>
+      <a href={`${props.home}releases/`} data-route="releases" data-drag="" aria-current={props.section === "releases" ? "page" : undefined}>{t.releases}</a>
     </nav>
   );
 }
 
 function Header(props: { locale: Locale; home: string; icon: string; section: Section }) {
   return (
-    <header class="top">
+    <header class="top" data-drag="landmark">
       <div class="wrap nav">
-        <a class="brand" href={props.home} data-route="home" aria-label="Cumcraft" aria-current={props.section === "home" ? "page" : undefined}>
+        <a class="brand" data-drag="" href={props.home} data-route="home" aria-label="Cumcraft" aria-current={props.section === "home" ? "page" : undefined}>
           <img src={props.icon} alt="" width="40" height="40" />
           <span>Cumcraft</span>
         </a>
@@ -189,6 +189,7 @@ function Layout(props: {
         />
         <script src={`${root}preferences.js`}></script>
         <script src={`${root}tabs.js`} defer></script>
+        <script src={`${root}drag.js`} defer></script>
         {props.mapUrl && <script src={`${root}map.js`} defer></script>}
         <link rel="icon" type="image/png" href={icon} />
         <link rel="stylesheet" href={`${root}style.css`} />
@@ -198,7 +199,7 @@ function Layout(props: {
           {t.skip}
         </a>
         <Header locale={props.locale} home={home} icon={icon} section={props.section} />
-        <main id="main">
+        <main id="main" data-drag="landmark">
           <div class="wrap" data-panel="home" data-title={title.home} hidden={props.section !== "home"}>
             <Home pack={props.pack} locale={props.locale} mapUrl={props.mapUrl} home={home} />
           </div>
@@ -212,12 +213,12 @@ function Layout(props: {
             <Releases releases={props.releases} locale={props.locale} />
           </div>
         </main>
-        <footer>
+        <footer data-drag="landmark">
           <div class="wrap footer">
-            <a href="https://github.com/Teto-Industries/cumcraft">
+            <a href="https://github.com/Teto-Industries/cumcraft" data-drag="">
               GitHub <span aria-hidden="true">↗</span>
             </a>
-            <a href="https://github.com/Teto-Industries/cumcraft/issues">
+            <a href="https://github.com/Teto-Industries/cumcraft/issues" data-drag="">
               {t.issue} <span aria-hidden="true">↗</span>
             </a>
           </div>
@@ -248,7 +249,7 @@ function Edition(props: {
   const profile = localizedProfile(props.profile, props.locale);
 
   return (
-    <article class="edition">
+    <article class="edition" data-drag="">
       <h2>{profile.name}</h2>
       <div class="meta">
         {props.profile.renderer}
@@ -260,6 +261,7 @@ function Edition(props: {
       {props.asset && (
         <a
           class="download"
+          data-drag=""
           href={props.asset.browser_download_url}
           aria-label={`${t.download}: ${profile.name}`}
         >
@@ -281,11 +283,12 @@ function MapActions(props: { url: string; locale: Locale }) {
         aria-expanded="false"
         data-explore={t.exploreMap}
         data-close={t.closeMap}
+        data-drag=""
         hidden
       >
         {t.exploreMap}
       </button>
-      <a href={props.url}>{t.exploreMap}</a>
+      <a href={props.url} data-drag="">{t.exploreMap}</a>
     </div>
   );
 }
@@ -294,10 +297,10 @@ function GettingStarted(props: { locale: Locale; home: string }) {
   const t = copy[props.locale];
 
   return (
-    <section aria-labelledby="getting-started">
+    <section aria-labelledby="getting-started" data-drag="">
       <h2 id="getting-started">{t.gettingStarted}</h2>
       <ol class="join-steps">
-        <li>
+        <li data-drag="">
           <h3>{t.installLauncher}</h3>
           <p>
             {t.ownsMinecraft}{" "}
@@ -310,11 +313,11 @@ function GettingStarted(props: { locale: Locale; home: string }) {
             </a>
           </p>
         </li>
-        <li>
+        <li data-drag="">
           <h3>{t.downloadEdition}</h3>
-          <a class="editions-link" href={`${props.home}editions/`} data-route="editions">{t.chooseEdition}</a>
+          <a class="editions-link" data-drag="" href={`${props.home}editions/`} data-route="editions">{t.chooseEdition}</a>
         </li>
-        <li>
+        <li data-drag="">
           <h3>{t.importPack}</h3>
           <p>{t.importPackHint}</p>
         </li>
@@ -336,7 +339,7 @@ function ModList(props: {
           .map((profile) => localizedProfile(profile, props.locale).name);
 
         return (
-          <li class={description ? "mod-feature" : undefined}>
+          <li class={description ? "mod-feature" : undefined} data-drag="">
             <a href={`https://modrinth.com/mod/${slug}`}>
               {name} <span aria-hidden="true">↗</span>
             </a>
@@ -356,24 +359,24 @@ function Mods(props: { locale: Locale; profiles: Profile[] }) {
 
   return (
     <>
-      <section class="hero">
+      <section class="hero" data-drag="">
         <h1>{t.mods}</h1>
       </section>
-      <section aria-label={t.mods}>
-        <div class="mod-group">
+      <section aria-label={t.mods} data-drag="">
+        <div class="mod-group" data-drag="">
           <h2>{t.modGameplay}</h2>
           <ModList entries={mods.gameplay} locale={props.locale} />
         </div>
-        <div class="mod-group">
+        <div class="mod-group" data-drag="">
           <h2>{t.modGraphics}</h2>
           <ModList entries={mods.graphics} locale={props.locale} profiles={props.profiles} />
         </div>
-        <div class="mod-group">
+        <div class="mod-group" data-drag="">
           <h2>{t.modInventory}</h2>
           <p class="mod-hint">{t.modInventoryIntro}</p>
           <ModList entries={mods.inventory} locale={props.locale} />
         </div>
-        <details class="mod-group mod-technical">
+        <details class="mod-group mod-technical" data-drag="">
           <summary>{t.modTechnical}</summary>
           <ModList entries={mods.technical} locale={props.locale} />
         </details>
@@ -392,8 +395,8 @@ function Home(props: {
 
   return (
     <>
-      <div class="home-intro">
-        <section class="hero">
+      <div class="home-intro" data-drag="">
+        <section class="hero" data-drag="">
           <h1>{t.headline}</h1>
           <p>Minecraft {props.pack.minecraft} · Fabric</p>
         </section>
@@ -417,7 +420,7 @@ function Editions(props: {
 
   return (
     <>
-      <section class="hero">
+      <section class="hero" data-drag="">
         <h1>{t.chooseEdition}</h1>
         {props.latest && (
           <p class="meta">
@@ -427,7 +430,7 @@ function Editions(props: {
         )}
       </section>
       {!props.latest && (
-        <p class="notice">
+        <p class="notice" data-drag="">
           {t.noPack} <a href={`${props.home}releases/`} data-route="releases">{t.checkReleases}</a>.
         </p>
       )}
@@ -449,17 +452,17 @@ function Releases(props: { releases: Release[]; locale: Locale }) {
 
   return (
     <>
-      <section class="hero">
+      <section class="hero" data-drag="">
         <div class="meta">{t.archive}</div>
         <h1>{t.changelog}.</h1>
         <p>{t.archiveIntroduction}</p>
       </section>
-      <section aria-label={t.published}>
+      <section aria-label={t.published} data-drag="">
         {props.releases.length === 0 ? (
           <p class="notice">{t.noReleases}</p>
         ) : (
           props.releases.map((release) => (
-            <article class="release">
+            <article class="release" data-drag="">
               <h2>{release.name || release.tag_name}</h2>
               <div class="meta">
                 <time datetime={release.published_at}>
@@ -495,14 +498,14 @@ function Releases(props: { releases: Release[]; locale: Locale }) {
                           safeUrl(asset.browser_download_url),
                       )
                       .map((asset) => (
-                        <a href={asset.browser_download_url}>
+                        <a href={asset.browser_download_url} data-drag="">
                           {asset.name} <span>↗</span>
                         </a>
                       ))}
                   </div>
                 )}
                 {safeUrl(release.html_url) && (
-                  <a class="source-link" href={release.html_url}>
+                  <a class="source-link" href={release.html_url} data-drag="">
                     {t.viewSource} <span aria-hidden="true">↗</span>
                   </a>
                 )}

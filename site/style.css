@@ -364,3 +364,32 @@ body:has([data-panel="mods"]:not([hidden])) > .top {
   gap: 0.5rem 1rem;
   padding-block: 1rem;
 }
+@media (hover: hover) and (pointer: fine) {
+  /* Clip translated overflow to the page without changing its scroll range. */
+  :root[data-drag-layout] {
+    overflow: auto;
+  }
+  :root[data-drag-layout] body:not([data-exploring]) {
+    overflow: clip;
+    min-block-size: 100vh;
+  }
+  body:not([data-exploring]) [data-drag-moved] {
+    position: relative;
+    z-index: var(--drag-layer);
+    translate: var(--drag-x) var(--drag-y);
+  }
+  /* Keep open menus usable above overlapping, moved blocks. */
+  :root[data-drag-layout] .top:has(.header-menu[open]) {
+    position: relative;
+    z-index: 2147483647;
+  }
+  :root[data-drag-layout] .header-controls:has(.header-menu[open]),
+  :root[data-drag-layout] .header-menu[data-drag-moved][open] {
+    z-index: 2147483647;
+  }
+  :root[data-dragging] [data-drag],
+  :root[data-dragging] [data-drag] * {
+    cursor: grabbing;
+    user-select: none;
+  }
+}

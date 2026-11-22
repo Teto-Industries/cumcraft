@@ -1,41 +1,41 @@
 (() => {
-  const links = [...document.querySelectorAll("a[data-route]")];
-  const panels = [...document.querySelectorAll("[data-panel]")];
-  const headerLinks = document.querySelectorAll("header a[data-route]");
-  const alternate = document.querySelector('link[rel="alternate"]');
-  const initialSection = panels.find((panel) => !panel.hidden).dataset.panel;
+  const links = [...document.querySelectorAll<HTMLAnchorElement>("a[data-route]")];
+  const panels = [...document.querySelectorAll<HTMLElement>("[data-panel]")];
+  const headerLinks = document.querySelectorAll<HTMLAnchorElement>("header a[data-route]");
+  const alternate = document.querySelector<HTMLLinkElement>('link[rel="alternate"]')!;
+  const initialSection = panels.find((panel) => !panel.hidden)!.dataset.panel!;
   const alternateHome = new URL(initialSection === "home" ? "./" : "../", alternate.href);
-  const routes = {};
+  const routes: Record<string, string> = {};
 
   for (const link of links) {
     const url = new URL(link.href);
-    routes[link.dataset.route] = url.pathname;
+    routes[link.dataset.route!] = url.pathname;
     link.href = url.href;
   }
 
-  function showSection(section) {
+  function showSection(section: string) {
     window.dispatchEvent(new Event("site:sectionchange"));
     for (const panel of panels) panel.hidden = panel.dataset.panel !== section;
     for (const link of headerLinks) {
       if (link.dataset.route === section) link.setAttribute("aria-current", "page");
       else link.removeAttribute("aria-current");
     }
-    const panel = panels.find((item) => item.dataset.panel === section);
-    document.title = panel.dataset.title;
+    const panel = panels.find((item) => item.dataset.panel === section)!;
+    document.title = panel.dataset.title!;
     alternate.href = new URL(section === "home" ? "./" : `${section}/`, alternateHome).href;
-    const heading = panel.querySelector("h1");
+    const heading = panel.querySelector("h1")!;
     heading.tabIndex = -1;
     heading.focus({ preventScroll: true });
     window.scrollTo(0, 0);
   }
 
   document.addEventListener("click", (event) => {
-    const link = event.target.closest("a[data-route]");
+    const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>("a[data-route]") : null;
     if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     if (location.href === link.href) return;
     history.pushState(null, "", link.href);
-    showSection(link.dataset.route);
+    showSection(link.dataset.route!);
   });
 
   window.addEventListener("popstate", () => {
