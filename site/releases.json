@@ -164,7 +164,7 @@
   {
     "tag_name": "v0.1.0",
     "name": "Cumcraft v0.1.0",
-    "body": "Minecraft Java 26.3 with Fabric Loader 0.20.1. All four editions include the Traverse compatibility port, so existing worlds retain their Traverse content. Import the new pack as a separate instance to keep your old saves and settings intact.",
+    "body": "Minecraft Java 26.3 with Fabric Loader 0.20.1. Import the new pack as a separate instance to keep your old saves and settings intact.",
     "published_at": "2026-11-21T22:27:46Z",
     "draft": false,
     "prerelease": false,
