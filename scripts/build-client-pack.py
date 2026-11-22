@@ -61,9 +61,13 @@ def client_files(mods, pack, profile):
         suffix = ".disabled" if mod.get("disabled") else ""
         yield download(f"mods/{name}{suffix}", mod)
 
-    if profile.get("shaders"):
+    renderer = profile.get("shaders")
+    if renderer:
         shader = pack["shaderPack"]
         yield download(f"shaderpacks/{shader['name']}", shader)
+        for shader in pack["additionalShaderPacks"]:
+            if renderer in shader["renderers"]:
+                yield download(f"shaderpacks/{shader['name']}", shader)
 
 
 def write_defaults(archive, pack, profile):
