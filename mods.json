@@ -843,6 +843,20 @@
       "voxy-opengl"
     ]
   },
+  "voxy-server-side-fabric.jar": {
+    "hash": "sha256-WXqgbc/KhPuCSimN6SCCm6m0pHX6IjxJd7ke0m3Twro=",
+    "url": "https://cdn.modrinth.com/data/84zcagOb/versions/YDxQqrUo/voxy-server-side-fabric.jar",
+    "size": 9396331,
+    "sha1": "efb045d353a6b47d0c8ad759f56876925485aada",
+    "sha512": "552284d80f70306582ac52c9b82a2c656846ce71ca8d4195c76bffac55940a4c75cd25ec73e593bb783d7ec00aa1b53901e39f23ec97f6e6451b41e605876be5",
+    "sides": [
+      "client",
+      "server"
+    ],
+    "profiles": [
+      "voxy-opengl"
+    ]
+  },
   "yet_another_config_lib_v3-3.9.7+26.3-fabric.jar": {
     "hash": "sha256-xS1B1ERSLZq7qZTNTE7i5xoGXXwxAQ+SqZWbgMy0sPU=",
     "url": "https://cdn.modrinth.com/data/1eAoo2KR/versions/s9SjoFu1/yet_another_config_lib_v3-3.9.7%2B26.3-fabric.jar",
