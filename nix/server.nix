@@ -10,6 +10,7 @@ let
   mods = lib.filterAttrs (
     name: mod: lib.elem "server" mod.sides && (name != "bluemap-5.29-fabric.jar" || bluemap.enable)
   ) (builtins.fromJSON (builtins.readFile ../mods.json));
+  traverse = ../client/overrides/mods/traverse-9.1.0-beta.1+cumcraft.26.3.jar;
   defaults = "${../config}";
   managedConfigs = "${../config-managed}";
   pythonWithTomlkit = pkgs.python3.withPackages (ps: [ ps.tomlkit ]);
@@ -41,7 +42,7 @@ in
       servers.cum = {
         enable = true;
         autoStart = true;
-        package = pkgs.fabricServers.fabric-26_2.override {
+        package = pkgs.fabricServers.fabric-26_3.override {
           jre_headless = pkgs.jdk25_headless;
         };
         jvmOpts = "-Xms2G -Xmx4G -XX:MaxDirectMemorySize=1G -XX:MaxMetaspaceSize=512M -Dfabric.modsFolder=.cumcraft-mods";
@@ -67,6 +68,12 @@ in
               inherit (mod) url hash;
             };
           }) mods
+          ++ [
+            {
+              name = baseNameOf traverse;
+              path = traverse;
+            }
+          ]
         );
         extraStartPre = ''
           while IFS= read -r -d "" source; do

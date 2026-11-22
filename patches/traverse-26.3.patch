@@ -1,0 +1,1406 @@
+Upstream: https://github.com/TerraformersMC/Traverse
+Base-commit: 4a3df623616d996e2f0b9d2bfa79d680c7702344
+
+diff --git a/build.gradle b/build.gradle
+index 0487455..5a899af 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -3,13 +3,14 @@ plugins {
+ 	id 'maven-publish'
+ 	id 'idea'
+ 	id 'eclipse'
+-	id 'net.fabricmc.fabric-loom' version '1.17.+'
++	id 'net.fabricmc.fabric-loom' version '1.17.21'
+ }
+ 
+ base.archivesName = project.archives_base_name
+ group = project.maven_group
+ 
+ apply from: 'https://raw.githubusercontent.com/TerraformersMC/GradleScripts/3.2/ferry-mpp.gradle'
++version = project.mod_version
+ 
+ repositories {
+ 	maven {
+@@ -27,8 +28,6 @@ loom {
+ 			sourceSet sourceSets.client
+ 		}
+ 	}
+-
+-	accessWidenerPath = file("src/main/resources/traverse.accesswidener")
+ }
+ 
+ fabricApi {
+diff --git a/gradle.properties b/gradle.properties
+index f0a2576..5be1faa 100644
+--- a/gradle.properties
++++ b/gradle.properties
+@@ -2,22 +2,22 @@ org.gradle.jvmargs=-Xmx2G
+ 
+ maven_group=com.terraformersmc
+ archives_base_name=traverse
+-mod_version=dev
++mod_version=9.1.0-beta.1+cumcraft.26.3
+ single_platform=fabric
+ 
+-minecraft_version=26.2
+-loader_version=0.19.3
+-fabric_version=0.153.0+26.2
++minecraft_version=26.3
++loader_version=0.20.1
++fabric_version=0.166.2+26.3
+ 
+ # Terraform APIs
+-terraform_biome_remapper_api_version=17.0.0
+-terraform_config_api_version=17.0.0
+-terraform_surfaces_api_version=17.0.0
+-terraform_tree_api_version=17.0.0
+-terraform_wood_api_version=17.0.0
++terraform_biome_remapper_api_version=19.0.0-alpha.1
++terraform_config_api_version=19.0.0-alpha.1
++terraform_surfaces_api_version=19.0.0-alpha.1
++terraform_tree_api_version=19.0.0-alpha.1
++terraform_wood_api_version=19.0.0-alpha.1
+ 
+ # Biolith for worldgen module and testing
+-biolith_version=3.7.0-alpha.2
++biolith_version=3.8.0-beta.2
+ 
+ ##
+ ## Ferry configuration
+diff --git a/src/client/java/com/terraformersmc/traverse/data/TraverseBlockLootSubProvider.java b/src/client/java/com/terraformersmc/traverse/data/TraverseBlockLootSubProvider.java
+index 0072555..162226c 100644
+--- a/src/client/java/com/terraformersmc/traverse/data/TraverseBlockLootSubProvider.java
++++ b/src/client/java/com/terraformersmc/traverse/data/TraverseBlockLootSubProvider.java
+@@ -4,8 +4,6 @@ import com.terraformersmc.traverse.block.TraverseBlocks;
+ import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+ import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider;
+ import net.minecraft.core.HolderLookup;
+-import net.minecraft.core.registries.Registries;
+-import net.minecraft.world.item.enchantment.Enchantment;
+ import org.jspecify.annotations.NullMarked;
+ 
+ import java.util.concurrent.CompletableFuture;
+@@ -18,9 +16,6 @@ public class TraverseBlockLootSubProvider extends FabricBlockLootSubProvider {
+ 
+ 	@Override
+ 	public void generate() {
+-		//noinspection unused
+-		HolderLookup.RegistryLookup<Enchantment> enchantmentRegistry = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+-
+ 		// simple blocks
+ 		dropSelf(TraverseBlocks.BROWN_AUTUMNAL_SAPLING);
+ 		dropSelf(TraverseBlocks.FIR_BUTTON);
+diff --git a/src/client/java/com/terraformersmc/traverse/data/TraverseDynamicRegistryProvider.java b/src/client/java/com/terraformersmc/traverse/data/TraverseDynamicRegistryProvider.java
+index 3b6af7b..bfcbb76 100644
+--- a/src/client/java/com/terraformersmc/traverse/data/TraverseDynamicRegistryProvider.java
++++ b/src/client/java/com/terraformersmc/traverse/data/TraverseDynamicRegistryProvider.java
+@@ -23,7 +23,7 @@ public class TraverseDynamicRegistryProvider extends FabricDynamicRegistryProvid
+ 	}
+ 
+ 	public static void buildRegistry(RegistrySetBuilder registryBuilder) {
+-		registryBuilder.add(Registries.CONFIGURED_FEATURE, TraverseConfiguredFeatures::bootstrap);
++		registryBuilder.add(Registries.FEATURE, TraverseConfiguredFeatures::bootstrap);
+ 		registryBuilder.add(Registries.PLACED_FEATURE, TraversePlacedFeatures::bootstrap);
+ 		registryBuilder.add(Registries.BIOME, TraverseBiomes::bootstrap);
+ 		registryBuilder.add(Registries.VILLAGER_TRADE, TraverseVillagerTrades::bootstrap);
+@@ -31,7 +31,7 @@ public class TraverseDynamicRegistryProvider extends FabricDynamicRegistryProvid
+ 
+ 	@Override
+ 	public void configure(HolderLookup.Provider registries, Entries entries) {
+-		addAll(entries, registries.lookupOrThrow(Registries.CONFIGURED_FEATURE), Traverse.MOD_ID);
++		addAll(entries, registries.lookupOrThrow(Registries.FEATURE), Traverse.MOD_ID);
+ 		addAll(entries, registries.lookupOrThrow(Registries.PLACED_FEATURE), Traverse.MOD_ID);
+ 		addAll(entries, registries.lookupOrThrow(Registries.BIOME), Traverse.MOD_ID);
+ 		addAll(entries, registries.lookupOrThrow(Registries.VILLAGER_TRADE), Traverse.MOD_ID);
+diff --git a/src/client/java/com/terraformersmc/traverse/data/TraverseRecipeProvider.java b/src/client/java/com/terraformersmc/traverse/data/TraverseRecipeProvider.java
+index b3440ec..ba353d3 100644
+--- a/src/client/java/com/terraformersmc/traverse/data/TraverseRecipeProvider.java
++++ b/src/client/java/com/terraformersmc/traverse/data/TraverseRecipeProvider.java
+@@ -8,12 +8,14 @@ import com.terraformersmc.traverse.item.TraverseItems;
+ import com.terraformersmc.traverse.tag.TraverseItemTags;
+ import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
++import net.minecraft.advancements.Advancement;
+ import net.minecraft.core.HolderLookup;
+-import net.minecraft.data.recipes.RecipeOutput;
+ import net.minecraft.data.recipes.RecipeProvider;
++import net.minecraft.data.worldgen.BootstrapContext;
+ import net.minecraft.resources.Identifier;
+ import net.minecraft.world.flag.FeatureFlagSet;
+ import net.minecraft.world.flag.FeatureFlags;
++import net.minecraft.world.item.crafting.Recipe;
+ import org.jspecify.annotations.NullMarked;
+ 
+ import java.util.concurrent.CompletableFuture;
+@@ -25,8 +27,8 @@ public class TraverseRecipeProvider extends FabricRecipeProvider {
+ 	}
+ 
+ 	@Override
+-	public RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
+-		return new RecipeProvider(registryLookup, exporter) {
++	public RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, BootstrapContext<Recipe<?>> recipes, BootstrapContext<Advancement> advancements) {
++		return new RecipeProvider(recipes, advancements) {
+ 			@Override
+ 			public void buildRecipes() {
+ 				// We don't really use feature sets, so this is good enough...
+diff --git a/src/main/java/com/terraformersmc/traverse/biome/AutumnalWoodsBiomes.java b/src/main/java/com/terraformersmc/traverse/biome/AutumnalWoodsBiomes.java
+index 3540553..156596d 100644
+--- a/src/main/java/com/terraformersmc/traverse/biome/AutumnalWoodsBiomes.java
++++ b/src/main/java/com/terraformersmc/traverse/biome/AutumnalWoodsBiomes.java
+@@ -8,13 +8,14 @@ import net.minecraft.data.worldgen.BootstrapContext;
+ import net.minecraft.sounds.SoundEvents;
+ import net.minecraft.world.attribute.BackgroundMusic;
+ import net.minecraft.world.attribute.EnvironmentAttributes;
++import net.minecraft.util.valueproviders.UniformInt;
+ import net.minecraft.world.entity.EntityTypes;
+ import net.minecraft.world.entity.MobCategory;
+ import net.minecraft.world.level.biome.Biome;
+ import net.minecraft.world.level.biome.BiomeGenerationSettings;
+ import net.minecraft.world.level.biome.MobSpawnSettings;
+ import net.minecraft.world.level.levelgen.GenerationStep;
+-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
++import net.minecraft.world.level.levelgen.carver.WorldCarver;
+ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+ 
+ import static com.terraformersmc.traverse.biome.TraverseBiomes.addBasicFeatures;
+@@ -40,7 +41,7 @@ public class AutumnalWoodsBiomes {
+ 	}
+ 
+ 	private static BiomeGenerationSettings createGenerationSettings(BootstrapContext<Biome> registerable) {
+-		HolderGetter<ConfiguredWorldCarver<?>> configuredCarvers = registerable.lookup(Registries.CONFIGURED_CARVER);
++		HolderGetter<WorldCarver> configuredCarvers = registerable.lookup(Registries.CARVER);
+ 		HolderGetter<PlacedFeature> placedFeatures = registerable.lookup(Registries.PLACED_FEATURE);
+ 
+ 		BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder(placedFeatures, configuredCarvers);
+@@ -58,7 +59,7 @@ public class AutumnalWoodsBiomes {
+ 
+ 	private static MobSpawnSettings createSpawnSettings() {
+ 		MobSpawnSettings.Builder builder = TraverseBiomes.createDefaultSpawnSettings();
+-		builder.addSpawn(MobCategory.CREATURE, 5, new MobSpawnSettings.SpawnerData(EntityTypes.WOLF, 4, 4));
++		builder.addSpawn(EntityTypes.WOLF, MobCategory.CREATURE, 5, UniformInt.of(4, 4));
+ 		return builder.build();
+ 	}
+ }
+diff --git a/src/main/java/com/terraformersmc/traverse/biome/ConiferousForestBiomes.java b/src/main/java/com/terraformersmc/traverse/biome/ConiferousForestBiomes.java
+index 809be7a..6f660ed 100644
+--- a/src/main/java/com/terraformersmc/traverse/biome/ConiferousForestBiomes.java
++++ b/src/main/java/com/terraformersmc/traverse/biome/ConiferousForestBiomes.java
+@@ -6,13 +6,14 @@ import net.minecraft.core.registries.Registries;
+ import net.minecraft.data.worldgen.BiomeDefaultFeatures;
+ import net.minecraft.data.worldgen.BootstrapContext;
+ import net.minecraft.world.attribute.EnvironmentAttributes;
++import net.minecraft.util.valueproviders.UniformInt;
+ import net.minecraft.world.entity.EntityTypes;
+ import net.minecraft.world.entity.MobCategory;
+ import net.minecraft.world.level.biome.Biome;
+ import net.minecraft.world.level.biome.BiomeGenerationSettings;
+ import net.minecraft.world.level.biome.MobSpawnSettings;
+ import net.minecraft.world.level.levelgen.GenerationStep;
+-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
++import net.minecraft.world.level.levelgen.carver.WorldCarver;
+ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+ 
+ import static com.terraformersmc.traverse.biome.TraverseBiomes.addBasicFeatures;
+@@ -38,7 +39,7 @@ public class ConiferousForestBiomes {
+ 	}
+ 
+ 	private static BiomeGenerationSettings createGenerationSettings(BootstrapContext<Biome> registerable, boolean snowy) {
+-		HolderGetter<ConfiguredWorldCarver<?>> configuredCarvers = registerable.lookup(Registries.CONFIGURED_CARVER);
++		HolderGetter<WorldCarver> configuredCarvers = registerable.lookup(Registries.CARVER);
+ 		HolderGetter<PlacedFeature> placedFeatures = registerable.lookup(Registries.PLACED_FEATURE);
+ 
+ 		BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder(placedFeatures, configuredCarvers);
+@@ -60,7 +61,7 @@ public class ConiferousForestBiomes {
+ 
+ 	private static MobSpawnSettings createSpawnSettings() {
+ 		MobSpawnSettings.Builder builder = TraverseBiomes.createDefaultSpawnSettings();
+-		builder.addSpawn(MobCategory.CREATURE, 5, new MobSpawnSettings.SpawnerData(EntityTypes.WOLF, 4, 4));
++		builder.addSpawn(EntityTypes.WOLF, MobCategory.CREATURE, 5, UniformInt.of(4, 4));
+ 		return builder.build();
+ 	}
+ }
+diff --git a/src/main/java/com/terraformersmc/traverse/biome/DesertShrublandBiomes.java b/src/main/java/com/terraformersmc/traverse/biome/DesertShrublandBiomes.java
+index e657010..bfcd4d2 100644
+--- a/src/main/java/com/terraformersmc/traverse/biome/DesertShrublandBiomes.java
++++ b/src/main/java/com/terraformersmc/traverse/biome/DesertShrublandBiomes.java
+@@ -9,13 +9,14 @@ import net.minecraft.data.worldgen.placement.VegetationPlacements;
+ import net.minecraft.sounds.SoundEvents;
+ import net.minecraft.world.attribute.BackgroundMusic;
+ import net.minecraft.world.attribute.EnvironmentAttributes;
++import net.minecraft.util.valueproviders.UniformInt;
+ import net.minecraft.world.entity.EntityTypes;
+ import net.minecraft.world.entity.MobCategory;
+ import net.minecraft.world.level.biome.Biome;
+ import net.minecraft.world.level.biome.BiomeGenerationSettings;
+ import net.minecraft.world.level.biome.MobSpawnSettings;
+ import net.minecraft.world.level.levelgen.GenerationStep;
+-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
++import net.minecraft.world.level.levelgen.carver.WorldCarver;
+ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+ 
+ import static com.terraformersmc.traverse.biome.TraverseBiomes.addBasicFeatures;
+@@ -42,7 +43,7 @@ public class DesertShrublandBiomes {
+ 	}
+ 
+ 	private static BiomeGenerationSettings createGenerationSettings(BootstrapContext<Biome> registerable) {
+-		HolderGetter<ConfiguredWorldCarver<?>> configuredCarvers = registerable.lookup(Registries.CONFIGURED_CARVER);
++		HolderGetter<WorldCarver> configuredCarvers = registerable.lookup(Registries.CARVER);
+ 		HolderGetter<PlacedFeature> placedFeatures = registerable.lookup(Registries.PLACED_FEATURE);
+ 
+ 		BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder(placedFeatures, configuredCarvers);
+@@ -64,17 +65,17 @@ public class DesertShrublandBiomes {
+ 	private static MobSpawnSettings createSpawnSettings() {
+ 		MobSpawnSettings.Builder builder = new net.minecraft.world.level.biome.MobSpawnSettings.Builder();
+ 		TraverseBiomes.addDefaultCaveSpawnEntries(builder);
+-		builder.addSpawn(MobCategory.MONSTER,  100, new MobSpawnSettings.SpawnerData(EntityTypes.SPIDER, 4, 4));
+-		builder.addSpawn(MobCategory.MONSTER,   38, new MobSpawnSettings.SpawnerData(EntityTypes.ZOMBIE, 4, 4));
+-		builder.addSpawn(MobCategory.MONSTER,    2, new MobSpawnSettings.SpawnerData(EntityTypes.ZOMBIE_VILLAGER, 1, 1));
+-		builder.addSpawn(MobCategory.MONSTER,   60, new MobSpawnSettings.SpawnerData(EntityTypes.HUSK, 4, 4));
+-		builder.addSpawn(MobCategory.MONSTER,  100, new MobSpawnSettings.SpawnerData(EntityTypes.SKELETON, 4, 4));
+-		builder.addSpawn(MobCategory.MONSTER,  100, new MobSpawnSettings.SpawnerData(EntityTypes.CREEPER, 4, 4));
+-		builder.addSpawn(MobCategory.MONSTER,  100, new MobSpawnSettings.SpawnerData(EntityTypes.SLIME, 4, 4));
+-		builder.addSpawn(MobCategory.MONSTER,   10, new MobSpawnSettings.SpawnerData(EntityTypes.ENDERMAN, 1, 4));
+-		builder.addSpawn(MobCategory.MONSTER,    5, new MobSpawnSettings.SpawnerData(EntityTypes.WITCH, 1, 1));
+-		builder.addSpawn(MobCategory.CREATURE,   4, new MobSpawnSettings.SpawnerData(EntityTypes.RABBIT, 2, 3));
+-		builder.addSpawn(MobCategory.CREATURE,   1, new MobSpawnSettings.SpawnerData(EntityTypes.ARMADILLO, 1, 2));
++		builder.addSpawn(EntityTypes.SPIDER, MobCategory.MONSTER, 100, UniformInt.of(4, 4));
++		builder.addSpawn(EntityTypes.ZOMBIE, MobCategory.MONSTER, 38, UniformInt.of(4, 4));
++		builder.addSpawn(EntityTypes.ZOMBIE_VILLAGER, MobCategory.MONSTER, 2, UniformInt.of(1, 1));
++		builder.addSpawn(EntityTypes.HUSK, MobCategory.MONSTER, 60, UniformInt.of(4, 4));
++		builder.addSpawn(EntityTypes.SKELETON, MobCategory.MONSTER, 100, UniformInt.of(4, 4));
++		builder.addSpawn(EntityTypes.CREEPER, MobCategory.MONSTER, 100, UniformInt.of(4, 4));
++		builder.addSpawn(EntityTypes.SLIME, MobCategory.MONSTER, 100, UniformInt.of(4, 4));
++		builder.addSpawn(EntityTypes.ENDERMAN, MobCategory.MONSTER, 10, UniformInt.of(1, 4));
++		builder.addSpawn(EntityTypes.WITCH, MobCategory.MONSTER, 5, UniformInt.of(1, 1));
++		builder.addSpawn(EntityTypes.RABBIT, MobCategory.CREATURE, 4, UniformInt.of(2, 3));
++		builder.addSpawn(EntityTypes.ARMADILLO, MobCategory.CREATURE, 1, UniformInt.of(1, 2));
+ 		return builder.build();
+ 	}
+ }
+diff --git a/src/main/java/com/terraformersmc/traverse/biome/FlatlandsBiomes.java b/src/main/java/com/terraformersmc/traverse/biome/FlatlandsBiomes.java
+index 8c0b1fa..1266c5a 100644
+--- a/src/main/java/com/terraformersmc/traverse/biome/FlatlandsBiomes.java
++++ b/src/main/java/com/terraformersmc/traverse/biome/FlatlandsBiomes.java
+@@ -8,7 +8,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
+ import net.minecraft.world.level.biome.Biome;
+ import net.minecraft.world.level.biome.BiomeGenerationSettings;
+ import net.minecraft.world.level.levelgen.GenerationStep;
+-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
++import net.minecraft.world.level.levelgen.carver.WorldCarver;
+ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+ 
+ import static com.terraformersmc.traverse.biome.TraverseBiomes.addBasicFeatures;
+@@ -31,7 +31,7 @@ public class FlatlandsBiomes {
+ 	}
+ 
+ 	private static BiomeGenerationSettings createGenerationSettings(BootstrapContext<Biome> registerable) {
+-		HolderGetter<ConfiguredWorldCarver<?>> configuredCarvers = registerable.lookup(Registries.CONFIGURED_CARVER);
++		HolderGetter<WorldCarver> configuredCarvers = registerable.lookup(Registries.CARVER);
+ 		HolderGetter<PlacedFeature> placedFeatures = registerable.lookup(Registries.PLACED_FEATURE);
+ 
+ 		BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder(placedFeatures, configuredCarvers);
+diff --git a/src/main/java/com/terraformersmc/traverse/biome/LushSwampBiomes.java b/src/main/java/com/terraformersmc/traverse/biome/LushSwampBiomes.java
+index 948db4e..54e62ca 100644
+--- a/src/main/java/com/terraformersmc/traverse/biome/LushSwampBiomes.java
++++ b/src/main/java/com/terraformersmc/traverse/biome/LushSwampBiomes.java
+@@ -8,15 +8,17 @@ import net.minecraft.data.worldgen.BootstrapContext;
+ import net.minecraft.data.worldgen.placement.AquaticPlacements;
+ import net.minecraft.sounds.SoundEvents;
+ import net.minecraft.world.attribute.BackgroundMusic;
++import net.minecraft.util.ARGB;
+ import net.minecraft.world.attribute.EnvironmentAttributes;
+ import net.minecraft.world.attribute.modifier.FloatModifier;
++import net.minecraft.util.valueproviders.UniformInt;
+ import net.minecraft.world.entity.EntityTypes;
+ import net.minecraft.world.entity.MobCategory;
+ import net.minecraft.world.level.biome.Biome;
+ import net.minecraft.world.level.biome.BiomeGenerationSettings;
+ import net.minecraft.world.level.biome.MobSpawnSettings;
+ import net.minecraft.world.level.levelgen.GenerationStep;
+-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
++import net.minecraft.world.level.levelgen.carver.WorldCarver;
+ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+ 
+ import static com.terraformersmc.traverse.biome.TraverseBiomes.addBasicFeatures;
+@@ -38,7 +40,7 @@ public class LushSwampBiomes {
+ 				.putAttributes(TraverseBiomes.createDefaultEnvironmentAttributes()
+ 						.set(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(SoundEvents.MUSIC_BIOME_SWAMP))
+ 						.set(EnvironmentAttributes.INCREASED_FIRE_BURNOUT, true)
+-						.set(EnvironmentAttributes.WATER_FOG_COLOR, 0x232317)
++						.set(EnvironmentAttributes.WATER_FOG_COLOR, ARGB.vector3fFromRGB24(0x232317))
+ 						.modify(EnvironmentAttributes.WATER_FOG_END_DISTANCE, FloatModifier.MULTIPLY, 0.85F)
+ 						.build()
+ 				)
+@@ -46,7 +48,7 @@ public class LushSwampBiomes {
+ 	}
+ 
+ 	public static BiomeGenerationSettings createGenerationSettings(BootstrapContext<Biome> registerable) {
+-		HolderGetter<ConfiguredWorldCarver<?>> configuredCarvers = registerable.lookup(Registries.CONFIGURED_CARVER);
++		HolderGetter<WorldCarver> configuredCarvers = registerable.lookup(Registries.CARVER);
+ 		HolderGetter<PlacedFeature> placedFeatures = registerable.lookup(Registries.PLACED_FEATURE);
+ 
+ 		BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder(placedFeatures, configuredCarvers);
+@@ -65,9 +67,9 @@ public class LushSwampBiomes {
+ 
+ 	private static MobSpawnSettings createSpawnSettings() {
+ 		MobSpawnSettings.Builder builder = TraverseBiomes.createDefaultSpawnSettings();
+-		builder.addSpawn(MobCategory.MONSTER,   1, new MobSpawnSettings.SpawnerData(EntityTypes.SLIME, 1, 1));
+-		builder.addSpawn(MobCategory.MONSTER,  50, new MobSpawnSettings.SpawnerData(EntityTypes.BOGGED, 4, 4));
+-		builder.addSpawn(MobCategory.CREATURE, 10, new MobSpawnSettings.SpawnerData(EntityTypes.FROG, 2, 5));
++		builder.addSpawn(EntityTypes.SLIME, MobCategory.MONSTER, 1, UniformInt.of(1, 1));
++		builder.addSpawn(EntityTypes.BOGGED, MobCategory.MONSTER, 50, UniformInt.of(4, 4));
++		builder.addSpawn(EntityTypes.FROG, MobCategory.CREATURE, 10, UniformInt.of(2, 5));
+ 		return builder.build();
+ 	}
+ }
+diff --git a/src/main/java/com/terraformersmc/traverse/biome/TraverseBiomes.java b/src/main/java/com/terraformersmc/traverse/biome/TraverseBiomes.java
+index 65eb910..a6c6967 100644
+--- a/src/main/java/com/terraformersmc/traverse/biome/TraverseBiomes.java
++++ b/src/main/java/com/terraformersmc/traverse/biome/TraverseBiomes.java
+@@ -6,9 +6,11 @@ import net.minecraft.data.worldgen.BiomeDefaultFeatures;
+ import net.minecraft.data.worldgen.BootstrapContext;
+ import net.minecraft.resources.Identifier;
+ import net.minecraft.resources.ResourceKey;
++import net.minecraft.util.ARGB;
+ import net.minecraft.util.Mth;
+ import net.minecraft.world.attribute.EnvironmentAttributeMap;
+ import net.minecraft.world.attribute.EnvironmentAttributes;
++import net.minecraft.util.valueproviders.UniformInt;
+ import net.minecraft.world.entity.EntityTypes;
+ import net.minecraft.world.entity.MobCategory;
+ import net.minecraft.world.level.biome.Biome;
+@@ -65,26 +67,26 @@ public class TraverseBiomes {
+ 	}
+ 
+ 	public static void addDefaultCreatureSpawnEntries(MobSpawnSettings.Builder builder) {
+-		builder.addSpawn(MobCategory.CREATURE, 12, new MobSpawnSettings.SpawnerData(EntityTypes.SHEEP, 4, 4));
+-		builder.addSpawn(MobCategory.CREATURE, 10, new MobSpawnSettings.SpawnerData(EntityTypes.PIG, 4, 4));
+-		builder.addSpawn(MobCategory.CREATURE, 10, new MobSpawnSettings.SpawnerData(EntityTypes.CHICKEN, 4, 4));
+-		builder.addSpawn(MobCategory.CREATURE,  8, new MobSpawnSettings.SpawnerData(EntityTypes.COW, 4, 4));
++		builder.addSpawn(EntityTypes.SHEEP, MobCategory.CREATURE, 12, UniformInt.of(4, 4));
++		builder.addSpawn(EntityTypes.PIG, MobCategory.CREATURE, 10, UniformInt.of(4, 4));
++		builder.addSpawn(EntityTypes.CHICKEN, MobCategory.CREATURE, 10, UniformInt.of(4, 4));
++		builder.addSpawn(EntityTypes.COW, MobCategory.CREATURE, 8, UniformInt.of(4, 4));
+ 	}
+ 
+ 	public static void addDefaultCaveSpawnEntries(MobSpawnSettings.Builder builder) {
+-		builder.addSpawn(MobCategory.AMBIENT, 10, new MobSpawnSettings.SpawnerData(EntityTypes.BAT, 8, 8));
+-		builder.addSpawn(MobCategory.UNDERGROUND_WATER_CREATURE, 10, new MobSpawnSettings.SpawnerData(EntityTypes.GLOW_SQUID, 4, 6));
++		builder.addSpawn(EntityTypes.BAT, MobCategory.AMBIENT, 10, UniformInt.of(8, 8));
++		builder.addSpawn(EntityTypes.GLOW_SQUID, MobCategory.UNDERGROUND_WATER_CREATURE, 10, UniformInt.of(4, 6));
+ 	}
+ 
+ 	public static void addDefaultMonsterSpawnEntries(MobSpawnSettings.Builder builder) {
+-		builder.addSpawn(MobCategory.MONSTER, 100, new MobSpawnSettings.SpawnerData(EntityTypes.SPIDER, 4, 4));
+-		builder.addSpawn(MobCategory.MONSTER,  95, new MobSpawnSettings.SpawnerData(EntityTypes.ZOMBIE, 4, 4));
+-		builder.addSpawn(MobCategory.MONSTER,   5, new MobSpawnSettings.SpawnerData(EntityTypes.ZOMBIE_VILLAGER, 1, 1));
+-		builder.addSpawn(MobCategory.MONSTER, 100, new MobSpawnSettings.SpawnerData(EntityTypes.SKELETON, 4, 4));
+-		builder.addSpawn(MobCategory.MONSTER, 100, new MobSpawnSettings.SpawnerData(EntityTypes.CREEPER, 4, 4));
+-		builder.addSpawn(MobCategory.MONSTER, 100, new MobSpawnSettings.SpawnerData(EntityTypes.SLIME, 4, 4));
+-		builder.addSpawn(MobCategory.MONSTER,  10, new MobSpawnSettings.SpawnerData(EntityTypes.ENDERMAN, 1, 4));
+-		builder.addSpawn(MobCategory.MONSTER,   5, new MobSpawnSettings.SpawnerData(EntityTypes.WITCH, 1, 1));
++		builder.addSpawn(EntityTypes.SPIDER, MobCategory.MONSTER, 100, UniformInt.of(4, 4));
++		builder.addSpawn(EntityTypes.ZOMBIE, MobCategory.MONSTER, 95, UniformInt.of(4, 4));
++		builder.addSpawn(EntityTypes.ZOMBIE_VILLAGER, MobCategory.MONSTER, 5, UniformInt.of(1, 1));
++		builder.addSpawn(EntityTypes.SKELETON, MobCategory.MONSTER, 100, UniformInt.of(4, 4));
++		builder.addSpawn(EntityTypes.CREEPER, MobCategory.MONSTER, 100, UniformInt.of(4, 4));
++		builder.addSpawn(EntityTypes.SLIME, MobCategory.MONSTER, 100, UniformInt.of(4, 4));
++		builder.addSpawn(EntityTypes.ENDERMAN, MobCategory.MONSTER, 10, UniformInt.of(1, 4));
++		builder.addSpawn(EntityTypes.WITCH, MobCategory.MONSTER, 5, UniformInt.of(1, 1));
+ 	}
+ 
+ 	public static BiomeSpecialEffects.Builder createDefaultBiomeEffects() {
+@@ -94,9 +96,9 @@ public class TraverseBiomes {
+ 
+ 	public static EnvironmentAttributeMap.Builder createDefaultEnvironmentAttributes() {
+ 		return EnvironmentAttributeMap.builder()
+-			.set(EnvironmentAttributes.WATER_FOG_COLOR, 0x50533)
+-			.set(EnvironmentAttributes.SKY_COLOR, getSkyColor(0.2F))
+-			.set(EnvironmentAttributes.FOG_COLOR, 0xC0D8FF);
++			.set(EnvironmentAttributes.WATER_FOG_COLOR, ARGB.vector3fFromRGB24(0x50533))
++			.set(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(getSkyColor(0.2F)))
++			.set(EnvironmentAttributes.FOG_COLOR, ARGB.vector3fFromRGB24(0xC0D8FF));
+ 	}
+ 
+ 	private static int getSkyColor(float temperature) {
+diff --git a/src/main/java/com/terraformersmc/traverse/biome/WoodlandsBiomes.java b/src/main/java/com/terraformersmc/traverse/biome/WoodlandsBiomes.java
+index 8ea0f20..d2874df 100644
+--- a/src/main/java/com/terraformersmc/traverse/biome/WoodlandsBiomes.java
++++ b/src/main/java/com/terraformersmc/traverse/biome/WoodlandsBiomes.java
+@@ -8,13 +8,14 @@ import net.minecraft.data.worldgen.BootstrapContext;
+ import net.minecraft.sounds.SoundEvents;
+ import net.minecraft.world.attribute.BackgroundMusic;
+ import net.minecraft.world.attribute.EnvironmentAttributes;
++import net.minecraft.util.valueproviders.UniformInt;
+ import net.minecraft.world.entity.EntityTypes;
+ import net.minecraft.world.entity.MobCategory;
+ import net.minecraft.world.level.biome.Biome;
+ import net.minecraft.world.level.biome.BiomeGenerationSettings;
+ import net.minecraft.world.level.biome.MobSpawnSettings;
+ import net.minecraft.world.level.levelgen.GenerationStep;
+-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
++import net.minecraft.world.level.levelgen.carver.WorldCarver;
+ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+ 
+ import static com.terraformersmc.traverse.biome.TraverseBiomes.addBasicFeatures;
+@@ -40,7 +41,7 @@ public class WoodlandsBiomes {
+ 	}
+ 
+ 	private static BiomeGenerationSettings createGenerationSettings(BootstrapContext<Biome> registerable) {
+-		HolderGetter<ConfiguredWorldCarver<?>> configuredCarvers = registerable.lookup(Registries.CONFIGURED_CARVER);
++		HolderGetter<WorldCarver> configuredCarvers = registerable.lookup(Registries.CARVER);
+ 		HolderGetter<PlacedFeature> placedFeatures = registerable.lookup(Registries.PLACED_FEATURE);
+ 
+ 		BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder(placedFeatures, configuredCarvers);
+@@ -58,7 +59,7 @@ public class WoodlandsBiomes {
+ 
+ 	private static MobSpawnSettings createSpawnSettings() {
+ 		MobSpawnSettings.Builder builder = TraverseBiomes.createDefaultSpawnSettings();
+-		builder.addSpawn(MobCategory.CREATURE, 5, new MobSpawnSettings.SpawnerData(EntityTypes.WOLF, 4, 4));
++		builder.addSpawn(EntityTypes.WOLF, MobCategory.CREATURE, 5, UniformInt.of(4, 4));
+ 		return builder.build();
+ 	}
+ }
+diff --git a/src/main/java/com/terraformersmc/traverse/biomegen/TraverseBiolithGeneration.java b/src/main/java/com/terraformersmc/traverse/biomegen/TraverseBiolithGeneration.java
+index 5353e67..419510c 100644
+--- a/src/main/java/com/terraformersmc/traverse/biomegen/TraverseBiolithGeneration.java
++++ b/src/main/java/com/terraformersmc/traverse/biomegen/TraverseBiolithGeneration.java
+@@ -7,6 +7,7 @@ import com.terraformersmc.biolith.api.surface.SurfaceGeneration;
+ import com.terraformersmc.traverse.Traverse;
+ import com.terraformersmc.traverse.config.TraverseBiomeConfig;
+ import com.terraformersmc.traverse.surface.rules.TraverseSurfaceRules;
++import net.minecraft.core.registries.Registries;
+ import net.minecraft.resources.Identifier;
+ import net.minecraft.world.level.biome.Biomes;
+ 
+@@ -19,7 +20,7 @@ public class TraverseBiolithGeneration {
+ 		// Register the Traverse surface rules.
+ 		SurfaceGeneration.addOverworldSurfaceRules(
+ 			Identifier.fromNamespaceAndPath(Traverse.MOD_ID, "surface_rules"),
+-			TraverseSurfaceRules::bootstrap);
++			registries -> TraverseSurfaceRules.bootstrap(registries.lookupOrThrow(Registries.BIOME)));
+ 
+ 		// Register the Traverse surface builders.
+ 		//TraverseSurfaceBuilders.getBuilders().forEach(SurfaceGeneration::addSurfaceBuilder);
+diff --git a/src/main/java/com/terraformersmc/traverse/block/TraverseBlocks.java b/src/main/java/com/terraformersmc/traverse/block/TraverseBlocks.java
+index 3b65e7c..91e4edf 100644
+--- a/src/main/java/com/terraformersmc/traverse/block/TraverseBlocks.java
++++ b/src/main/java/com/terraformersmc/traverse/block/TraverseBlocks.java
+@@ -5,18 +5,21 @@ import com.terraformersmc.terraform.wood.api.block.PillarLogHelper;
+ import com.terraformersmc.traverse.feature.TraverseConfiguredFeatures;
+ import com.terraformersmc.traverse.init.helpers.TraverseRegistry;
+ import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
+-import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
+ import net.minecraft.core.BlockPos;
++import net.minecraft.resources.ResourceKey;
++import net.minecraft.util.random.WeightedList;
+ import net.minecraft.world.entity.EntityType;
+ import net.minecraft.world.entity.EntityTypes;
+ import net.minecraft.world.level.BlockGetter;
+ import net.minecraft.world.level.block.*;
+ import net.minecraft.world.level.block.grower.TreeGrower;
++import net.minecraft.world.level.block.sounds.AmbientLeavesBlockSoundPlayer;
+ import net.minecraft.world.level.block.state.BlockBehaviour;
+ import net.minecraft.world.level.block.state.BlockState;
+ import net.minecraft.world.level.material.MapColor;
++import net.minecraft.world.phys.AABB;
+ 
+-import java.util.Optional;
++import net.minecraft.world.level.levelgen.feature.Feature;
+ 
+ public class TraverseBlocks {
+ 	public static Block RED_AUTUMNAL_LEAVES;
+@@ -58,17 +61,17 @@ public class TraverseBlocks {
+ 	public static Block POTTED_FIR_SAPLING;
+ 
+ 	public static void register() {
+-		BROWN_AUTUMNAL_LEAVES = TraverseRegistry.register("brown_autumnal_leaves", settings -> new ColoredParticleLeavesBlock(0.02f, 0x422611, settings), BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).mapColor(MapColor.TERRACOTTA_BROWN).isValidSpawn(TraverseBlocks::canSpawnOnLeaves).isSuffocating(TraverseBlocks::never).isViewBlocking(TraverseBlocks::never));
+-		BROWN_AUTUMNAL_SAPLING = TraverseRegistry.register("brown_autumnal_sapling", settings -> new SaplingBlock(new TreeGrower("brown_autumnal", Optional.empty(), Optional.of(TraverseConfiguredFeatures.BROWN_AUTUMNAL_TREE), Optional.empty()), settings), SaplingBlock.Properties.ofFullCopy(Blocks.OAK_SAPLING).mapColor(MapColor.TERRACOTTA_BROWN));
+-		ORANGE_AUTUMNAL_LEAVES = TraverseRegistry.register("orange_autumnal_leaves", settings -> new ColoredParticleLeavesBlock(0.02f, 0xDE791D, settings), BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).mapColor(MapColor.TERRACOTTA_ORANGE).isValidSpawn(TraverseBlocks::canSpawnOnLeaves).isSuffocating(TraverseBlocks::never).isViewBlocking(TraverseBlocks::never));
+-		ORANGE_AUTUMNAL_SAPLING = TraverseRegistry.register("orange_autumnal_sapling", settings -> new SaplingBlock(new TreeGrower("orange_autumnal", Optional.empty(), Optional.of(TraverseConfiguredFeatures.ORANGE_AUTUMNAL_TREE), Optional.empty()), settings), SaplingBlock.Properties.ofFullCopy(Blocks.OAK_SAPLING).mapColor(MapColor.TERRACOTTA_ORANGE));
+-		RED_AUTUMNAL_LEAVES = TraverseRegistry.register("red_autumnal_leaves", settings -> new ColoredParticleLeavesBlock(0.02f, 0x7E2417, settings), BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).mapColor(MapColor.TERRACOTTA_RED).isValidSpawn(TraverseBlocks::canSpawnOnLeaves).isSuffocating(TraverseBlocks::never).isViewBlocking(TraverseBlocks::never));
+-		RED_AUTUMNAL_SAPLING = TraverseRegistry.register("red_autumnal_sapling", settings -> new SaplingBlock(new TreeGrower("red_autumnal", Optional.empty(), Optional.of(TraverseConfiguredFeatures.RED_AUTUMNAL_TREE), Optional.empty()), settings), SaplingBlock.Properties.ofFullCopy(Blocks.OAK_SAPLING).mapColor(MapColor.TERRACOTTA_RED));
+-		YELLOW_AUTUMNAL_LEAVES = TraverseRegistry.register("yellow_autumnal_leaves", settings -> new ColoredParticleLeavesBlock(0.02f, 0xD6B524, settings), BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).mapColor(MapColor.TERRACOTTA_YELLOW).isValidSpawn(TraverseBlocks::canSpawnOnLeaves).isSuffocating(TraverseBlocks::never).isViewBlocking(TraverseBlocks::never));
+-		YELLOW_AUTUMNAL_SAPLING = TraverseRegistry.register("yellow_autumnal_sapling", settings -> new SaplingBlock(new TreeGrower("yellow_autumnal", Optional.empty(), Optional.of(TraverseConfiguredFeatures.YELLOW_AUTUMNAL_TREE), Optional.empty()), settings), SaplingBlock.Properties.ofFullCopy(Blocks.OAK_SAPLING).mapColor(MapColor.TERRACOTTA_YELLOW));
+-
+-		FIR_LEAVES = TraverseRegistry.register("fir_leaves", settings -> new ColoredParticleLeavesBlock(0.01f, 0x184017, settings), BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).mapColor(MapColor.PLANT).isValidSpawn(TraverseBlocks::canSpawnOnLeaves).isSuffocating(TraverseBlocks::never).isViewBlocking(TraverseBlocks::never));
+-		FIR_SAPLING = TraverseRegistry.register("fir_sapling", settings -> new SaplingBlock(new TreeGrower("fir", Optional.empty(), Optional.of(TraverseConfiguredFeatures.FIR_TREE), Optional.empty()), settings), SaplingBlock.Properties.ofFullCopy(Blocks.OAK_SAPLING).mapColor(MapColor.PLANT));
++		BROWN_AUTUMNAL_LEAVES = TraverseRegistry.register("brown_autumnal_leaves", settings -> new ColoredParticleLeavesBlock(0.02f, 0x422611, AmbientLeavesBlockSoundPlayer.noAmbientSound(), settings), BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).mapColor(MapColor.TERRACOTTA_BROWN).isValidSpawn(TraverseBlocks::canSpawnOnLeaves).isSuffocating(TraverseBlocks::never).isViewBlocking(TraverseBlocks::never));
++		BROWN_AUTUMNAL_SAPLING = TraverseRegistry.register("brown_autumnal_sapling", settings -> new SaplingBlock(treeGrower("brown_autumnal", TraverseConfiguredFeatures.BROWN_AUTUMNAL_TREE), settings), SaplingBlock.Properties.ofFullCopy(Blocks.OAK_SAPLING).mapColor(MapColor.TERRACOTTA_BROWN));
++		ORANGE_AUTUMNAL_LEAVES = TraverseRegistry.register("orange_autumnal_leaves", settings -> new ColoredParticleLeavesBlock(0.02f, 0xDE791D, AmbientLeavesBlockSoundPlayer.noAmbientSound(), settings), BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).mapColor(MapColor.TERRACOTTA_ORANGE).isValidSpawn(TraverseBlocks::canSpawnOnLeaves).isSuffocating(TraverseBlocks::never).isViewBlocking(TraverseBlocks::never));
++		ORANGE_AUTUMNAL_SAPLING = TraverseRegistry.register("orange_autumnal_sapling", settings -> new SaplingBlock(treeGrower("orange_autumnal", TraverseConfiguredFeatures.ORANGE_AUTUMNAL_TREE), settings), SaplingBlock.Properties.ofFullCopy(Blocks.OAK_SAPLING).mapColor(MapColor.TERRACOTTA_ORANGE));
++		RED_AUTUMNAL_LEAVES = TraverseRegistry.register("red_autumnal_leaves", settings -> new ColoredParticleLeavesBlock(0.02f, 0x7E2417, AmbientLeavesBlockSoundPlayer.noAmbientSound(), settings), BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).mapColor(MapColor.TERRACOTTA_RED).isValidSpawn(TraverseBlocks::canSpawnOnLeaves).isSuffocating(TraverseBlocks::never).isViewBlocking(TraverseBlocks::never));
++		RED_AUTUMNAL_SAPLING = TraverseRegistry.register("red_autumnal_sapling", settings -> new SaplingBlock(treeGrower("red_autumnal", TraverseConfiguredFeatures.RED_AUTUMNAL_TREE), settings), SaplingBlock.Properties.ofFullCopy(Blocks.OAK_SAPLING).mapColor(MapColor.TERRACOTTA_RED));
++		YELLOW_AUTUMNAL_LEAVES = TraverseRegistry.register("yellow_autumnal_leaves", settings -> new ColoredParticleLeavesBlock(0.02f, 0xD6B524, AmbientLeavesBlockSoundPlayer.noAmbientSound(), settings), BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).mapColor(MapColor.TERRACOTTA_YELLOW).isValidSpawn(TraverseBlocks::canSpawnOnLeaves).isSuffocating(TraverseBlocks::never).isViewBlocking(TraverseBlocks::never));
++		YELLOW_AUTUMNAL_SAPLING = TraverseRegistry.register("yellow_autumnal_sapling", settings -> new SaplingBlock(treeGrower("yellow_autumnal", TraverseConfiguredFeatures.YELLOW_AUTUMNAL_TREE), settings), SaplingBlock.Properties.ofFullCopy(Blocks.OAK_SAPLING).mapColor(MapColor.TERRACOTTA_YELLOW));
++
++		FIR_LEAVES = TraverseRegistry.register("fir_leaves", settings -> new ColoredParticleLeavesBlock(0.01f, 0x184017, AmbientLeavesBlockSoundPlayer.noAmbientSound(), settings), BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES).mapColor(MapColor.PLANT).isValidSpawn(TraverseBlocks::canSpawnOnLeaves).isSuffocating(TraverseBlocks::never).isViewBlocking(TraverseBlocks::never));
++		FIR_SAPLING = TraverseRegistry.register("fir_sapling", settings -> new SaplingBlock(treeGrower("fir", TraverseConfiguredFeatures.FIR_TREE), settings), SaplingBlock.Properties.ofFullCopy(Blocks.OAK_SAPLING).mapColor(MapColor.PLANT));
+ 
+ 		FIR_LOG = TraverseRegistry.register("fir_log", RotatedPillarBlock::new, PillarLogHelper.createProperties(MapColor.WOOD, MapColor.COLOR_BROWN));
+ 		FIR_WOOD = TraverseRegistry.register("fir_wood", RotatedPillarBlock::new, PillarLogHelper.createProperties(MapColor.COLOR_BROWN));
+@@ -96,7 +99,6 @@ public class TraverseBlocks {
+ 		POTTED_FIR_SAPLING = TraverseRegistry.register("potted_fir_sapling", settings -> new FlowerPotBlock(FIR_SAPLING, settings), BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_OAK_SAPLING));
+ 
+ 		addFlammables();
+-		addStrippables();
+ 	}
+ 
+ 	private static void addFlammables() {
+@@ -119,15 +121,18 @@ public class TraverseBlocks {
+ 		flammableRegistry.add(YELLOW_AUTUMNAL_LEAVES, 30, 60);
+ 	}
+ 
+-	private static void addStrippables() {
+-		StrippableBlockRegistry.register(FIR_LOG, STRIPPED_FIR_LOG);
+-		StrippableBlockRegistry.register(FIR_WOOD, STRIPPED_FIR_WOOD);
++	private static TreeGrower treeGrower(String name, ResourceKey<Feature> tree) {
++		return new TreeGrower(name, WeightedList.of(tree), WeightedList.of(), WeightedList.of(), tree);
+ 	}
+ 
+ 	public static boolean never(BlockState state, BlockGetter world, BlockPos pos) {
+ 		return false;
+ 	}
+ 
++	public static boolean never(BlockState state, BlockGetter world, BlockPos pos, AABB bounds) {
++		return false;
++	}
++
+ 	public static Boolean canSpawnOnLeaves(BlockState state, BlockGetter world, BlockPos pos, EntityType<?> type) {
+ 		return type == EntityTypes.OCELOT || type == EntityTypes.PARROT;
+ 	}
+diff --git a/src/main/java/com/terraformersmc/traverse/feature/TraverseConfiguredFeatures.java b/src/main/java/com/terraformersmc/traverse/feature/TraverseConfiguredFeatures.java
+index 4edadaa..d3719d2 100644
+--- a/src/main/java/com/terraformersmc/traverse/feature/TraverseConfiguredFeatures.java
++++ b/src/main/java/com/terraformersmc/traverse/feature/TraverseConfiguredFeatures.java
+@@ -6,10 +6,12 @@ import com.terraformersmc.traverse.block.TraverseBlocks;
+ import com.terraformersmc.traverse.feature.placer.FallenTrunkPlacer;
+ import com.terraformersmc.traverse.feature.placer.NoneFoliagePlacer;
+ import com.terraformersmc.traverse.init.helpers.TraverseRegistry;
++import net.minecraft.core.Holder;
+ import net.minecraft.core.HolderGetter;
+ import net.minecraft.core.HolderSet;
+ import net.minecraft.core.registries.Registries;
+ import net.minecraft.data.worldgen.BootstrapContext;
++import net.minecraft.data.worldgen.BlockStateProviders;
+ import net.minecraft.data.worldgen.features.TreeFeatures;
+ import net.minecraft.data.worldgen.features.VegetationFeatures;
+ import net.minecraft.data.worldgen.placement.PlacementUtils;
+@@ -20,64 +22,60 @@ import net.minecraft.util.random.Weighted;
+ import net.minecraft.util.random.WeightedList;
+ import net.minecraft.util.valueproviders.ConstantInt;
+ import net.minecraft.util.valueproviders.UniformInt;
+-import net.minecraft.world.level.biome.Biome;
+ import net.minecraft.world.level.block.Block;
+ import net.minecraft.world.level.block.Blocks;
+ import net.minecraft.world.level.block.state.BlockState;
+-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+-import net.minecraft.world.level.levelgen.feature.Feature;
+-import net.minecraft.world.level.levelgen.feature.configurations.*;
++import net.minecraft.world.level.levelgen.feature.*;
+ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
+ import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
+ import net.minecraft.world.level.levelgen.feature.foliageplacers.BushFoliagePlacer;
+ import net.minecraft.world.level.levelgen.feature.foliageplacers.SpruceFoliagePlacer;
+ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+ import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
++import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
+ import net.minecraft.world.level.levelgen.feature.treedecorators.LeaveVineDecorator;
+ import net.minecraft.world.level.levelgen.feature.treedecorators.PlaceOnGroundDecorator;
+ import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
+ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+ 
+ public class TraverseConfiguredFeatures {
+-	private static final PlaceOnGroundDecorator LEAF_LITTER = new PlaceOnGroundDecorator(96, 4, 2, new WeightedStateProvider(VegetationFeatures.leafLitterPatchBuilder(1, 3)));
+-	private static final PlaceOnGroundDecorator DENSE_LEAF_LITTER = new PlaceOnGroundDecorator(150, 2, 2, new WeightedStateProvider(VegetationFeatures.leafLitterPatchBuilder(1, 4)));
++	private static final PlaceOnGroundDecorator LEAF_LITTER = new PlaceOnGroundDecorator(96, 4, 2, Holder.direct(new WeightedStateProvider(VegetationFeatures.leafLitterPatchBuilder(1, 3))));
++	private static final PlaceOnGroundDecorator DENSE_LEAF_LITTER = new PlaceOnGroundDecorator(150, 2, 2, Holder.direct(new WeightedStateProvider(VegetationFeatures.leafLitterPatchBuilder(1, 4))));
+ 
+ 	/* Logs and Shrubs */
+-	public static final ResourceKey<ConfiguredFeature<?, ?>> FALLEN_OAK_TREE = resourceKey("fallen_oak_tree");
+-	public static final ResourceKey<ConfiguredFeature<?, ?>> OAK_SHRUB = resourceKey("oak_shrub");
+-	public static final ResourceKey<ConfiguredFeature<?, ?>> WOODLANDS_TREES = resourceKey("woodlands_trees");
++	public static final ResourceKey<Feature> FALLEN_OAK_TREE = resourceKey("fallen_oak_tree");
++	public static final ResourceKey<Feature> OAK_SHRUB = resourceKey("oak_shrub");
++	public static final ResourceKey<Feature> WOODLANDS_TREES = resourceKey("woodlands_trees");
+ 
+ 	/* Autumnal Trees */
+-	public static final ResourceKey<ConfiguredFeature<?, ?>> BROWN_AUTUMNAL_TREE = resourceKey("brown_autumnal_tree");
+-	public static final ResourceKey<ConfiguredFeature<?, ?>> ORANGE_AUTUMNAL_TREE = resourceKey("orange_autumnal_tree");
+-	public static final ResourceKey<ConfiguredFeature<?, ?>> RED_AUTUMNAL_TREE = resourceKey("red_autumnal_tree");
+-	public static final ResourceKey<ConfiguredFeature<?, ?>> YELLOW_AUTUMNAL_TREE = resourceKey("yellow_autumnal_tree");
+-	public static final ResourceKey<ConfiguredFeature<?, ?>> BROWN_AUTUMNAL_TREE_LEAF_LITTER = resourceKey("brown_autumnal_tree_leaf_litter");
+-	public static final ResourceKey<ConfiguredFeature<?, ?>> ORANGE_AUTUMNAL_TREE_LEAF_LITTER = resourceKey("orange_autumnal_tree_leaf_litter");
+-	public static final ResourceKey<ConfiguredFeature<?, ?>> RED_AUTUMNAL_TREE_LEAF_LITTER = resourceKey("red_autumnal_tree_leaf_litter");
+-	public static final ResourceKey<ConfiguredFeature<?, ?>> YELLOW_AUTUMNAL_TREE_LEAF_LITTER = resourceKey("yellow_autumnal_tree_leaf_litter");
+-	public static final ResourceKey<ConfiguredFeature<?, ?>> AUTUMNAL_TREES = resourceKey("autumnal_trees");
++	public static final ResourceKey<Feature> BROWN_AUTUMNAL_TREE = resourceKey("brown_autumnal_tree");
++	public static final ResourceKey<Feature> ORANGE_AUTUMNAL_TREE = resourceKey("orange_autumnal_tree");
++	public static final ResourceKey<Feature> RED_AUTUMNAL_TREE = resourceKey("red_autumnal_tree");
++	public static final ResourceKey<Feature> YELLOW_AUTUMNAL_TREE = resourceKey("yellow_autumnal_tree");
++	public static final ResourceKey<Feature> BROWN_AUTUMNAL_TREE_LEAF_LITTER = resourceKey("brown_autumnal_tree_leaf_litter");
++	public static final ResourceKey<Feature> ORANGE_AUTUMNAL_TREE_LEAF_LITTER = resourceKey("orange_autumnal_tree_leaf_litter");
++	public static final ResourceKey<Feature> RED_AUTUMNAL_TREE_LEAF_LITTER = resourceKey("red_autumnal_tree_leaf_litter");
++	public static final ResourceKey<Feature> YELLOW_AUTUMNAL_TREE_LEAF_LITTER = resourceKey("yellow_autumnal_tree_leaf_litter");
++	public static final ResourceKey<Feature> AUTUMNAL_TREES = resourceKey("autumnal_trees");
+ 
+ 	/* Fir Trees */
+-	public static final ResourceKey<ConfiguredFeature<?, ?>> FIR_TREE = resourceKey("fir_tree");
++	public static final ResourceKey<Feature> FIR_TREE = resourceKey("fir_tree");
+ 
+ 	/* Swamp Trees */
+-	public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_SWAMP_TREE = resourceKey("tall_swamp_tree");
+-	public static final ResourceKey<ConfiguredFeature<?, ?>> SWAMP_FUNGUS = resourceKey("swamp_fungus");
++	public static final ResourceKey<Feature> TALL_SWAMP_TREE = resourceKey("tall_swamp_tree");
++	public static final ResourceKey<Feature> SWAMP_FUNGUS = resourceKey("swamp_fungus");
+ 
+ 	/* Lush Vegetation */
+-	public static final ResourceKey<ConfiguredFeature<?, ?>> FLATLANDS_GRASS = resourceKey("flatlands_grass");
+-	public static final ResourceKey<ConfiguredFeature<?, ?>> LUSH_FLOWERS = resourceKey("lush_flowers");
++	public static final ResourceKey<Feature> FLATLANDS_GRASS = resourceKey("flatlands_grass");
++	public static final ResourceKey<Feature> LUSH_FLOWERS = resourceKey("lush_flowers");
+ 
+-	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+-		HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
++	public static void bootstrap(BootstrapContext<Feature> context) {
++		HolderGetter<Feature> configuredFeatures = context.lookup(Registries.FEATURE);
+ 		HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
+-		HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
+-		BlockStateProvider belowTrunkProvider = TreeConfiguration.defaultPlaceBelowTreeTrunkProvider(biomes);
++		Holder<BlockStateProvider> belowTrunkProvider = context.lookup(Registries.BLOCK_STATE_PROVIDER).getOrThrow(BlockStateProviders.SOIL_BENEATH_TREE);
+ 
+ 		/* Logs and Shrubs */
+ 		TraverseRegistry.register(context, FALLEN_OAK_TREE,
+-				Feature.TREE,
+ 				fallenLog(
+ 						Blocks.OAK_LOG,
+ 						belowTrunkProvider
+@@ -86,7 +84,6 @@ public class TraverseConfiguredFeatures {
+ 				.build()
+ 		);
+ 		TraverseRegistry.register(context, OAK_SHRUB,
+-				Feature.TREE,
+ 				shrub(
+ 						Blocks.OAK_LOG,
+ 						Blocks.OAK_LEAVES,
+@@ -96,8 +93,7 @@ public class TraverseConfiguredFeatures {
+ 				.build()
+ 		);
+ 		TraverseRegistry.register(context, WOODLANDS_TREES,
+-				Feature.WEIGHTED_RANDOM_SELECTOR,
+-				new WeightedRandomFeatureConfiguration(
++				new WeightedRandomSelectorFeature(
+ 						WeightedList.of(
+ 								new Weighted<>(placedFeatures.getOrThrow(TraversePlacedFeatures.WOODLANDS_SHRUB), 1),
+ 								new Weighted<>(placedFeatures.getOrThrow(TraversePlacedFeatures.WOODLANDS_FALLEN_LOG), 1),
+@@ -108,7 +104,6 @@ public class TraverseConfiguredFeatures {
+ 
+ 		/* Autumnal Trees */
+ 		TraverseRegistry.register(context, BROWN_AUTUMNAL_TREE,
+-				Feature.TREE,
+ 				oakLike(
+ 						Blocks.OAK_LOG,
+ 						TraverseBlocks.BROWN_AUTUMNAL_LEAVES,
+@@ -119,7 +114,6 @@ public class TraverseConfiguredFeatures {
+ 				.build()
+ 		);
+ 		TraverseRegistry.register(context, ORANGE_AUTUMNAL_TREE,
+-				Feature.TREE,
+ 				oakLike(
+ 						Blocks.OAK_LOG,
+ 						TraverseBlocks.ORANGE_AUTUMNAL_LEAVES,
+@@ -130,7 +124,6 @@ public class TraverseConfiguredFeatures {
+ 			.build()
+ 		);
+ 		TraverseRegistry.register(context, RED_AUTUMNAL_TREE,
+-				Feature.TREE,
+ 				oakLike(
+ 						Blocks.DARK_OAK_LOG,
+ 						TraverseBlocks.RED_AUTUMNAL_LEAVES,
+@@ -141,7 +134,6 @@ public class TraverseConfiguredFeatures {
+ 				.build()
+ 		);
+ 		TraverseRegistry.register(context, YELLOW_AUTUMNAL_TREE,
+-				Feature.TREE,
+ 				oakLike(
+ 						Blocks.BIRCH_LOG,
+ 						TraverseBlocks.YELLOW_AUTUMNAL_LEAVES,
+@@ -153,7 +145,6 @@ public class TraverseConfiguredFeatures {
+ 		);
+ 
+ 		TraverseRegistry.register(context, BROWN_AUTUMNAL_TREE_LEAF_LITTER,
+-				Feature.TREE,
+ 				oakLike(
+ 						Blocks.OAK_LOG,
+ 						TraverseBlocks.BROWN_AUTUMNAL_LEAVES,
+@@ -165,7 +156,6 @@ public class TraverseConfiguredFeatures {
+ 				.build()
+ 		);
+ 		TraverseRegistry.register(context, ORANGE_AUTUMNAL_TREE_LEAF_LITTER,
+-				Feature.TREE,
+ 				oakLike(
+ 						Blocks.OAK_LOG,
+ 						TraverseBlocks.ORANGE_AUTUMNAL_LEAVES,
+@@ -177,7 +167,6 @@ public class TraverseConfiguredFeatures {
+ 				.build()
+ 		);
+ 		TraverseRegistry.register(context, RED_AUTUMNAL_TREE_LEAF_LITTER,
+-				Feature.TREE,
+ 				oakLike(
+ 						Blocks.DARK_OAK_LOG,
+ 						TraverseBlocks.RED_AUTUMNAL_LEAVES,
+@@ -189,7 +178,6 @@ public class TraverseConfiguredFeatures {
+ 				.build()
+ 		);
+ 		TraverseRegistry.register(context, YELLOW_AUTUMNAL_TREE_LEAF_LITTER,
+-				Feature.TREE,
+ 				oakLike(
+ 						Blocks.BIRCH_LOG,
+ 						TraverseBlocks.YELLOW_AUTUMNAL_LEAVES,
+@@ -201,8 +189,7 @@ public class TraverseConfiguredFeatures {
+ 				.build()
+ 		);
+ 		TraverseRegistry.register(context, AUTUMNAL_TREES,
+-				Feature.SIMPLE_RANDOM_SELECTOR,
+-				new CompositeFeatureConfiguration(
++				new SimpleRandomSelectorFeature(
+ 						HolderSet.direct(
+ 								placedFeatures.getOrThrow(TraversePlacedFeatures.BROWN_AUTUMNAL_TREE_LEAF_LITTER),
+ 								placedFeatures.getOrThrow(TraversePlacedFeatures.ORANGE_AUTUMNAL_TREE_LEAF_LITTER),
+@@ -215,11 +202,10 @@ public class TraverseConfiguredFeatures {
+ 
+ 		/* Fir Trees */
+ 		TraverseRegistry.register(context, FIR_TREE,
+-				Feature.TREE,
+-				new TreeConfiguration.TreeConfigurationBuilder(
+-						BlockStateProvider.simple(TraverseBlocks.FIR_LOG),
++				new TreeFeature.Builder(
++						new SimpleStateProvider(TraverseBlocks.FIR_LOG.defaultBlockState()),
+ 						new StraightTrunkPlacer(15, 15, 4),
+-						BlockStateProvider.simple(TraverseBlocks.FIR_LEAVES),
++						new SimpleStateProvider(TraverseBlocks.FIR_LEAVES.defaultBlockState()),
+ 						new SpruceFoliagePlacer(UniformInt.of(2, 3), UniformInt.of(1, 1), UniformInt.of(4, 12)),
+ 						new TwoLayersFeatureSize(2, 0, 4),
+ 						belowTrunkProvider
+@@ -230,11 +216,10 @@ public class TraverseConfiguredFeatures {
+ 
+ 		/* Swamp Trees */
+ 		TraverseRegistry.register(context, TALL_SWAMP_TREE,
+-				Feature.TREE,
+-				new TreeConfiguration.TreeConfigurationBuilder(
+-						BlockStateProvider.simple(Blocks.OAK_LOG),
++				new TreeFeature.Builder(
++						new SimpleStateProvider(Blocks.OAK_LOG.defaultBlockState()),
+ 						new StraightTrunkPlacer(7, 3, 0),
+-						BlockStateProvider.simple(Blocks.OAK_LEAVES),
++						new SimpleStateProvider(Blocks.OAK_LEAVES.defaultBlockState()),
+ 						new BlobFoliagePlacer(ConstantInt.of(3), ConstantInt.of(0), 3),
+ 						new TwoLayersFeatureSize(1, 0, 1),
+ 						belowTrunkProvider
+@@ -243,8 +228,7 @@ public class TraverseConfiguredFeatures {
+ 				.build()
+ 		);
+ 		TraverseRegistry.register(context, SWAMP_FUNGUS,
+-				Feature.RANDOM_BOOLEAN_SELECTOR,
+-				new RandomBooleanFeatureConfiguration(
++				new RandomBooleanSelectorFeature(
+ 						PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(TreeFeatures.HUGE_BROWN_MUSHROOM)),
+ 						PlacementUtils.inlinePlaced(configuredFeatures.getOrThrow(TreeFeatures.HUGE_RED_MUSHROOM))
+ 				)
+@@ -252,12 +236,10 @@ public class TraverseConfiguredFeatures {
+ 
+ 		/* Lush Vegetation */
+ 		TraverseRegistry.register(context, FLATLANDS_GRASS,
+-				Feature.SIMPLE_BLOCK,
+-				new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.SHORT_GRASS))
++				new SimpleBlockFeature(new SimpleStateProvider(Blocks.SHORT_GRASS.defaultBlockState()))
+ 		);
+ 		TraverseRegistry.register(context, LUSH_FLOWERS,
+-				Feature.SIMPLE_BLOCK,
+-				new SimpleBlockConfiguration(new WeightedStateProvider(new WeightedList.Builder<BlockState>()
++				new SimpleBlockFeature(new WeightedStateProvider(new WeightedList.Builder<BlockState>()
+ 						.add(Blocks.POPPY.defaultBlockState(), 12)
+ 						.add(Blocks.AZURE_BLUET.defaultBlockState(), 12)
+ 						.add(Blocks.OXEYE_DAISY.defaultBlockState(), 12)
+@@ -270,40 +252,40 @@ public class TraverseConfiguredFeatures {
+ 		);
+ 	}
+ 
+-	private static TreeConfiguration.TreeConfigurationBuilder fallenLog(Block trunk, BlockStateProvider belowTrunkProvider) {
+-		return new TreeConfiguration.TreeConfigurationBuilder(
+-				BlockStateProvider.simple(trunk),
++	private static TreeFeature.Builder fallenLog(Block trunk, Holder<BlockStateProvider> belowTrunkProvider) {
++		return new TreeFeature.Builder(
++				new SimpleStateProvider(trunk.defaultBlockState()),
+ 				new FallenTrunkPlacer(3, 2, 0),
+-				BlockStateProvider.simple(Blocks.OAK_LEAVES.defaultBlockState()),
++				new SimpleStateProvider(Blocks.OAK_LEAVES.defaultBlockState()),
+ 				new NoneFoliagePlacer(),
+ 				new TwoLayersFeatureSize(0, 0, 0),
+ 				belowTrunkProvider
+ 		);
+ 	}
+ 
+-	private static TreeConfiguration.TreeConfigurationBuilder shrub(Block trunk, Block leaves, BlockStateProvider belowTrunkProvider) {
+-		return new TreeConfiguration.TreeConfigurationBuilder(
+-				BlockStateProvider.simple(trunk),
++	private static TreeFeature.Builder shrub(Block trunk, Block leaves, Holder<BlockStateProvider> belowTrunkProvider) {
++		return new TreeFeature.Builder(
++				new SimpleStateProvider(trunk.defaultBlockState()),
+ 				new StraightTrunkPlacer(1, 0, 0),
+-				BlockStateProvider.simple(leaves),
++				new SimpleStateProvider(leaves.defaultBlockState()),
+ 				new BushFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), 2),
+ 				new TwoLayersFeatureSize(0, 0, 0),
+ 				belowTrunkProvider
+ 		);
+ 	}
+ 
+-	private static TreeConfiguration.TreeConfigurationBuilder oakLike(Block trunk, Block leaves, int height, BlockStateProvider belowTrunkProvider) {
+-		return new TreeConfiguration.TreeConfigurationBuilder(
+-				BlockStateProvider.simple(trunk.defaultBlockState()),
++	private static TreeFeature.Builder oakLike(Block trunk, Block leaves, int height, Holder<BlockStateProvider> belowTrunkProvider) {
++		return new TreeFeature.Builder(
++				new SimpleStateProvider(trunk.defaultBlockState()),
+ 				new StraightTrunkPlacer(height, 2, 0),
+-				BlockStateProvider.simple(leaves.defaultBlockState()),
++				new SimpleStateProvider(leaves.defaultBlockState()),
+ 				new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
+ 				new TwoLayersFeatureSize(1, 0, 1),
+ 				belowTrunkProvider
+ 		).ignoreVines();
+ 	}
+ 
+-	private static ResourceKey<ConfiguredFeature<?, ?>> resourceKey(String path) {
+-		return ResourceKey.create(Registries.CONFIGURED_FEATURE, Identifier.fromNamespaceAndPath(Traverse.MOD_ID, path));
++	private static ResourceKey<Feature> resourceKey(String path) {
++		return ResourceKey.create(Registries.FEATURE, Identifier.fromNamespaceAndPath(Traverse.MOD_ID, path));
+ 	}
+ }
+diff --git a/src/main/java/com/terraformersmc/traverse/feature/TraversePlacedFeatures.java b/src/main/java/com/terraformersmc/traverse/feature/TraversePlacedFeatures.java
+index 1d0a3d0..3a89aea 100644
+--- a/src/main/java/com/terraformersmc/traverse/feature/TraversePlacedFeatures.java
++++ b/src/main/java/com/terraformersmc/traverse/feature/TraversePlacedFeatures.java
+@@ -3,8 +3,6 @@ package com.terraformersmc.traverse.feature;
+ import com.terraformersmc.traverse.Traverse;
+ import com.terraformersmc.traverse.block.TraverseBlocks;
+ import com.terraformersmc.traverse.init.helpers.TraverseRegistry;
+-import net.minecraft.core.BlockPos;
+-import net.minecraft.core.HolderGetter;
+ import net.minecraft.core.registries.Registries;
+ import net.minecraft.data.worldgen.BootstrapContext;
+ import net.minecraft.data.worldgen.features.TreeFeatures;
+@@ -16,7 +14,6 @@ import net.minecraft.resources.ResourceKey;
+ import net.minecraft.util.Util;
+ import net.minecraft.world.level.block.Blocks;
+ import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
+-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+ import net.minecraft.world.level.levelgen.placement.*;
+ 
+ public class TraversePlacedFeatures {
+@@ -53,8 +50,6 @@ public class TraversePlacedFeatures {
+ 	public static final ResourceKey<PlacedFeature> WOODLANDS_TREES = resourceKey("woodlands_trees");
+ 
+ 	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
+-		HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
+-
+ 		/* Shrubs */
+ 		TraverseRegistry.register(context, DESERT_EXTRA_CACTUS, VegetationFeatures.CACTUS, RarityFilter.onAverageOnceEvery(13), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+ 		TraverseRegistry.register(context, DESERT_SHRUBS, TraverseConfiguredFeatures.OAK_SHRUB, VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.1f, 1), Blocks.OAK_SAPLING));
+@@ -75,13 +70,13 @@ public class TraversePlacedFeatures {
+ 		TraverseRegistry.register(context, CONIFEROUS_TREES, TraverseConfiguredFeatures.FIR_TREE, VegetationPlacements.treePlacement(PlacementUtils.countExtra(7, 0.1f, 1), TraverseBlocks.FIR_SAPLING));
+ 
+ 		/* Swamp Trees */
+-		TraverseRegistry.register(context, LUSH_SWAMP_TREES, TraverseConfiguredFeatures.TALL_SWAMP_TREE, PlacementUtils.countExtra(2, 0.1f, 1), InSquarePlacement.spread(), SurfaceWaterDepthFilter.forMaxDepth(3), PlacementUtils.HEIGHTMAP_OCEAN_FLOOR, BiomeFilter.biome(), BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(Blocks.OAK_SAPLING.defaultBlockState(), BlockPos.ZERO)));
++		TraverseRegistry.register(context, LUSH_SWAMP_TREES, TraverseConfiguredFeatures.TALL_SWAMP_TREE, PlacementUtils.countExtra(2, 0.1f, 1), InSquarePlacement.spread(), SurfaceWaterDepthFilter.forMaxDepth(3), PlacementUtils.HEIGHTMAP_OCEAN_FLOOR, BiomeFilter.biome(), BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(Blocks.OAK_SAPLING)));
+ 		TraverseRegistry.register(context, SWAMP_FUNGUS, TraverseConfiguredFeatures.SWAMP_FUNGUS, PlacementUtils.countExtra(0, 0.1f, 1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+ 
+ 		/* Lush Vegetation */
+ 		TraverseRegistry.register(context, FLATLANDS_GRASS, TraverseConfiguredFeatures.FLATLANDS_GRASS, Util.copyAndAdd(VegetationPlacements.worldSurfaceSquaredWithCount(96), BlockPredicateFilter.forPredicate(BlockPredicate.ONLY_IN_AIR_PREDICATE)));
+-		TraverseRegistry.register(context, FLATLANDS_TREES, TreeFeatures.OAK_BEES_005, PlacementUtils.countExtra(0, 0.2F, 1), InSquarePlacement.spread(), SurfaceWaterDepthFilter.forMaxDepth(0), PlacementUtils.HEIGHTMAP_OCEAN_FLOOR, BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(Blocks.OAK_SAPLING.defaultBlockState(), BlockPos.ZERO)), BiomeFilter.biome());
+-		TraverseRegistry.register(context, LUSH_FLOWERS, TraverseConfiguredFeatures.LUSH_FLOWERS, RarityFilter.onAverageOnceEvery(32), CountPlacement.of(10), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome(), CountPlacement.of(64), RandomOffsetPlacement.ofTriangle(7, 3), BlockPredicateFilter.forPredicate(BlockPredicate.ONLY_IN_AIR_PREDICATE));
++		TraverseRegistry.register(context, FLATLANDS_TREES, TreeFeatures.OAK_BEES_005, PlacementUtils.countExtra(0, 0.2F, 1), InSquarePlacement.spread(), SurfaceWaterDepthFilter.forMaxDepth(0), PlacementUtils.HEIGHTMAP_OCEAN_FLOOR, BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(Blocks.OAK_SAPLING)), BiomeFilter.biome());
++		TraverseRegistry.register(context, LUSH_FLOWERS, TraverseConfiguredFeatures.LUSH_FLOWERS, RarityFilter.onAverageOnceEvery(32), CountPlacement.of(10), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome(), CountPlacement.of(64), OffsetPlacement.ofTriangle(7, 3), BlockPredicateFilter.forPredicate(BlockPredicate.ONLY_IN_AIR_PREDICATE));
+ 
+ 
+ 		/* Woodlands */
+diff --git a/src/main/java/com/terraformersmc/traverse/feature/placer/FallenTrunkPlacer.java b/src/main/java/com/terraformersmc/traverse/feature/placer/FallenTrunkPlacer.java
+index 9e076a4..ccdf33b 100644
+--- a/src/main/java/com/terraformersmc/traverse/feature/placer/FallenTrunkPlacer.java
++++ b/src/main/java/com/terraformersmc/traverse/feature/placer/FallenTrunkPlacer.java
+@@ -11,7 +11,6 @@ import net.minecraft.world.level.WorldGenLevel;
+ import net.minecraft.world.level.block.RotatedPillarBlock;
+ import net.minecraft.world.level.block.state.BlockState;
+ import net.minecraft.world.level.levelgen.feature.TreeFeature;
+-import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
+ import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
+ import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
+@@ -34,7 +33,7 @@ public class FallenTrunkPlacer extends StraightTrunkPlacer {
+ 	}
+ 
+ 	@Override
+-	public List<FoliagePlacer.FoliageAttachment> placeTrunk(WorldGenLevel level, BiConsumer<BlockPos, BlockState> trunkSetter, RandomSource random, int treeHeight, BlockPos origin, TreeConfiguration config) {
++	public List<FoliagePlacer.FoliageAttachment> placeTrunk(WorldGenLevel level, BiConsumer<BlockPos, BlockState> trunkSetter, RandomSource random, int treeHeight, BlockPos origin, TreeFeature config) {
+ 		placeBelowTrunkBlock(level, trunkSetter, random, origin.below(), config);
+ 
+ 		List<FoliagePlacer.FoliageAttachment> treeNodes = Lists.newArrayList();
+@@ -50,9 +49,9 @@ public class FallenTrunkPlacer extends StraightTrunkPlacer {
+ 		return ImmutableList.of(new FoliagePlacer.FoliageAttachment(origin, 0, false));
+ 	}
+ 
+-	protected static boolean placeTrunkBlock(WorldGenLevel level, BiConsumer<BlockPos, BlockState> replacer, RandomSource random, BlockPos blockPos, TreeConfiguration treeFeatureConfig, Direction.Axis axis, List<FoliagePlacer.FoliageAttachment> treeNodes) {
++	protected static boolean placeTrunkBlock(WorldGenLevel level, BiConsumer<BlockPos, BlockState> replacer, RandomSource random, BlockPos blockPos, TreeFeature treeFeatureConfig, Direction.Axis axis, List<FoliagePlacer.FoliageAttachment> treeNodes) {
+ 		if (TreeFeature.validTreePos(level, blockPos)) {
+-			replacer.accept(blockPos, treeFeatureConfig.trunkProvider.getState(level, random, blockPos).setValue(RotatedPillarBlock.AXIS, axis));
++			replacer.accept(blockPos, treeFeatureConfig.trunkProvider().value().getState(level, random, blockPos).setValue(RotatedPillarBlock.AXIS, axis));
+ 			treeNodes.add(new FoliagePlacer.FoliageAttachment(blockPos.immutable(), 0, false));
+ 			return true;
+ 		} else {
+diff --git a/src/main/java/com/terraformersmc/traverse/feature/placer/NoneFoliagePlacer.java b/src/main/java/com/terraformersmc/traverse/feature/placer/NoneFoliagePlacer.java
+index 0a6a034..e9fa574 100644
+--- a/src/main/java/com/terraformersmc/traverse/feature/placer/NoneFoliagePlacer.java
++++ b/src/main/java/com/terraformersmc/traverse/feature/placer/NoneFoliagePlacer.java
+@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
+ import net.minecraft.util.RandomSource;
+ import net.minecraft.util.valueproviders.ConstantInt;
+ import net.minecraft.world.level.WorldGenLevel;
+-import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
++import net.minecraft.world.level.levelgen.feature.TreeFeature;
+ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
+ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
+ import org.jspecify.annotations.NullMarked;
+@@ -24,12 +24,12 @@ public class NoneFoliagePlacer extends FoliagePlacer {
+ 	}
+ 
+ 	@Override
+-	protected void createFoliage(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeConfiguration config, int treeHeight, FoliageAttachment foliageAttachment, int foliageHeight, int leafRadius, int offset) {
++	protected void createFoliage(WorldGenLevel level, FoliageSetter foliageSetter, RandomSource random, TreeFeature config, int treeHeight, FoliageAttachment foliageAttachment, int foliageHeight, int leafRadius, int offset) {
+ 		// It's the "None" placer, after all...
+ 	}
+ 
+ 	@Override
+-	public int foliageHeight(RandomSource random, int trunkHeight, TreeConfiguration config) {
++	public int foliageHeight(RandomSource random, int trunkHeight, TreeFeature config) {
+ 		return 0;
+ 	}
+ 
+diff --git a/src/main/java/com/terraformersmc/traverse/init/helpers/TraverseRegistry.java b/src/main/java/com/terraformersmc/traverse/init/helpers/TraverseRegistry.java
+index 7b4b313..64db320 100644
+--- a/src/main/java/com/terraformersmc/traverse/init/helpers/TraverseRegistry.java
++++ b/src/main/java/com/terraformersmc/traverse/init/helpers/TraverseRegistry.java
+@@ -5,7 +5,6 @@ import net.minecraft.core.Registry;
+ import net.minecraft.core.registries.BuiltInRegistries;
+ import net.minecraft.core.registries.Registries;
+ import net.minecraft.data.worldgen.BootstrapContext;
+-import net.minecraft.data.worldgen.features.FeatureUtils;
+ import net.minecraft.data.worldgen.placement.PlacementUtils;
+ import net.minecraft.resources.Identifier;
+ import net.minecraft.resources.ResourceKey;
+@@ -14,9 +13,7 @@ import net.minecraft.world.item.Item;
+ import net.minecraft.world.level.block.*;
+ import net.minecraft.world.level.block.entity.BlockEntityTypes;
+ import net.minecraft.world.level.block.state.BlockBehaviour;
+-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+ import net.minecraft.world.level.levelgen.feature.Feature;
+-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+ import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+ import org.jspecify.annotations.NullMarked;
+@@ -113,28 +110,8 @@ public class TraverseRegistry {
+ 	 * Features
+ 	 */
+ 
+-	/**
+-	 * Registers a feature.
+-	 *
+-	 * @param name Name ({@link Identifier} path string) of the feature
+-	 * @param feature {@link Feature} to be registered
+-	 * @return Newly registered {@link Feature}
+-	 */
+-	public static <T extends Feature<FC>, FC extends FeatureConfiguration> T register(String name, T feature) {
+-		return Registry.register(BuiltInRegistries.FEATURE, Identifier.fromNamespaceAndPath(Traverse.MOD_ID, name), feature);
+-	}
+-
+-	/**
+-	 * Creates and registers a configured feature (during datagen).  The configured feature will be created
+-	 * with the provided feature config and registered to the provided registerable under the provided key.
+-	 *
+-	 * @param registerable A registration-capable abstraction of a registry of configured features
+-	 * @param key {@link ResourceKey} of {@link ConfiguredFeature} being registered
+-	 * @param feature {@link Feature} being configured
+-	 * @param config {@link FeatureConfiguration} to apply to {@link Feature} being registered
+-	 */
+-	public static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstrapContext<ConfiguredFeature<?, ?>> registerable, ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC config) {
+-		FeatureUtils.register(registerable, key, feature, config);
++	public static void register(BootstrapContext<Feature> registerable, ResourceKey<Feature> key, Feature feature) {
++		registerable.register(key, feature);
+ 	}
+ 
+ 	/**
+@@ -143,10 +120,10 @@ public class TraverseRegistry {
+ 	 *
+ 	 * @param registerable A registration-capable abstraction of a registry of placed features
+ 	 * @param key {@link ResourceKey} of {@link PlacedFeature} being registered
+-	 * @param feature {@link ResourceKey} of {@link ConfiguredFeature} being placed
+-	 * @param placementModifiers Any {@link PlacementModifier}(s) to apply to {@link ConfiguredFeature} being registered
++	 * @param feature {@link ResourceKey} of {@link Feature} being placed
++	 * @param placementModifiers Any {@link PlacementModifier}(s) to apply to {@link Feature} being registered
+ 	 */
+-	public static void register(BootstrapContext<PlacedFeature> registerable, ResourceKey<PlacedFeature> key, ResourceKey<ConfiguredFeature<?, ?>> feature, PlacementModifier... placementModifiers) {
++	public static void register(BootstrapContext<PlacedFeature> registerable, ResourceKey<PlacedFeature> key, ResourceKey<Feature> feature, PlacementModifier... placementModifiers) {
+ 		register(registerable, key, feature, List.of(placementModifiers));
+ 	}
+ 
+@@ -156,12 +133,12 @@ public class TraverseRegistry {
+ 	 *
+ 	 * @param registerable A registration-capable abstraction of a registry of placed features
+ 	 * @param key {@link ResourceKey} of {@link PlacedFeature} being registered
+-	 * @param feature {@link ResourceKey} of {@link ConfiguredFeature} being placed
+-	 * @param placementModifiers {@link List} of {@link PlacementModifier}(s) to apply to {@link ConfiguredFeature} being registered
++	 * @param feature {@link ResourceKey} of {@link Feature} being placed
++	 * @param placementModifiers {@link List} of {@link PlacementModifier}(s) to apply to {@link Feature} being registered
+ 	 */
+-	public static void register(BootstrapContext<PlacedFeature> registerable, ResourceKey<PlacedFeature> key, ResourceKey<ConfiguredFeature<?, ?>> feature, List<PlacementModifier> placementModifiers) {
++	public static void register(BootstrapContext<PlacedFeature> registerable, ResourceKey<PlacedFeature> key, ResourceKey<Feature> feature, List<PlacementModifier> placementModifiers) {
+ 		PlacementUtils.register(registerable, key,
+-			registerable.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(feature),
++			registerable.lookup(Registries.FEATURE).getOrThrow(feature),
+ 			placementModifiers);
+ 	}
+ }
+diff --git a/src/main/java/com/terraformersmc/traverse/item/TraverseItems.java b/src/main/java/com/terraformersmc/traverse/item/TraverseItems.java
+index 3be6bd5..13f344b 100644
+--- a/src/main/java/com/terraformersmc/traverse/item/TraverseItems.java
++++ b/src/main/java/com/terraformersmc/traverse/item/TraverseItems.java
+@@ -2,9 +2,13 @@ package com.terraformersmc.traverse.item;
+ 
+ import com.terraformersmc.traverse.block.TraverseBlocks;
+ import com.terraformersmc.traverse.init.helpers.TraverseRegistry;
+-import net.fabricmc.fabric.api.registry.CompostableRegistry;
+-import net.fabricmc.fabric.api.registry.FuelValueEvents;
++import net.minecraft.core.Direction;
++import net.minecraft.resources.ResourceKey;
+ import net.minecraft.world.item.*;
++import net.minecraft.world.level.block.Block;
++import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProvider;
++
++import static net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders.*;
+ 
+ public class TraverseItems {
+ 	public static BlockItem RED_AUTUMNAL_LEAVES;
+@@ -34,65 +38,54 @@ public class TraverseItems {
+ 	public static BlockItem FIR_DOOR;
+ 	public static BlockItem FIR_SHELF;
+ 
+-	public static SignItem FIR_SIGN;
++	public static StandingAndWallBlockItem FIR_SIGN;
+ 	public static HangingSignItem FIR_HANGING_SIGN;
+ 
+ 	public static void register() {
+-		RED_AUTUMNAL_LEAVES = TraverseRegistry.registerBlockItem("red_autumnal_leaves", TraverseBlocks.RED_AUTUMNAL_LEAVES);
+-		RED_AUTUMNAL_SAPLING = TraverseRegistry.registerBlockItem("red_autumnal_sapling", TraverseBlocks.RED_AUTUMNAL_SAPLING);
+-		BROWN_AUTUMNAL_LEAVES = TraverseRegistry.registerBlockItem("brown_autumnal_leaves", TraverseBlocks.BROWN_AUTUMNAL_LEAVES);
+-		BROWN_AUTUMNAL_SAPLING = TraverseRegistry.registerBlockItem("brown_autumnal_sapling", TraverseBlocks.BROWN_AUTUMNAL_SAPLING);
+-		ORANGE_AUTUMNAL_LEAVES = TraverseRegistry.registerBlockItem("orange_autumnal_leaves", TraverseBlocks.ORANGE_AUTUMNAL_LEAVES);
+-		ORANGE_AUTUMNAL_SAPLING = TraverseRegistry.registerBlockItem("orange_autumnal_sapling", TraverseBlocks.ORANGE_AUTUMNAL_SAPLING);
+-		YELLOW_AUTUMNAL_LEAVES = TraverseRegistry.registerBlockItem("yellow_autumnal_leaves", TraverseBlocks.YELLOW_AUTUMNAL_LEAVES);
+-		YELLOW_AUTUMNAL_SAPLING = TraverseRegistry.registerBlockItem("yellow_autumnal_sapling", TraverseBlocks.YELLOW_AUTUMNAL_SAPLING);
++		RED_AUTUMNAL_LEAVES = registerLeaves("red_autumnal_leaves", TraverseBlocks.RED_AUTUMNAL_LEAVES);
++		RED_AUTUMNAL_SAPLING = registerSapling("red_autumnal_sapling", TraverseBlocks.RED_AUTUMNAL_SAPLING);
++		BROWN_AUTUMNAL_LEAVES = registerLeaves("brown_autumnal_leaves", TraverseBlocks.BROWN_AUTUMNAL_LEAVES);
++		BROWN_AUTUMNAL_SAPLING = registerSapling("brown_autumnal_sapling", TraverseBlocks.BROWN_AUTUMNAL_SAPLING);
++		ORANGE_AUTUMNAL_LEAVES = registerLeaves("orange_autumnal_leaves", TraverseBlocks.ORANGE_AUTUMNAL_LEAVES);
++		ORANGE_AUTUMNAL_SAPLING = registerSapling("orange_autumnal_sapling", TraverseBlocks.ORANGE_AUTUMNAL_SAPLING);
++		YELLOW_AUTUMNAL_LEAVES = registerLeaves("yellow_autumnal_leaves", TraverseBlocks.YELLOW_AUTUMNAL_LEAVES);
++		YELLOW_AUTUMNAL_SAPLING = registerSapling("yellow_autumnal_sapling", TraverseBlocks.YELLOW_AUTUMNAL_SAPLING);
+ 
+-		FIR_LEAVES = TraverseRegistry.registerBlockItem("fir_leaves", TraverseBlocks.FIR_LEAVES);
+-		FIR_SAPLING = TraverseRegistry.registerBlockItem("fir_sapling", TraverseBlocks.FIR_SAPLING);
++		FIR_LEAVES = registerLeaves("fir_leaves", TraverseBlocks.FIR_LEAVES);
++		FIR_SAPLING = registerSapling("fir_sapling", TraverseBlocks.FIR_SAPLING);
+ 
+-		FIR_LOG = TraverseRegistry.registerBlockItem("fir_log", TraverseBlocks.FIR_LOG);
+-		FIR_WOOD = TraverseRegistry.registerBlockItem("fir_wood", TraverseBlocks.FIR_WOOD);
+-		STRIPPED_FIR_LOG = TraverseRegistry.registerBlockItem("stripped_fir_log", TraverseBlocks.STRIPPED_FIR_LOG);
+-		STRIPPED_FIR_WOOD = TraverseRegistry.registerBlockItem("stripped_fir_wood", TraverseBlocks.STRIPPED_FIR_WOOD);
+-		FIR_PLANKS = TraverseRegistry.registerBlockItem("fir_planks", TraverseBlocks.FIR_PLANKS);
+-		FIR_SLAB = TraverseRegistry.registerBlockItem("fir_slab", TraverseBlocks.FIR_SLAB);
+-		FIR_PRESSURE_PLATE = TraverseRegistry.registerBlockItem("fir_pressure_plate", TraverseBlocks.FIR_PRESSURE_PLATE);
+-		FIR_FENCE = TraverseRegistry.registerBlockItem("fir_fence", TraverseBlocks.FIR_FENCE);
+-		FIR_TRAPDOOR = TraverseRegistry.registerBlockItem("fir_trapdoor", TraverseBlocks.FIR_TRAPDOOR);
+-		FIR_FENCE_GATE = TraverseRegistry.registerBlockItem("fir_fence_gate", TraverseBlocks.FIR_FENCE_GATE);
+-		FIR_STAIRS = TraverseRegistry.registerBlockItem("fir_stairs", TraverseBlocks.FIR_STAIRS);
+-		FIR_BUTTON = TraverseRegistry.registerBlockItem("fir_button", TraverseBlocks.FIR_BUTTON);
+-		FIR_DOOR = TraverseRegistry.registerBlockItem("fir_door", TraverseBlocks.FIR_DOOR);
+-		FIR_SHELF = TraverseRegistry.registerBlockItem("fir_shelf", TraverseBlocks.FIR_SHELF);
++		FIR_LOG = registerWood("fir_log", TraverseBlocks.FIR_LOG, COOKING_TIME_WOOD_BLOCKS);
++		FIR_WOOD = registerWood("fir_wood", TraverseBlocks.FIR_WOOD, COOKING_TIME_WOOD_BLOCKS);
++		STRIPPED_FIR_LOG = registerWood("stripped_fir_log", TraverseBlocks.STRIPPED_FIR_LOG, COOKING_TIME_WOOD_BLOCKS);
++		STRIPPED_FIR_WOOD = registerWood("stripped_fir_wood", TraverseBlocks.STRIPPED_FIR_WOOD, COOKING_TIME_WOOD_BLOCKS);
++		FIR_PLANKS = registerWood("fir_planks", TraverseBlocks.FIR_PLANKS, COOKING_TIME_WOOD_BLOCKS);
++		FIR_SLAB = registerWood("fir_slab", TraverseBlocks.FIR_SLAB, COOKING_TIME_WOOD_SLABS);
++		FIR_PRESSURE_PLATE = registerWood("fir_pressure_plate", TraverseBlocks.FIR_PRESSURE_PLATE, COOKING_TIME_WOOD_ITEMS_SMALL);
++		FIR_FENCE = registerWood("fir_fence", TraverseBlocks.FIR_FENCE, COOKING_TIME_WOOD_BLOCKS);
++		FIR_TRAPDOOR = registerWood("fir_trapdoor", TraverseBlocks.FIR_TRAPDOOR, COOKING_TIME_WOOD_BLOCKS);
++		FIR_FENCE_GATE = registerWood("fir_fence_gate", TraverseBlocks.FIR_FENCE_GATE, COOKING_TIME_WOOD_BLOCKS);
++		FIR_STAIRS = registerWood("fir_stairs", TraverseBlocks.FIR_STAIRS, COOKING_TIME_WOOD_BLOCKS);
++		FIR_BUTTON = registerWood("fir_button", TraverseBlocks.FIR_BUTTON, COOKING_TIME_WOOD_ITEMS_EXTRA_SMALL);
++		FIR_DOOR = registerWood("fir_door", TraverseBlocks.FIR_DOOR, COOKING_TIME_WOOD_ITEMS_LARGE);
++		FIR_SHELF = registerWood("fir_shelf", TraverseBlocks.FIR_SHELF, COOKING_TIME_WOOD_BLOCKS);
+ 
+-		FIR_SIGN = TraverseRegistry.register("fir_sign", settings -> new SignItem(TraverseBlocks.FIR_SIGN, TraverseBlocks.FIR_WALL_SIGN, settings), new Item.Properties().stacksTo(16).useBlockDescriptionPrefix());
+-		FIR_HANGING_SIGN = TraverseRegistry.register("fir_hanging_sign", settings -> new HangingSignItem(TraverseBlocks.FIR_HANGING_SIGN, TraverseBlocks.FIR_WALL_HANGING_SIGN, settings), new Item.Properties().stacksTo(16).useBlockDescriptionPrefix());
++		FIR_SIGN = TraverseRegistry.register("fir_sign", settings -> new StandingAndWallBlockItem(TraverseBlocks.FIR_SIGN, TraverseBlocks.FIR_WALL_SIGN, Direction.DOWN, settings), new Item.Properties().stacksTo(16).signText().useBlockDescriptionPrefix().cookingFuel(COOKING_TIME_WOOD_ITEMS_LARGE));
++		FIR_HANGING_SIGN = TraverseRegistry.register("fir_hanging_sign", settings -> new HangingSignItem(TraverseBlocks.FIR_HANGING_SIGN, TraverseBlocks.FIR_WALL_HANGING_SIGN, settings), new Item.Properties().stacksTo(16).signText().useBlockDescriptionPrefix().cookingFuel(COOKING_TIME_HANGING_SIGNS));
++	}
+ 
+-		addCompostables();
+-		addFuels();
++	private static BlockItem registerLeaves(String name, Block block) {
++		return registerBlockItem(name, block, new Item.Properties().compostable(COMPOSTABLE_LOW));
+ 	}
+ 
+-	private static void addCompostables() {
+-		CompostableRegistry compostingRegistry = CompostableRegistry.INSTANCE;
+-		float LEAVES_CHANCE = compostingRegistry.get(Items.OAK_LEAVES);
+-		float SAPLING_CHANCE = compostingRegistry.get(Items.OAK_SAPLING);
++	private static BlockItem registerSapling(String name, Block block) {
++		return registerBlockItem(name, block, new Item.Properties().compostable(COMPOSTABLE_LOW).cookingFuel(COOKING_TIME_DRY_PLANTS));
++	}
+ 
+-		compostingRegistry.add(FIR_LEAVES, LEAVES_CHANCE);
+-		compostingRegistry.add(FIR_SAPLING, SAPLING_CHANCE);
+-		compostingRegistry.add(BROWN_AUTUMNAL_LEAVES, LEAVES_CHANCE);
+-		compostingRegistry.add(BROWN_AUTUMNAL_SAPLING, SAPLING_CHANCE);
+-		compostingRegistry.add(ORANGE_AUTUMNAL_LEAVES, LEAVES_CHANCE);
+-		compostingRegistry.add(ORANGE_AUTUMNAL_SAPLING, SAPLING_CHANCE);
+-		compostingRegistry.add(RED_AUTUMNAL_LEAVES, LEAVES_CHANCE);
+-		compostingRegistry.add(RED_AUTUMNAL_SAPLING, SAPLING_CHANCE);
+-		compostingRegistry.add(YELLOW_AUTUMNAL_LEAVES, LEAVES_CHANCE);
+-		compostingRegistry.add(YELLOW_AUTUMNAL_SAPLING, SAPLING_CHANCE);
++	private static BlockItem registerWood(String name, Block block, ResourceKey<ContextIntProvider> fuel) {
++		return registerBlockItem(name, block, new Item.Properties().cookingFuel(fuel));
+ 	}
+ 
+-	private static void addFuels() {
+-		FuelValueEvents.BUILD.register((builder, context) -> {
+-			builder.add(FIR_FENCE, 300);
+-			builder.add(FIR_FENCE_GATE, 300);
+-		});
++	private static BlockItem registerBlockItem(String name, Block block, Item.Properties properties) {
++		return TraverseRegistry.register(name, settings -> new BlockItem(block, settings), properties.useBlockDescriptionPrefix());
+ 	}
+ }
+diff --git a/src/main/java/com/terraformersmc/traverse/mixin/BlockTransformerMixin.java b/src/main/java/com/terraformersmc/traverse/mixin/BlockTransformerMixin.java
+new file mode 100644
+index 0000000..4901e8f
+--- /dev/null
++++ b/src/main/java/com/terraformersmc/traverse/mixin/BlockTransformerMixin.java
+@@ -0,0 +1,44 @@
++package com.terraformersmc.traverse.mixin;
++
++import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
++import com.terraformersmc.traverse.block.TraverseBlocks;
++import net.minecraft.core.component.BlockTransformer;
++import net.minecraft.core.component.BlockTransformer.BlockTransformData;
++import net.minecraft.core.component.DataComponents;
++import net.minecraft.sounds.SoundEvents;
++import net.minecraft.world.item.component.BlockTransformers;
++import net.minecraft.world.item.context.UseOnContext;
++import net.minecraft.world.level.block.Block;
++import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
++import net.minecraft.world.level.levelgen.feature.stateproviders.CopyPropertiesProvider;
++import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedStateProvider;
++import org.spongepowered.asm.mixin.Mixin;
++import org.spongepowered.asm.mixin.injection.At;
++
++import java.util.ArrayList;
++import java.util.List;
++
++@Mixin(BlockTransformer.class)
++abstract class BlockTransformerMixin {
++	@ModifyExpressionValue(method = "transformBlock", at = @At(value = "FIELD", target = "Lnet/minecraft/core/component/BlockTransformer;transforms:Ljava/util/List;"))
++	private List<BlockTransformData> traverse$addFirStripping(List<BlockTransformData> vanilla, UseOnContext context) {
++		var transformer = context.getItemInHand().get(DataComponents.BLOCK_TRANSFORMER);
++		if (transformer == null || !transformer.is(BlockTransformers.AXE)) {
++			return vanilla;
++		}
++		var block = context.getLevel().getBlockState(context.getClickedPos()).getBlock();
++		Block stripped;
++		if (block == TraverseBlocks.FIR_LOG) {
++			stripped = TraverseBlocks.STRIPPED_FIR_LOG;
++		} else if (block == TraverseBlocks.FIR_WOOD) {
++			stripped = TraverseBlocks.STRIPPED_FIR_WOOD;
++		} else {
++			return vanilla;
++		}
++		var transforms = new ArrayList<>(vanilla);
++		var provider = RuleBasedStateProvider.ifTrueThenProvide(
++				BlockPredicate.matchesBlocks(block), new CopyPropertiesProvider(stripped));
++		transforms.add(BlockTransformData.builder(provider).sound(SoundEvents.AXE_STRIP).build());
++		return transforms;
++	}
++}
+diff --git a/src/main/java/com/terraformersmc/traverse/surface/rules/TraverseSurfaceRules.java b/src/main/java/com/terraformersmc/traverse/surface/rules/TraverseSurfaceRules.java
+index cf34c35..b3baad7 100644
+--- a/src/main/java/com/terraformersmc/traverse/surface/rules/TraverseSurfaceRules.java
++++ b/src/main/java/com/terraformersmc/traverse/surface/rules/TraverseSurfaceRules.java
+@@ -6,33 +6,35 @@ import net.minecraft.world.level.biome.Biome;
+ import net.minecraft.world.level.block.Block;
+ import net.minecraft.world.level.block.Blocks;
+ import net.minecraft.world.level.levelgen.Noises;
+-import net.minecraft.world.level.levelgen.SurfaceRules;
++import net.minecraft.world.level.levelgen.material.MaterialRules;
++import net.minecraft.world.level.levelgen.material.rule.MaterialRule;
++import net.minecraft.world.level.levelgen.placement.CaveSurface;
+ import net.minecraft.world.level.levelgen.VerticalAnchor;
+ 
+-import static net.minecraft.world.level.levelgen.SurfaceRules.*;
++import static net.minecraft.world.level.levelgen.material.MaterialRules.*;
+ 
+ public class TraverseSurfaceRules {
+ 
+-	private static RuleSource block(Block block) {
+-		return SurfaceRules.state(block.defaultBlockState());
++	private static MaterialRule block(Block block) {
++		return MaterialRules.state(block.defaultBlockState());
+ 	}
+ 
+-	public static RuleSource bootstrap(HolderGetter<Biome> biomeGetter) {
++	public static MaterialRule bootstrap(HolderGetter<Biome> biomeGetter) {
+ 
+ 		// Sandy surface rules
+-		RuleSource sandAndSandstone = sequence(ifTrue(UNDER_FLOOR,
++		MaterialRule sandAndSandstone = sequence(ifTrue(stoneDepthCheck(0, true, CaveSurface.FLOOR),
+ 			block(Blocks.SAND)), block(Blocks.SANDSTONE));
+-		RuleSource redSandAndSandstone = sequence(ifTrue(UNDER_FLOOR,
++		MaterialRule redSandAndSandstone = sequence(ifTrue(stoneDepthCheck(0, true, CaveSurface.FLOOR),
+ 			block(Blocks.RED_SAND)), block(Blocks.RED_SANDSTONE));
+ 
+ 		// Biome-level rules
+-		RuleSource desertShrubland = ifTrue(SurfaceRules.isBiome(biomeGetter, TraverseBiomes.DESERT_SHRUBLAND),
++		MaterialRule desertShrubland = ifTrue(MaterialRules.isBiome(biomeGetter, TraverseBiomes.DESERT_SHRUBLAND),
+ 			ifTrue(noiseCondition2d(Noises.BADLANDS_SURFACE, 0.01D), sandAndSandstone));
+-		RuleSource lushSwamp = ifTrue(SurfaceRules.isBiome(biomeGetter, TraverseBiomes.LUSH_SWAMP),
+-			ifTrue(SurfaceRules.ON_FLOOR,
+-				ifTrue(SurfaceRules.yBlockCheck(VerticalAnchor.absolute(62), 0),
+-					ifTrue(SurfaceRules.not(SurfaceRules.yBlockCheck(VerticalAnchor.absolute(63), 0)),
+-						ifTrue(SurfaceRules.noiseCondition2d(Noises.SWAMP, 0.0),
++		MaterialRule lushSwamp = ifTrue(MaterialRules.isBiome(biomeGetter, TraverseBiomes.LUSH_SWAMP),
++			ifTrue(stoneDepthCheck(0, false, CaveSurface.FLOOR),
++				ifTrue(MaterialRules.yBlockCheck(VerticalAnchor.absolute(62), 0),
++					ifTrue(MaterialRules.not(MaterialRules.yBlockCheck(VerticalAnchor.absolute(63), 0)),
++						ifTrue(MaterialRules.noiseCondition2d(Noises.SWAMP, 0.0),
+ 							block(Blocks.WATER))))));
+ 
+ 		// Return a surface-only sequence of our surface rules
+diff --git a/src/main/java/com/terraformersmc/traverse/villager/TraverseVillagerTrades.java b/src/main/java/com/terraformersmc/traverse/villager/TraverseVillagerTrades.java
+index 23435e5..2bbea21 100644
+--- a/src/main/java/com/terraformersmc/traverse/villager/TraverseVillagerTrades.java
++++ b/src/main/java/com/terraformersmc/traverse/villager/TraverseVillagerTrades.java
+@@ -2,7 +2,6 @@ package com.terraformersmc.traverse.villager;
+ 
+ import com.terraformersmc.traverse.Traverse;
+ import com.terraformersmc.traverse.item.TraverseItems;
+-import net.minecraft.core.HolderGetter;
+ import net.minecraft.core.registries.Registries;
+ import net.minecraft.data.worldgen.BootstrapContext;
+ import net.minecraft.resources.Identifier;
+@@ -15,7 +14,6 @@ import net.minecraft.world.item.trading.VillagerTrade;
+ import org.apache.commons.lang3.tuple.Pair;
+ 
+ import java.util.List;
+-import java.util.Optional;
+ 
+ public class TraverseVillagerTrades {
+ 	public static final ResourceKey<VillagerTrade> WANDERING_TRADER_EMERALD_FIR_LOG = resourceKey("wandering_trader/emerald_fir_log");
+@@ -27,20 +25,13 @@ public class TraverseVillagerTrades {
+ 	public static final ResourceKey<VillagerTrade> WANDERING_TRADER_EMERALD_YELLOW_AUTUMNAL_SAPLING = resourceKey("wandering_trader/emerald_yellow_autumnal_sapling");
+ 
+ 	public static void bootstrap(BootstrapContext<VillagerTrade> context) {
+-		HolderGetter<Item> items = context.lookup(Registries.ITEM);
+-
+ 		for (Pair<ResourceKey<VillagerTrade>, Item> pair : List.of(
+ 			Pair.of(WANDERING_TRADER_EMERALD_FIR_LOG, TraverseItems.FIR_LOG.asItem())
+ 		)) {
+-			context.register(pair.getLeft(), new VillagerTrade(
++			context.register(pair.getLeft(), VillagerTrade.builder(
+ 				new TradeCost(Items.EMERALD, 1),
+-				new ItemStackTemplate(pair.getRight(), 8),
+-				4,
+-				1,
+-				0.05F,
+-				Optional.empty(),
+-				List.of()
+-			));
++				new ItemStackTemplate(pair.getRight(), 8), 4, 1, 0.05F
++			).build());
+ 		}
+ 
+ 		for (Pair<ResourceKey<VillagerTrade>, Item> entry : List.of(
+@@ -50,15 +41,10 @@ public class TraverseVillagerTrades {
+ 			Pair.of(WANDERING_TRADER_EMERALD_RED_AUTUMNAL_SAPLING, TraverseItems.RED_AUTUMNAL_SAPLING.asItem()),
+ 			Pair.of(WANDERING_TRADER_EMERALD_YELLOW_AUTUMNAL_SAPLING, TraverseItems.YELLOW_AUTUMNAL_SAPLING.asItem())
+ 		)) {
+-			context.register(entry.getLeft(), new VillagerTrade(
++			context.register(entry.getLeft(), VillagerTrade.builder(
+ 				new TradeCost(Items.EMERALD, 5),
+-				new ItemStackTemplate(entry.getRight()),
+-				8,
+-				1,
+-				0.05F,
+-				Optional.empty(),
+-				List.of()
+-			));
++				new ItemStackTemplate(entry.getRight()), 8, 1, 0.05F
++			).build());
+ 		}
+ 	}
+ 
+diff --git a/src/main/resources/fabric.mod.json b/src/main/resources/fabric.mod.json
+index 55d8199..06591fe 100644
+--- a/src/main/resources/fabric.mod.json
++++ b/src/main/resources/fabric.mod.json
+@@ -28,15 +28,14 @@
+       "com.terraformersmc.traverse.data.TraverseDatagen"
+     ]
+   },
+-  "accessWidener": "traverse.accesswidener",
+   "mixins": [
+     "mixins.traverse-common.json"
+   ],
+   "depends": {
+-    "biolith": ">=3.2.0-",
++    "biolith": ">=3.8.0-beta.2",
+     "fabricloader": ">=0.18.0",
+     "fabric-api": ">=0.144.0",
+-    "minecraft": ">=26.2 <26.3",
++    "minecraft": "26.3",
+     "java": ">=25"
+   },
+   "authors": [
+diff --git a/src/main/resources/mixins.traverse-common.json b/src/main/resources/mixins.traverse-common.json
+index 6fe9945..02ffe78 100644
+--- a/src/main/resources/mixins.traverse-common.json
++++ b/src/main/resources/mixins.traverse-common.json
+@@ -7,5 +7,6 @@
+     "defaultRequire": 1
+   },
+   "mixins": [
++    "BlockTransformerMixin"
+   ]
+ }
+diff --git a/src/main/resources/traverse.accesswidener b/src/main/resources/traverse.accesswidener
+deleted file mode 100644
+index 2872922..0000000
+--- a/src/main/resources/traverse.accesswidener
++++ /dev/null
+@@ -1,7 +0,0 @@
+-accessWidener	v1	official
+-
+-accessible class net/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule
+-accessible class net/minecraft/world/level/levelgen/SurfaceRules$Context
+-accessible class net/minecraft/world/level/levelgen/SurfaceRules$Condition
+-accessible field net/minecraft/world/level/levelgen/SurfaceRules$Context system Lnet/minecraft/world/level/levelgen/SurfaceSystem;
+-accessible field net/minecraft/world/level/levelgen/SurfaceRules$Context randomState Lnet/minecraft/world/level/levelgen/RandomState;
