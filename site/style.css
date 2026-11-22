@@ -43,7 +43,6 @@ a {
   translate: 0 0.5rem;
 }
 .top,
-.facts,
 .edition:not(:last-child),
 .release {
   border-bottom: 1px solid GrayText;
@@ -52,8 +51,7 @@ a {
 .inline-nav,
 .header-controls,
 .preferences:not([hidden]),
-.brand,
-.facts {
+.brand {
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -266,19 +264,8 @@ h3 {
   outline-color: #101a22;
   outline-offset: -3px;
 }
-.facts {
-  align-items: start;
-  flex-wrap: wrap;
-  gap: 0.75rem 2rem;
-  padding-bottom: 1rem;
-}
-.meta,
-.facts dt {
+.meta {
   font-size: 0.875rem;
-}
-.facts dd {
-  margin: 0;
-  font-weight: 600;
 }
 .edition,
 .release {

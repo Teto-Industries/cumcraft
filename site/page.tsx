@@ -12,8 +12,6 @@ type Profile = {
 };
 type Pack = {
   minecraft: string;
-  fabricLoader: string;
-  server: { address: string };
   profiles?: Profile[];
 };
 type Asset = { name: string; browser_download_url: string };
@@ -283,20 +281,6 @@ function Home(props: {
           </section>
           {props.mapUrl && <MapActions url={props.mapUrl} locale={props.locale} />}
         </div>
-        <dl class="facts">
-          <div>
-            <dt>{t.loader}</dt>
-            <dd>Fabric {props.pack.fabricLoader}</dd>
-          </div>
-          <div>
-            <dt>{t.server}</dt>
-            <dd>{props.pack.server.address}</dd>
-          </div>
-          <div>
-            <dt>{t.latest}</dt>
-            <dd>{props.latest?.tag_name ?? t.unpublished}</dd>
-          </div>
-        </dl>
         <section id="editions">
           <h2>{t.chooseEdition}</h2>
           {!props.latest && (
