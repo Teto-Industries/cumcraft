@@ -2,7 +2,7 @@
   {
     "tag_name": "v0.3.1",
     "name": "Cumcraft v0.3.1",
-    "body": "- Added a Mods page in English and Russian with short descriptions, Modrinth links, and edition labels for graphics mods. Optional inventory tools are listed separately.\n- Simplified the homepage and fixed the Prism Launcher link so it no longer sends everyone to the Linux download page.\n- Set shared defaults for new installs: GUI scale 3, lower game and music volume, and no multiplayer warning. Fixed how the pack writes the language setting so Minecraft reads it correctly.\n- Set the world map’s default high-detail render distance to 150 blocks.\n",
+    "body": "- Set shared defaults for new installs: GUI scale 3, lower game and music volume, and no multiplayer warning. Fixed how the pack writes the language setting so Minecraft reads it correctly.\n",
     "published_at": "2026-11-22T01:06:26Z",
     "draft": false,
     "prerelease": false,
@@ -29,7 +29,7 @@
   {
     "tag_name": "v0.3.0",
     "name": "Cumcraft v0.3.0",
-    "body": "- Fix Iris startup crashes on Mesa and distorted terrain with shaders. The Iris editions use Sodium 0.9.2 and keep OpenGL error checking enabled.\n- Update Complementary Reimagined to r5.10. Shader editions include more shader packs matched to their renderer, and the Iris editions include Euphoria Patcher.\n- Put the Recommended edition first on the downloads page.\n- Restore missing hashes for pinned mods so Nix can build the server pack.\n",
+    "body": "- Fix Iris startup crashes on Mesa and distorted terrain with shaders. The Iris editions use Sodium 0.9.2 and keep OpenGL error checking enabled.\n- Update Complementary Reimagined to r5.10. Shader editions include more shader packs matched to their renderer, and the Iris editions include Euphoria Patcher.\n- Fix server pack builds that failed to fetch pinned mods.\n",
     "published_at": "2026-11-22T00:10:12Z",
     "draft": false,
     "prerelease": false,
@@ -110,7 +110,7 @@
   {
     "tag_name": "v0.1.0-beta.1",
     "name": "Cumcraft v0.1.0-beta.1",
-    "body": "First public beta for Minecraft 26.2 on Fabric.\n\n- Four Modrinth pack editions: Performance, Recommended, Vulkan (experimental), and Voxy.\n- The [live world map](https://teto-industries.github.io/cumcraft/) starts on an online Overworld player or falls back to spawn.\n- Report beta issues on [GitHub](https://github.com/Teto-Industries/cumcraft/issues).",
+    "body": "First public beta for Minecraft 26.2 on Fabric.\n\n- Four Modrinth pack editions: Performance, Recommended, Vulkan (experimental), and Voxy.",
     "published_at": "2026-11-21T21:05:52Z",
     "draft": false,
     "prerelease": true,

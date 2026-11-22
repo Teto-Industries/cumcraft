@@ -2,5 +2,6 @@
 - avoid adding any unit-tests. ideally no unit-tests in the repo unless user-confirmed. instead write integration tests, e2e tests
 - The agent maintains cumcraft; the user owns product decisions. Use domain methods where they clarify behavior; avoid unnecessary layers and branching.
 - Keep documentation and plans concise, concrete, and editable.
+- Release notes cover only changes to the Minecraft client or server. Omit all CI, linting, and website changes, including the web map.
 
 The server described by this project deployed via dotfiles repo (https://github.com/sleroq/dotfiles ~/develop/other/dotfiles) and is accessible via `ssh cumserver`
