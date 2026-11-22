@@ -61,9 +61,13 @@ def client_files(mods, pack, profile):
         suffix = ".disabled" if mod.get("disabled") else ""
         yield download(f"mods/{name}{suffix}", mod)
 
-    if profile.get("shaders"):
+    renderer = profile.get("shaders")
+    if renderer:
         shader = pack["shaderPack"]
         yield download(f"shaderpacks/{shader['name']}", shader)
+        for shader in pack["additionalShaderPacks"]:
+            if renderer in shader["renderers"]:
+                yield download(f"shaderpacks/{shader['name']}", shader)
 
 
 def write_defaults(archive, pack, profile):
@@ -80,6 +84,10 @@ def write_defaults(archive, pack, profile):
     if renderer == "iris":
         shader = pack["shaderPack"]["name"]
         write_entry(archive, "overrides/config/iris.properties", f"enableShaders=true\nshaderPack={shader}\n".encode())
+        # Iris can bind an invalid texture on world load; Mesa needs GL error checking.
+        # https://github.com/IrisShaders/Iris/issues/3367
+        sodium = {"performance": {"use_no_error_g_l_context": False}}
+        write_entry(archive, "overrides/config/sodium-options.json", (json.dumps(sodium, indent=2) + "\n").encode())
     elif renderer == "vitrail":
         shader = pack["shaderPack"]["name"]
         write_entry(archive, "overrides/vitrail/pack.txt", f"pack={shader}\nenabled=true\n".encode())

@@ -73,10 +73,73 @@
     }
   ],
   "shaderPack": {
-    "name": "ComplementaryReimagined_r5.9.3.zip",
-    "url": "https://cdn.modrinth.com/data/HVnmMxH1/versions/Bqen1mJX/ComplementaryReimagined_r5.9.3.zip",
-    "size": 553397,
-    "sha1": "838139b54cddb56b2e83cd260d8efd960ac536d6",
-    "sha512": "45304b1d7862afdb2177b7e6226fc9c6737911d17a4ad46cc9c519ca4deb935f05072cd337cd8b19a15bb8062b57b54eceec7bdee4cd572d94858e2946d37d85"
-  }
+    "name": "ComplementaryReimagined_r5.10.zip",
+    "url": "https://cdn.modrinth.com/data/HVnmMxH1/versions/RKfUB9VC/ComplementaryReimagined_r5.10.zip",
+    "size": 567387,
+    "sha1": "ce5f303920c12f858c6b4c27a521fe7a1ba70aea",
+    "sha512": "edced01fb330af215ac73b8d9d31011565089f971f87145b87f413f40ee2128b48970aed26f8e5e879899647ec847b3eefca64bfc013aabbcf25275a207f663d"
+  },
+  "additionalShaderPacks": [
+    {
+      "name": "ComplementaryUnbound_r5.10.zip",
+      "url": "https://cdn.modrinth.com/data/R6NEzAwj/versions/QJiYQisE/ComplementaryUnbound_r5.10.zip",
+      "size": 567391,
+      "sha1": "7a9a6b667b89d6b442837c5c367cd6cc8356b400",
+      "sha512": "bccfca6b07ea4c75b3d7c8bfb875de54ecb3ce4416c960194974d887b65c2aebc9ebd2f6911356bdcb2b0f8740ce70adbf2fdf2e39698616c194104400f70e62",
+      "renderers": [
+        "vitrail"
+      ]
+    },
+    {
+      "name": "BSL_v10.1.8.zip",
+      "url": "https://cdn.modrinth.com/data/Q1vvjJYV/versions/Y68yiql9/BSL_v10.1.8.zip",
+      "size": 1134153,
+      "sha1": "e89818c8827d0131c102fb480c3c3446624db0df",
+      "sha512": "94a3c25d6820868db624e11347873e6b572e7cd571967d9ac6f4690ca5d37ca302a7645d85eec800e0654541e3825fba14d37b5a25d3996aaf038178552be26f",
+      "renderers": [
+        "iris",
+        "vitrail"
+      ]
+    },
+    {
+      "name": "Derivative 26.3.zip",
+      "url": "https://cdn.modrinth.com/data/UL7IRfHl/versions/8cC6CLtR/Derivative%2026.3.zip",
+      "size": 17885403,
+      "sha1": "5a2b00bdb034f948e04c1f84593cc1b567cebca0",
+      "sha512": "339ed9d68133e73588f5b7e3f08359532b9419e785481e43311623ebb512e617dfeebe1b42986befcffc5beccb6b1f3a21301c981fe64ed30cecf35e31a40ddd",
+      "renderers": [
+        "iris"
+      ]
+    },
+    {
+      "name": "MakeUp-UltraFast-9.6a.zip",
+      "url": "https://cdn.modrinth.com/data/izsIPI7a/versions/vXV151ey/MakeUp-UltraFast-9.6a.zip",
+      "size": 406852,
+      "sha1": "15a581d5aa92cad742c079dd768aae59e0cd379a",
+      "sha512": "4497cf121736a01c9b4b7c3214d96274edaa44d8bfdd65a26b702ecdf2ae1841db6c1f055b66b3b884c38ea6cea3255dbf006f7e66e2976e1423cf1e0a8e23bb",
+      "renderers": [
+        "vitrail"
+      ]
+    },
+    {
+      "name": "Pastel-Shaders-Universal-v1.200.zip",
+      "url": "https://cdn.modrinth.com/data/BkTdFBUU/versions/w3Pxx3b4/Pastel-Shaders-Universal-v1.200.zip",
+      "size": 1023746,
+      "sha1": "d9492996359ddaad54707f21671a6c47b7189f07",
+      "sha512": "fd5b4970ee6d1582fb616af494fa413f09bd315f945c650b1b8c1a0af5c83e5e961a6e8a5bcbc941c34a6b83eab965f119cb03dcf2ee968b45b79c5c5ffb6f05",
+      "renderers": [
+        "iris"
+      ]
+    },
+    {
+      "name": "photon_v1.4.zip",
+      "url": "https://cdn.modrinth.com/data/lLqFfGNs/versions/BnGklH5y/photon_v1.4.zip",
+      "size": 3857333,
+      "sha1": "96c7730f5891a42e39bbf1f0f5a98fa99628a7fe",
+      "sha512": "2dec87084dccf91a72a06235ecbfb3627f066699b5f70583f06077cba61433aedbfa6af28eb68bf1cdc726149cc3d9a587517cfab59e6a24e9d6a40b6874d655",
+      "renderers": [
+        "iris"
+      ]
+    }
+  ]
 }
