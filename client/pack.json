@@ -24,7 +24,7 @@
       "id": "low",
       "name": "Performance",
       "renderer": "OpenGL",
-      "description": "A profile tuned for low-end PCs or Steam Deck",
+      "description": "A profile tuned for low-end PCs or Steam Deck.",
       "options": {
         "preferredGraphicsBackend": "opengl",
         "renderDistance": 8,
@@ -42,7 +42,7 @@
       "id": "dh-opengl",
       "name": "Recommended",
       "renderer": "OpenGL · Iris",
-      "description": "The default option with shaders for a decent PC",
+      "description": "The default option with shaders for a decent PC.",
       "shaders": "iris",
       "options": {
         "preferredGraphicsBackend": "opengl",
@@ -53,7 +53,7 @@
       "id": "dh-vulkan",
       "name": "Vulkan",
       "renderer": "Vulkan · Vitrail",
-      "description": "Try this if your GPU supports Vulkan; you might get more FPS",
+      "description": "Try this if your GPU supports Vulkan; you might get more FPS.",
       "shaders": "vitrail",
       "options": {
         "preferredGraphicsBackend": "vulkan",
@@ -64,7 +64,7 @@
       "id": "voxy-opengl",
       "name": "Voxy",
       "renderer": "OpenGL · Iris",
-      "description": "recommended option but with Voxy instead of DH, a bit lighter mod that some may prefer",
+      "description": "Like the recommended edition, but with Voxy instead of Distant Horizons. Voxy is a bit lighter, which some players may prefer.",
       "shaders": "iris",
       "options": {
         "preferredGraphicsBackend": "opengl",
