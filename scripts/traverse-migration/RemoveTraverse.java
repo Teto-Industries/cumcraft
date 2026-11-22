@@ -1,3 +1,4 @@
+import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -105,8 +106,40 @@ public final class RemoveTraverse {
     }
 
     private void rewriteFile(Path path, Path relative) throws IOException {
-        CompoundTag tag = NbtIo.readCompressed(path, NbtAccounter.unlimitedHeap());
-        if (data.rewriteNbt(tag, relative)) NbtIo.writeCompressed(tag, path);
+        boolean template = relative.toString().endsWith(".nbt");
+        boolean savedData = !template && isSavedData(relative);
+        if (!template && !savedData && !isLevelOrPlayerData(relative)) return;
+
+        CompoundTag tag;
+        boolean gzip = true;
+        try (var input = new BufferedInputStream(Files.newInputStream(path))) {
+            if (savedData) {
+                input.mark(2);
+                gzip = (input.read() | (input.read() << 8)) == GZIPInputStream.GZIP_MAGIC;
+                input.reset();
+            }
+            tag = gzip ? NbtIo.readCompressed(input, NbtAccounter.unlimitedHeap())
+                : NbtIo.read(new DataInputStream(input));
+        }
+        if (!data.rewriteNbt(tag, relative)) return;
+        if (gzip) NbtIo.writeCompressed(tag, path);
+        else NbtIo.write(tag, path);
+    }
+
+    private static boolean isLevelOrPlayerData(Path relative) {
+        return relative.equals(Path.of("level.dat")) || relative.equals(Path.of("level.dat_old"))
+            || relative.startsWith("players/data")
+            || (relative.getNameCount() == 2 && (relative.startsWith("players") || relative.startsWith("playerdata")));
+    }
+
+    private static boolean isSavedData(Path relative) {
+        if (relative.startsWith("data") || relative.startsWith("DIM-1/data") || relative.startsWith("DIM1/data")) return true;
+        if (!relative.startsWith("dimensions")) return false;
+        // dimensions/<namespace>/<dimension path>/data; the dimension path can contain slashes.
+        for (int i = 3; i < relative.getNameCount() - 1; i++) {
+            if (relative.getName(i).toString().equals("data")) return true;
+        }
+        return false;
     }
 
     private void rewriteRegion(Path path, Path relative) throws IOException {
