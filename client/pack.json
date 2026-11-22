@@ -62,10 +62,10 @@
     }
   ],
   "shaderPack": {
-    "name": "ComplementaryReimagined_r5.9.3.zip",
-    "url": "https://cdn.modrinth.com/data/HVnmMxH1/versions/Bqen1mJX/ComplementaryReimagined_r5.9.3.zip",
-    "size": 553397,
-    "sha1": "838139b54cddb56b2e83cd260d8efd960ac536d6",
-    "sha512": "45304b1d7862afdb2177b7e6226fc9c6737911d17a4ad46cc9c519ca4deb935f05072cd337cd8b19a15bb8062b57b54eceec7bdee4cd572d94858e2946d37d85"
+    "name": "ComplementaryReimagined_r5.10.zip",
+    "url": "https://cdn.modrinth.com/data/HVnmMxH1/versions/RKfUB9VC/ComplementaryReimagined_r5.10.zip",
+    "size": 567387,
+    "sha1": "ce5f303920c12f858c6b4c27a521fe7a1ba70aea",
+    "sha512": "edced01fb330af215ac73b8d9d31011565089f971f87145b87f413f40ee2128b48970aed26f8e5e879899647ec847b3eefca64bfc013aabbcf25275a207f663d"
   }
 }
