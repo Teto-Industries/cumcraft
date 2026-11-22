@@ -742,6 +742,7 @@
     ],
     "profiles": [
       "dh-opengl",
+      "dh-vulkan",
       "voxy-opengl"
     ]
   },
@@ -755,8 +756,7 @@
       "client"
     ],
     "profiles": [
-      "low",
-      "dh-vulkan"
+      "low"
     ]
   },
   "sodium-fabric-0.9.2+mc26.3.jar": {
@@ -770,6 +770,7 @@
     ],
     "profiles": [
       "dh-opengl",
+      "dh-vulkan",
       "voxy-opengl"
     ]
   },
@@ -783,8 +784,7 @@
       "client"
     ],
     "profiles": [
-      "low",
-      "dh-vulkan"
+      "low"
     ]
   },
   "sodium-shadowy-path-blocks-fabric-8.0.0.jar": {
