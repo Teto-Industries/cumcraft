@@ -301,7 +301,7 @@ function GettingStarted(props: { locale: Locale; home: string }) {
           <h3>{t.installLauncher}</h3>
           <p>
             {t.ownsMinecraft}{" "}
-            <a href="https://prismlauncher.org/download/linux/">{t.downloadPrism}</a>
+            <a href="https://prismlauncher.org">{t.downloadPrism}</a>
           </p>
           <p>
             {t.noAccount}{" "}
