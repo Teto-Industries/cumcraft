@@ -29,19 +29,22 @@
     return (target || element).getBoundingClientRect();
   }
 
-  function position(element: HTMLElement) {
-    return {
-      x: parseFloat(element.style.getPropertyValue("--drag-x")) || 0,
-      y: parseFloat(element.style.getPropertyValue("--drag-y")) || 0,
-    };
+  function shift(element: HTMLElement, x: number, y: number) {
+    const currentX = parseFloat(element.style.getPropertyValue("--drag-x")) || 0;
+    const currentY = parseFloat(element.style.getPropertyValue("--drag-y")) || 0;
+    element.style.setProperty("--drag-x", `${currentX + x}px`);
+    element.style.setProperty("--drag-y", `${currentY + y}px`);
   }
 
   function move(element: HTMLElement, x: number, y: number) {
-    const current = position(element);
-    element.style.setProperty("--drag-x", `${current.x + x}px`);
-    element.style.setProperty("--drag-y", `${current.y + y}px`);
+    shift(element, x, y);
     element.setAttribute("data-drag-moved", "");
     root.setAttribute("data-drag-layout", "");
+
+    // Counter only the outermost detached blocks; their contents stay put with them.
+    for (const child of element.querySelectorAll<HTMLElement>("[data-drag-moved]")) {
+      if (child.parentElement!.closest("[data-drag-moved]") === element) shift(child, -x, -y);
+    }
   }
 
   function stopMomentum() {
