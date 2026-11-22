@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ "$#" -ne 3 ]; then
+  echo "Usage: $0 RUNTIME_DIRECTORY SOURCE_WORLD NEW_OUTPUT_WORLD" >&2
+  exit 2
+fi
+: "${JAVA_HOME:?Set JAVA_HOME to a Java 25 JDK}"
+runtime=$(cd "$1" && pwd -P)
+server="$runtime/versions/26.3/server-26.3.jar"
+[ -f "$server" ] && [ -d "$runtime/libraries" ] || { echo "Invalid 26.3 runtime: $runtime" >&2; exit 1; }
+script_dir=$(cd "$(dirname "$0")" && pwd -P)
+classes=$(mktemp -d)
+trap 'rm -rf "$classes"' EXIT
+classpath="$server"
+while IFS= read -r -d '' jar; do classpath+=":$jar"; done < <(find "$runtime/libraries" -type f -name '*.jar' -print0)
+"$JAVA_HOME/bin/javac" -cp "$classpath" -d "$classes" "$script_dir/traverse-migration/TraverseData.java" "$script_dir/traverse-migration/RemoveTraverse.java"
+source=$2
+output=$3
+[[ $source = /* ]] || source=$PWD/$source
+[[ $output = /* ]] || output=$PWD/$output
+(cd "$classes" && "$JAVA_HOME/bin/java" -cp "$classes:$classpath" RemoveTraverse "$source" "$output")
