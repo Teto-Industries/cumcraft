@@ -211,6 +211,9 @@ h3 {
 .map-page[data-ready]:not([data-exploring]) main > .wrap:not([hidden]) {
   display: flow-root;
 }
+.map-page[data-ready]:not([data-exploring]) main .hero {
+  margin-block-start: 1rem;
+}
 @media (max-width: 51em) {
   .map-page[data-ready]:not([data-exploring]) main > .wrap {
     margin-block-start: clamp(4.5rem, 14svh, 8rem);
