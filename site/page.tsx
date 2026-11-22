@@ -363,6 +363,9 @@ function Editions(props: {
   home: string;
 }) {
   const t = copy[props.locale];
+  const profiles = props.profiles.toSorted(
+    (a, b) => Number(b.id === "dh-opengl") - Number(a.id === "dh-opengl"),
+  );
 
   return (
     <>
@@ -381,7 +384,7 @@ function Editions(props: {
         </p>
       )}
       <div>
-        {props.profiles.map((profile) => (
+        {profiles.map((profile) => (
           <Edition
             profile={profile}
             locale={props.locale}
