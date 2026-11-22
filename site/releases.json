@@ -1,5 +1,32 @@
 [
   {
+    "tag_name": "v0.4.0",
+    "name": "Cumcraft v0.4.0",
+    "body": "- Remove Traverse from the client packs and server. The included migration tool converts Traverse blocks, items, and biomes to vanilla equivalents in a new copy of the world, preserving existing builds and autumn foliage without a reset.\n- Use modern Russian as the fallback for missing pre-reform Russian translations, then English.\n\n**Server upgrade:** Stop the server and back up the world before upgrading. Run `scripts/remove-traverse RUNTIME_DIRECTORY SOURCE_WORLD NEW_OUTPUT_WORLD` with a Java 25 JDK and the Minecraft 26.3 server runtime, then start the updated server with the migrated copy.\n",
+    "published_at": "2026-11-22T11:19:14Z",
+    "draft": false,
+    "prerelease": false,
+    "html_url": "https://github.com/Teto-Industries/cumcraft/releases/tag/v0.4.0",
+    "assets": [
+      {
+        "name": "cumcraft-dh-opengl-v0.4.0.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.4.0/cumcraft-dh-opengl-v0.4.0.mrpack"
+      },
+      {
+        "name": "cumcraft-dh-vulkan-v0.4.0.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.4.0/cumcraft-dh-vulkan-v0.4.0.mrpack"
+      },
+      {
+        "name": "cumcraft-low-v0.4.0.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.4.0/cumcraft-low-v0.4.0.mrpack"
+      },
+      {
+        "name": "cumcraft-voxy-opengl-v0.4.0.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.4.0/cumcraft-voxy-opengl-v0.4.0.mrpack"
+      }
+    ]
+  },
+  {
     "tag_name": "v0.3.2",
     "name": "Cumcraft v0.3.2",
     "body": "- Fix a crash when joining a world in the Vulkan edition. It now uses Sodium 0.9.2 and Sodium Extra 0.9.5 for compatibility with Vitrail.\n- Add the Cumcraft icon to all client packs and show the release version in imported instance names.\n",
