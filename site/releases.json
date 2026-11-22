@@ -1,5 +1,32 @@
 [
   {
+    "tag_name": "v0.3.1",
+    "name": "Cumcraft v0.3.1",
+    "body": "- Added a Mods page in English and Russian with short descriptions, Modrinth links, and edition labels for graphics mods. Optional inventory tools are listed separately.\n- Simplified the homepage and fixed the Prism Launcher link so it no longer sends everyone to the Linux download page.\n- Set shared defaults for new installs: GUI scale 3, lower game and music volume, and no multiplayer warning. Fixed how the pack writes the language setting so Minecraft reads it correctly.\n- Set the world map’s default high-detail render distance to 150 blocks.\n",
+    "published_at": "2026-11-22T01:06:26Z",
+    "draft": false,
+    "prerelease": false,
+    "html_url": "https://github.com/Teto-Industries/cumcraft/releases/tag/v0.3.1",
+    "assets": [
+      {
+        "name": "cumcraft-dh-opengl.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.3.1/cumcraft-dh-opengl.mrpack"
+      },
+      {
+        "name": "cumcraft-dh-vulkan.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.3.1/cumcraft-dh-vulkan.mrpack"
+      },
+      {
+        "name": "cumcraft-low.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.3.1/cumcraft-low.mrpack"
+      },
+      {
+        "name": "cumcraft-voxy-opengl.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.3.1/cumcraft-voxy-opengl.mrpack"
+      }
+    ]
+  },
+  {
     "tag_name": "v0.3.0",
     "name": "Cumcraft v0.3.0",
     "body": "- Fix Iris startup crashes on Mesa and distorted terrain with shaders. The Iris editions use Sodium 0.9.2 and keep OpenGL error checking enabled.\n- Update Complementary Reimagined to r5.10. Shader editions include more shader packs matched to their renderer, and the Iris editions include Euphoria Patcher.\n- Put the Recommended edition first on the downloads page.\n- Restore missing hashes for pinned mods so Nix can build the server pack.\n",
