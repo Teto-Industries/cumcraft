@@ -9,10 +9,6 @@ type Mod = readonly [
 
 export const mods = {
   gameplay: [
-    ["traverse", "Traverse", {
-      en: "New biomes, ported to the current Minecraft version.",
-      ru: "Новые биомы. В сборке порт на новую версию.",
-    }],
     ["farmers-delight-refabricated", "Farmer’s Delight Refabricated", {
       en: "New crops, recipes, and cooking tools.",
       ru: "Новые культуры, рецепты и кухонная утварь.",
