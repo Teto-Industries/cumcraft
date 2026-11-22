@@ -3,8 +3,9 @@ import { marked } from "marked";
 import type { JSX } from "@solidjs/web";
 import sanitizeHtml from "sanitize-html";
 import { copy, russianProfiles, type Locale } from "./copy";
+import { mods, type Mod } from "./mods";
 
-type Section = "home" | "editions" | "releases";
+type Section = "home" | "editions" | "mods" | "releases";
 
 type Profile = {
   id: string;
@@ -122,6 +123,7 @@ function Navigation(props: { locale: Locale; home: string; section: Section; inl
   return (
     <nav class={props.inline ? "inline-nav" : undefined} aria-label={t.nav}>
       <a href={`${props.home}editions/`} data-route="editions" aria-current={props.section === "editions" ? "page" : undefined}>{t.editions}</a>
+      <a href={`${props.home}mods/`} data-route="mods" aria-current={props.section === "mods" ? "page" : undefined}>{t.mods}</a>
       <a href={`${props.home}releases/`} data-route="releases" aria-current={props.section === "releases" ? "page" : undefined}>{t.releases}</a>
     </nav>
   );
@@ -168,6 +170,7 @@ function Layout(props: {
   const title = {
     home: t.homeTitle,
     editions: t.editionsTitle,
+    mods: t.modsTitle,
     releases: t.releasesTitle,
   };
   const icon = `${root}server-icon.png`;
@@ -197,10 +200,13 @@ function Layout(props: {
         <Header locale={props.locale} home={home} icon={icon} section={props.section} />
         <main id="main">
           <div class="wrap" data-panel="home" data-title={title.home} hidden={props.section !== "home"}>
-            <Home pack={props.pack} latest={props.latest} locale={props.locale} mapUrl={props.mapUrl} home={home} />
+            <Home pack={props.pack} locale={props.locale} mapUrl={props.mapUrl} home={home} />
           </div>
           <div class="wrap" data-panel="editions" data-title={title.editions} hidden={props.section !== "editions"}>
             <Editions profiles={props.profiles} latest={props.latest} locale={props.locale} home={home} />
+          </div>
+          <div class="wrap" data-panel="mods" data-title={title.mods} hidden={props.section !== "mods"}>
+            <Mods profiles={props.profiles} locale={props.locale} />
           </div>
           <div class="wrap" data-panel="releases" data-title={title.releases} hidden={props.section !== "releases"}>
             <Releases releases={props.releases} locale={props.locale} />
@@ -230,15 +236,16 @@ function Layout(props: {
   );
 }
 
+const localizedProfile = (profile: Profile, locale: Locale) =>
+  (locale === "ru" && russianProfiles.get(profile.id)) || profile;
+
 function Edition(props: {
   profile: Profile;
   asset?: Asset;
   locale: Locale;
 }) {
   const t = copy[props.locale];
-  const profile =
-    (props.locale === "ru" && russianProfiles.get(props.profile.id)) ||
-    props.profile;
+  const profile = localizedProfile(props.profile, props.locale);
 
   return (
     <article class="edition">
@@ -316,9 +323,68 @@ function GettingStarted(props: { locale: Locale; home: string }) {
   );
 }
 
+function ModList(props: {
+  entries: readonly Mod[];
+  locale: Locale;
+  profiles?: Profile[];
+}) {
+  return (
+    <ul class="mod-list" role="list">
+      {props.entries.map(([slug, name, description, editions]) => {
+        const names = props.profiles
+          ?.filter((profile) => editions?.includes(profile.id))
+          .map((profile) => localizedProfile(profile, props.locale).name);
+
+        return (
+          <li class={description ? "mod-feature" : undefined}>
+            <a href={`https://modrinth.com/mod/${slug}`}>
+              {name} <span aria-hidden="true">↗</span>
+            </a>
+            {description && <p>{description[props.locale]}</p>}
+            {names && names.length > 0 && (
+              <p class="mod-editions">{names.join(" · ")}</p>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+function Mods(props: { locale: Locale; profiles: Profile[] }) {
+  const t = copy[props.locale];
+
+  return (
+    <>
+      <section class="hero">
+        <h1>{t.mods}</h1>
+        <p class="mods-intro">{t.modsIntro}</p>
+      </section>
+      <section aria-label={t.mods}>
+        <div class="mod-group">
+          <h2>{t.modGameplay}</h2>
+          <ModList entries={mods.gameplay} locale={props.locale} />
+        </div>
+        <div class="mod-group">
+          <h2>{t.modGraphics}</h2>
+          <ModList entries={mods.graphics} locale={props.locale} profiles={props.profiles} />
+        </div>
+        <div class="mod-group">
+          <h2>{t.modInventory}</h2>
+          <p class="mods-intro">{t.modInventoryIntro}</p>
+          <ModList entries={mods.inventory} locale={props.locale} />
+        </div>
+        <details class="mod-group mod-technical">
+          <summary>{t.modTechnical}</summary>
+          <ModList entries={mods.technical} locale={props.locale} />
+        </details>
+      </section>
+    </>
+  );
+}
+
 function Home(props: {
   pack: Pack;
-  latest?: Release;
   locale: Locale;
   mapUrl?: string;
   home: string;
@@ -334,23 +400,6 @@ function Home(props: {
         </section>
         {props.mapUrl && <MapActions url={props.mapUrl} locale={props.locale} />}
       </div>
-      <dl class="facts">
-        <div>
-          <dt>{t.loader}</dt>
-          <dd>Fabric {props.pack.fabricLoader}</dd>
-        </div>
-        <div>
-          <dt>{t.server}</dt>
-          <dd>{props.pack.server.address}</dd>
-        </div>
-        <div>
-          <dt>{t.latest}</dt>
-          <dd>
-            {props.latest?.tag_name ?? t.unpublished}
-            {props.latest?.prerelease && ` · ${t.prerelease}`}
-          </dd>
-        </div>
-      </dl>
       <GettingStarted locale={props.locale} home={props.home} />
     </>
   );
@@ -489,6 +538,7 @@ export function pages(
   return {
     home: render("home"),
     editions: render("editions"),
+    mods: render("mods"),
     releases: render("releases"),
   };
 }
