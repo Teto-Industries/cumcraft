@@ -358,7 +358,6 @@ function Mods(props: { locale: Locale; profiles: Profile[] }) {
     <>
       <section class="hero">
         <h1>{t.mods}</h1>
-        <p class="mods-intro">{t.modsIntro}</p>
       </section>
       <section aria-label={t.mods}>
         <div class="mod-group">
@@ -371,7 +370,7 @@ function Mods(props: { locale: Locale; profiles: Profile[] }) {
         </div>
         <div class="mod-group">
           <h2>{t.modInventory}</h2>
-          <p class="mods-intro">{t.modInventoryIntro}</p>
+          <p class="mod-hint">{t.modInventoryIntro}</p>
           <ModList entries={mods.inventory} locale={props.locale} />
         </div>
         <details class="mod-group mod-technical">

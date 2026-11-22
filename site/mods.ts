@@ -10,32 +10,32 @@ type Mod = readonly [
 export const mods = {
   gameplay: [
     ["traverse", "Traverse", {
-      en: "Explore new biomes, from autumn woods to lush swamps. Cumcraft ships its own port.",
-      ru: "Исследуй новые биомы: от осенних лесов до пышных болот. В сборке — порт для Cumcraft.",
+      en: "New biomes, ported to the current Minecraft version.",
+      ru: "Новые биомы. В сборке порт на новую версию.",
     }],
     ["farmers-delight-refabricated", "Farmer’s Delight Refabricated", {
-      en: "Grow new crops and cook meals with kitchen tools like the cooking pot and cutting board.",
-      ru: "Выращивай новые культуры и готовь блюда в кастрюле или на разделочной доске.",
+      en: "New crops, recipes, and cooking tools.",
+      ru: "Новые культуры, рецепты и кухонная утварь.",
     }],
     ["fallingtree", "FallingTree", {
-      en: "Cut one log to bring down the whole tree.",
-      ru: "Сруби один блок ствола, чтобы свалить всё дерево.",
+      en: "The whole tree falls when you chop one log.",
+      ru: "Дерево падает целиком, если срубить один блок ствола.",
     }],
     ["do-a-barrel-roll", "Do a Barrel Roll", {
-      en: "Bank and roll when flying with an elytra.",
-      ru: "Летай на элитрах с креном и делай бочки.",
+      en: "Banking and rolls for elytra flight.",
+      ru: "Крен и бочки при полёте на элитрах.",
     }],
     ["patpat", "PatPat", {
-      en: "Give your favorite mobs a pat.",
-      ru: "Гладь любимых мобов.",
+      en: "Lets you pet mobs.",
+      ru: "Мобов можно гладить.",
     }],
     ["shulkerboxtooltip", "Shulker Box Tooltip", {
-      en: "See what’s in a shulker box without placing it.",
-      ru: "Смотри, что лежит в шалкере, не ставя его на землю.",
+      en: "Shows what’s inside shulker boxes in your inventory.",
+      ru: "Показывает содержимое шалкеров прямо в инвентаре.",
     }],
     ["controlify", "Controlify", {
-      en: "Play Java Edition with a controller, including the Steam Deck’s built-in controls.",
-      ru: "Играй в Java Edition с геймпадом или встроенным управлением Steam Deck.",
+      en: "Makes Minecraft easier to play with a controller.",
+      ru: "Для комфортной игры с контроллера.",
     }],
     ["better-mount-hud", "Better Mount HUD"],
     ["cape-provider", "Cape Provider"],
@@ -52,41 +52,47 @@ export const mods = {
   ],
   graphics: [
     ["distanthorizons", "Distant Horizons", {
-      en: "See terrain far beyond the normal render distance.",
-      ru: "Смотри далеко за пределы обычной дальности прорисовки.",
+      en: "Renders terrain well beyond the normal view distance.",
+      ru: "Увеличивает дальность прорисовки.",
     }, ["dh-opengl", "dh-vulkan"]],
     ["voxy", "Voxy", {
-      en: "A lighter alternative for rendering distant terrain.",
-      ru: "Менее требовательная альтернатива для прорисовки дальних пейзажей.",
+      en: "An alternative to Distant Horizons for longer view distances.",
+      ru: "Альтернатива Distant Horizons для увеличения дальности прорисовки.",
     }, ["voxy-opengl"]],
     ["iris", "Iris Shaders", {
-      en: "Run shader packs on OpenGL.",
-      ru: "Запускай шейдерпаки на OpenGL.",
+      en: "Shader support on OpenGL.",
+      ru: "Шейдеры на OpenGL.",
     }, ["dh-opengl", "voxy-opengl"]],
     ["vitrail-shaders", "Vitrail Shaders", {
-      en: "Run shader packs on Minecraft’s Vulkan renderer.",
-      ru: "Запускай шейдерпаки на Vulkan-рендерере Minecraft.",
+      en: "Shader support on Vulkan.",
+      ru: "Шейдеры на Vulkan.",
     }, ["dh-vulkan"]],
-    ["euphoria-patches", "Euphoria Patches", {
-      en: "Add more effects and settings to Complementary Shaders.",
-      ru: "Больше эффектов и настроек для шейдеров Complementary.",
-    }, ["dh-opengl", "voxy-opengl"]],
     ["lambdynamiclights", "LambDynamicLights", {
-      en: "Light your way with a torch in hand.",
-      ru: "Освещай дорогу факелом прямо в руке.",
+      en: "Torches light up the area even when held.",
+      ru: "Факелы светят даже в руке.",
     }],
     ["presence-footsteps", "Presence Footsteps", {
-      en: "Hear different footsteps on wood, stone, grass, and other surfaces.",
-      ru: "Слушай, как по-разному звучат шаги по дереву, камню, траве и другим поверхностям.",
+      en: "Footsteps sound different on different blocks.",
+      ru: "Звук шагов зависит от блока под ногами.",
+    }],
+    ["coolrain", "Cool Rain", {
+      en: "Rain sounds different depending on what it lands on.",
+      ru: "Дождь по-разному звучит на разных поверхностях.",
+    }],
+    ["continuity", "Continuity", {
+      en: "Connects textures so adjacent glass blocks look seamless.",
+      ru: "Соединяет текстуры, чтобы между блоками стекла не было швов.",
+    }],
+    ["not-enough-animations", "Not Enough Animations", {
+      en: "Eating, reading maps, and other actions get third-person animations.",
+      ru: "Добавляет анимации еды, чтения карты и других действий от третьего лица.",
     }],
     ["animaticarefabricated", "Animatica Refabricated"],
     ["bettergrassify", "BetterGrassify"],
-    ["continuity", "Continuity"],
-    ["coolrain", "Cool Rain"],
     ["entity-model-features", "Entity Model Features"],
     ["entitytexturefeatures", "Entity Texture Features"],
+    ["euphoria-patches", "Euphoria Patches"],
     ["no-gaps-in-yo-items", "No Gaps in Yo Items"],
-    ["not-enough-animations", "Not Enough Animations"],
     ["optigui", "OptiGUI"],
     ["real-arrow-tip", "Real Arrow Tip"],
     ["skyboxify", "Skyboxify"],
@@ -94,12 +100,12 @@ export const mods = {
   ],
   inventory: [
     ["inventory-essentials", "Inventory Essentials", {
-      en: "Sort items and move stacks with shortcuts.",
-      ru: "Сортируй предметы и перемещай стаки быстрыми клавишами.",
+      en: "Item sorting and shortcuts for moving stacks.",
+      ru: "Сортировка предметов и быстрый перенос стаков.",
     }],
     ["inventory-profiles-next", "Inventory Profiles Next", {
-      en: "Sort items, lock slots, and save gear layouts.",
-      ru: "Сортируй предметы, закрепляй слоты и сохраняй раскладки снаряжения.",
+      en: "Item sorting, slot locking, and saved gear layouts.",
+      ru: "Сортировка предметов, блокировка слотов и сохранение раскладок снаряжения.",
     }],
   ],
   technical: [
@@ -107,11 +113,8 @@ export const mods = {
       en: "Improves frame rates and reduces stutter.",
       ru: "Повышает FPS и уменьшает подтормаживания.",
     }],
-    ["bluemap", "BlueMap", {
-      en: "Renders the server world as a 3D map you can explore in your browser.",
-      ru: "Создаёт 3D-карту мира сервера, которую можно исследовать в браузере.",
-    }],
     ["better-block-entities", "Better Block Entities"],
+    ["bluemap", "BlueMap"],
     ["c2me-fabric", "C2ME"],
     ["carpet", "Carpet"],
     ["chunky", "Chunky"],
