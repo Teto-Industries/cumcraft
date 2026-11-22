@@ -30,6 +30,7 @@ import net.minecraft.world.level.chunk.storage.RegionStorageInfo;
 
 public final class RemoveTraverse {
     private static final Pattern REGION = Pattern.compile("r\\.(-?\\d+)\\.(-?\\d+)\\.mca");
+    private static final Pattern PLAYER_TEMP = Pattern.compile("[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}-\\d+\\.dat");
     private final TraverseData data = new TraverseData();
 
     public static void main(String[] args) throws Exception {
@@ -109,6 +110,9 @@ public final class RemoveTraverse {
         boolean template = relative.toString().endsWith(".nbt");
         boolean savedData = !template && isSavedData(relative);
         if (!template && !savedData && !isLevelOrPlayerData(relative)) return;
+        // Minecraft may leave an empty temporary player save after an interrupted write.
+        if ((relative.startsWith("players/data") || relative.startsWith("playerdata"))
+            && PLAYER_TEMP.matcher(relative.getFileName().toString()).matches() && Files.size(path) == 0) return;
 
         CompoundTag tag;
         boolean gzip = true;
