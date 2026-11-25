@@ -71,6 +71,7 @@
     "sha1": "11bcce6062aff1880db3caab87db9b778907dca5",
     "sha512": "d00bc1ed193cc809c75f14fcc8a55d5417782b6a41cf5bc1ad7198a9b9d3ecc9f5b6a8ff9fa6ccef833b1119248053d01ac8c2a3b5249bb7a95c0988262d15ee",
     "sides": [
+      "client",
       "server"
     ]
   },

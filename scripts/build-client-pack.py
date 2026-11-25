@@ -80,6 +80,9 @@ def write_defaults(archive, pack, profile):
     write_entry(archive, "overrides/options.txt", defaults.encode())
     write_entry(archive, "overrides/servers.dat", servers_dat(pack["server"]))
 
+    # FallingTree syncs mining speed but not tree detection settings.
+    write_entry(archive, "overrides/config/fallingtree.json", (ROOT / "config/fallingtree.json").read_bytes())
+
     renderer = profile.get("shaders")
     if renderer == "iris":
         shader = pack["shaderPack"]["name"]
