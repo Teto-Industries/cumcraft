@@ -1,5 +1,32 @@
 [
   {
+    "tag_name": "v0.6.0",
+    "name": "Cumcraft v0.6.0",
+    "body": "Chopping the bottom log now takes time proportional to the number of logs in the tree. Large trees can be felled, and a worn axe cuts as many logs as it can before breaking.",
+    "published_at": "2026-11-25T19:57:14Z",
+    "draft": false,
+    "prerelease": false,
+    "html_url": "https://github.com/Teto-Industries/cumcraft/releases/tag/v0.6.0",
+    "assets": [
+      {
+        "name": "cumcraft-dh-opengl-v0.6.0.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.6.0/cumcraft-dh-opengl-v0.6.0.mrpack"
+      },
+      {
+        "name": "cumcraft-dh-vulkan-v0.6.0.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.6.0/cumcraft-dh-vulkan-v0.6.0.mrpack"
+      },
+      {
+        "name": "cumcraft-low-v0.6.0.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.6.0/cumcraft-low-v0.6.0.mrpack"
+      },
+      {
+        "name": "cumcraft-voxy-opengl-v0.6.0.mrpack",
+        "browser_download_url": "https://github.com/Teto-Industries/cumcraft/releases/download/v0.6.0/cumcraft-voxy-opengl-v0.6.0.mrpack"
+      }
+    ]
+  },
+  {
     "tag_name": "v0.5.0",
     "name": "Cumcraft v0.5.0",
     "body": "The Voxy edition now includes Voxy Server Side 0.22.0. Cumcraft streams distant terrain to Voxy players without requiring them to explore it first.",
