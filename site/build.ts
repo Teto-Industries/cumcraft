@@ -4,7 +4,7 @@ import { mkdir, rm, copyFile, cp } from "node:fs/promises";
 Bun.plugin({
   name: "solid-ssr",
   setup(build) {
-    build.onLoad({ filter: /\/page\.tsx$/ }, async ({ path }) => {
+    build.onLoad({ filter: /\.tsx$/ }, async ({ path }) => {
       const compiled = await transformFileAsync(path, {
         presets: [
           ["babel-preset-solid", { generate: "ssr", hydratable: false }],
@@ -17,6 +17,7 @@ Bun.plugin({
 });
 
 const { pages } = await import("./page");
+const { renderCreateProposal } = await import("./create-page");
 const client = await Bun.file("../client/pack.json").json();
 const metadata = await Bun.file("../server.json").json();
 const { host, port } = metadata.server;
@@ -45,6 +46,8 @@ await Promise.all([
       await mkdir(directory, { recursive: true });
       await Bun.write(`${directory}/index.html`, html);
     }
+    await mkdir(`${root}/create`, { recursive: true });
+    await Bun.write(`${root}/create/index.html`, renderCreateProposal(locale));
   }),
   copyFile("style.css", "dist/style.css"),
   cp("fonts", "dist/fonts", { recursive: true }),

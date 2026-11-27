@@ -122,7 +122,7 @@ function Preferences(props: { locale: Locale }) {
   );
 }
 
-function Navigation(props: { locale: Locale; home: string; section: Section; inline?: boolean }) {
+function Navigation(props: { locale: Locale; home: string; section?: Section; inline?: boolean }) {
   const t = copy[props.locale];
 
   return (
@@ -134,7 +134,7 @@ function Navigation(props: { locale: Locale; home: string; section: Section; inl
   );
 }
 
-function Header(props: { locale: Locale; home: string; icon: string; section: Section }) {
+export function Header(props: { locale: Locale; home: string; icon: string; section?: Section }) {
   return (
     <header class="top" data-drag="landmark">
       <div class="wrap nav">
@@ -155,6 +155,23 @@ function Header(props: { locale: Locale; home: string; icon: string; section: Se
         </div>
       </div>
     </header>
+  );
+}
+
+export function Footer(props: { locale: Locale }) {
+  const t = copy[props.locale];
+
+  return (
+    <footer data-drag="landmark">
+      <div class="wrap footer">
+        <a href="https://github.com/Teto-Industries/cumcraft" data-drag="">
+          GitHub <span aria-hidden="true">↗</span>
+        </a>
+        <a href="https://github.com/Teto-Industries/cumcraft/issues" data-drag="">
+          {t.issue} <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </footer>
   );
 }
 
@@ -218,16 +235,7 @@ function Layout(props: {
             <Releases releases={props.releases} locale={props.locale} />
           </div>
         </main>
-        <footer data-drag="landmark">
-          <div class="wrap footer">
-            <a href="https://github.com/Teto-Industries/cumcraft" data-drag="">
-              GitHub <span aria-hidden="true">↗</span>
-            </a>
-            <a href="https://github.com/Teto-Industries/cumcraft/issues" data-drag="">
-              {t.issue} <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </footer>
+        <Footer locale={props.locale} />
         {props.mapUrl && (
           <iframe
             id="world-map"

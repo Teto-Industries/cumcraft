@@ -1,14 +1,14 @@
 @font-face {
   font-family: "Pixelify Sans";
   src: url("fonts/pixelify-sans-latin.woff2") format("woff2");
-  font-weight: 700;
+  font-weight: 400 700;
   font-display: swap;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
   font-family: "Pixelify Sans";
   src: url("fonts/pixelify-sans-cyrillic.woff2") format("woff2");
-  font-weight: 700;
+  font-weight: 400 700;
   font-display: swap;
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
@@ -196,6 +196,11 @@ h4,
 h5,
 h6 {
   font-family: "Pixelify Sans", Rubik, system-ui, sans-serif;
+}
+:lang(ru) :is(h1, h2, h3, h4, h5, h6, .impact-delta, .risk-axis-name, .risk-point text, .risk-badge) {
+  font-weight: 400;
+  font-synthesis: none;
+  letter-spacing: 0.015em;
 }
 h1,
 h2,
@@ -399,6 +404,434 @@ body:has([data-panel="mods"]:not([hidden])) > .top {
   flex-wrap: wrap;
   gap: 0.5rem 1rem;
   padding-block: 1rem;
+}
+.proposal {
+  --surface-subtle: color-mix(in srgb, CanvasText 5%, Canvas);
+  --surface-strong: color-mix(in srgb, CanvasText 12%, Canvas);
+  --border-subtle: color-mix(in srgb, GrayText 45%, transparent);
+  --bar-baseline: color-mix(in srgb, CanvasText 32%, Canvas);
+  --bar-proposed: CanvasText;
+  --tone-positive: color-mix(in srgb, #2e7d32 78%, CanvasText);
+  --tone-caution: color-mix(in srgb, #b26a00 82%, CanvasText);
+  --tone-high: color-mix(in srgb, #c62828 82%, CanvasText);
+}
+.proposal section {
+  margin-block: 2.25rem;
+}
+.proposal h2 {
+  scroll-margin-top: 1rem;
+}
+.section-intro {
+  margin-block: 0.5rem 1rem;
+  text-wrap: pretty;
+}
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.875rem;
+  margin-block-start: 0.875rem;
+}
+.video-card {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  margin: 0;
+  border: 1px solid GrayText;
+  background: var(--surface-subtle);
+  overflow: hidden;
+}
+.video-card:first-child {
+  grid-column: 1 / -1;
+}
+.video-frame {
+  position: relative;
+  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000;
+  outline: 1px solid color-mix(in srgb, CanvasText 8%, transparent);
+  outline-offset: -1px;
+}
+.video-frame iframe {
+  position: absolute;
+  inset: 0;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  border: 0;
+}
+.video-meta {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.375rem;
+  min-inline-size: 0;
+  padding: 0.75rem;
+}
+.video-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-inline-size: 0;
+}
+.video-tag {
+  font-size: 0.75rem;
+  color: GrayText;
+}
+.video-meta p {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+.video-link {
+  align-self: flex-start;
+  margin-block-start: auto;
+  padding-block-start: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+@media (max-width: 38em) {
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.selling-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: 0.75rem;
+}
+.selling-card {
+  display: grid;
+  align-content: start;
+  gap: 0.375rem;
+  min-inline-size: 0;
+  padding: 0.875rem;
+  border: 1px solid GrayText;
+}
+.selling-card p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+.one-way-box {
+  display: grid;
+  gap: 0.75rem;
+  margin-block-start: 0.75rem;
+  padding: 0.875rem;
+  border: 1px solid GrayText;
+  background: var(--surface-subtle);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.one-way-box p {
+  margin: 0;
+  text-wrap: pretty;
+}
+.path-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: 0.75rem;
+}
+.path-card {
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+  min-inline-size: 0;
+  padding: 0.875rem;
+  border: 1px solid GrayText;
+}
+.path-recommended {
+  background: var(--surface-subtle);
+}
+.path-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.375rem 0.5rem;
+}
+.path-summary {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+.path-points {
+  display: grid;
+  gap: 0.375rem;
+  margin: 0;
+  padding-inline-start: 1.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+.proposal-figure {
+  margin: 0;
+  padding: 0.875rem;
+  border: 1px solid GrayText;
+}
+.proposal-figure figcaption {
+  margin-block-start: 0.75rem;
+  font-size: 0.8125rem;
+  color: GrayText;
+  text-wrap: pretty;
+}
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-block-end: 0.875rem;
+  font-size: 0.8125rem;
+}
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  white-space: nowrap;
+}
+.swatch {
+  display: inline-block;
+  inline-size: 0.875rem;
+  block-size: 0.625rem;
+  border: 1px solid GrayText;
+}
+.swatch-baseline {
+  background: var(--bar-baseline);
+}
+.swatch-proposed {
+  background: var(--bar-proposed);
+}
+.impact-chart {
+  display: grid;
+  gap: 1rem;
+}
+.impact-row {
+  display: grid;
+  gap: 0.25rem;
+}
+.impact-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+.impact-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.impact-delta {
+  font-family: "Pixelify Sans", Rubik, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.delta-up {
+  color: var(--tone-positive);
+}
+.delta-down {
+  color: var(--tone-high);
+}
+.impact-bars {
+  display: grid;
+  gap: 0.25rem;
+}
+.bar-line {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+}
+.bar-track {
+  inline-size: 100%;
+  block-size: 0.625rem;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+}
+.bar-fill {
+  block-size: 100%;
+}
+.bar-baseline {
+  background: var(--bar-baseline);
+}
+.bar-proposed {
+  background: var(--bar-proposed);
+}
+.bar-value {
+  min-inline-size: 2.75rem;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+  color: GrayText;
+}
+.impact-note {
+  margin: 0.125rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: GrayText;
+  text-wrap: pretty;
+}
+.group-list {
+  display: grid;
+  gap: 1rem;
+  margin-block-start: 1rem;
+}
+.group-row {
+  padding: 0;
+}
+.group-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.375rem 0.75rem;
+}
+.group-row p {
+  margin-block: 0.375rem 0;
+  font-size: 0.875rem;
+  text-wrap: pretty;
+}
+.status-tag {
+  display: inline-block;
+  padding: 0.125rem 0.4375rem;
+  border: 1px solid currentColor;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.status-positive,
+.status-risk-low {
+  color: var(--tone-positive);
+}
+.status-mixed,
+.status-risk-medium {
+  color: var(--tone-caution);
+}
+.status-caution,
+.status-risk-high {
+  color: var(--tone-high);
+}
+.risk-svg {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  max-inline-size: 32rem;
+  margin-inline: auto;
+  overflow: visible;
+}
+.risk-plot-bg {
+  fill: var(--surface-subtle);
+  stroke: GrayText;
+  stroke-width: 1;
+}
+.risk-hot-zone {
+  fill: var(--surface-strong);
+}
+.risk-grid-line {
+  stroke: var(--border-subtle);
+  stroke-width: 1;
+}
+.risk-mid-line {
+  stroke: GrayText;
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+}
+.risk-axis-tick {
+  fill: GrayText;
+  font-size: 11px;
+}
+.risk-axis-name {
+  fill: CanvasText;
+  font-family: "Pixelify Sans", Rubik, system-ui, sans-serif;
+  font-size: 12px;
+}
+.risk-point circle {
+  fill: Canvas;
+  stroke-width: 2;
+}
+.risk-point text {
+  fill: CanvasText;
+  font-family: "Pixelify Sans", Rubik, system-ui, sans-serif;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.risk-point.risk-level-high circle {
+  stroke: var(--tone-high);
+  fill: var(--tone-high);
+}
+.risk-point.risk-level-high text {
+  fill: Canvas;
+}
+.risk-point.risk-level-medium circle {
+  stroke: var(--tone-caution);
+}
+.risk-point.risk-level-low circle {
+  stroke: var(--tone-positive);
+}
+.risk-list {
+  display: grid;
+  gap: 0.875rem;
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+.risk-item p {
+  margin-block: 0.25rem 0;
+  font-size: 0.875rem;
+  text-wrap: pretty;
+}
+.risk-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.risk-head h3 {
+  flex: 1 1 14rem;
+}
+.risk-badge {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  border: 2px solid currentColor;
+  font-family: "Pixelify Sans", Rubik, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+.risk-badge.risk-level-high {
+  border-color: var(--tone-high);
+  background: var(--tone-high);
+  color: Canvas;
+}
+.risk-badge.risk-level-medium {
+  border-color: var(--tone-caution);
+}
+.risk-badge.risk-level-low {
+  border-color: var(--tone-positive);
+}
+.proposal-notes {
+  display: grid;
+  gap: 0.5rem;
+  margin-block: 0.25rem 0.75rem;
+  padding-inline-start: 1.25rem;
+  font-size: 0.875rem;
+}
+.question-list {
+  display: grid;
+  gap: 0.625rem;
+  margin: 0;
+  padding-inline-start: 1.5rem;
+  font-size: 0.9375rem;
+}
+.proposal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-block-start: 1.25rem;
+  font-size: 0.875rem;
 }
 @media (hover: hover) and (pointer: fine) {
   /* Clip translated overflow to the page without changing its scroll range. */
