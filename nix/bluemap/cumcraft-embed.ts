@@ -1,7 +1,11 @@
 type Position = { x: number; y?: number; z: number };
 type Player = { foreign?: boolean; position?: Position };
 type Marker = { type: string; position?: Position };
-type MapView = { data: { liveDataRoot: string; startPos: Position } };
+type TileGrid = { tileSize: { x: number; z: number }; translate: { x: number; z: number } };
+type MapView = {
+  data: { liveDataRoot: string; mapDataRoot: string; startPos: Position; hires: TileGrid };
+  hiresTileManager?: { tileLoader?: { tilePath: string; clientDecompression?: boolean } };
+};
 type BlueMap = {
   loadPlayerData(map: MapView): Promise<{ players?: (Player | null)[] }>;
   setPerspectiveView(view: number): void;
@@ -44,15 +48,59 @@ if (window.parent !== window) {
     return positions[Math.floor(Math.random() * positions.length)];
   }
 
+  function shuffled<T>(items: T[]): T[] {
+    const copy = [...items];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+
+  function splitTileCoord(value: number): string {
+    return (value < 0 ? '-' : '') + Math.abs(value).toString().split('').join('/');
+  }
+
+  function hiresTileUrl(map: MapView, position: Position): string {
+    const { tileSize, translate } = map.data.hires;
+    const tileX = Math.floor((position.x - translate.x) / tileSize.x);
+    const tileZ = Math.floor((position.z - translate.z) / tileSize.z);
+    const loader = map.hiresTileManager?.tileLoader;
+    const base = loader?.tilePath ?? `${map.data.mapDataRoot}/tiles/0/`;
+    const ext = loader?.clientDecompression ? '.prbm.gz' : '.prbm';
+    return `${base}x${splitTileCoord(tileX)}/z${splitTileCoord(tileZ)}${ext}`;
+  }
+
+  async function isRendered(map: MapView, position: Position): Promise<boolean> {
+    try {
+      const response = await fetch(hiresTileUrl(map, position));
+      void response.body?.cancel();
+      return response.status === 200;
+    } catch {
+      return false;
+    }
+  }
+
+  async function pickRenderedPlayer(map: MapView): Promise<Position | undefined> {
+    const data = await app.loadPlayerData(map);
+    const players = shuffled(
+      (Array.isArray(data.players) ? data.players : [])
+        .filter((player): player is Player & { position: Position } => !!player && !player.foreign && validPosition(player.position))
+        .map((player) => player.position),
+    );
+
+    for (const candidate of players) {
+      if (await isRendered(map, candidate)) return candidate;
+    }
+    return undefined;
+  }
+
   async function focus() {
     const map = app.mapViewer.map;
     let position: Position | undefined;
 
     try {
-      const data = await app.loadPlayerData(map);
-      position = randomPosition((Array.isArray(data.players) ? data.players : [])
-        .filter((player): player is Player & { position: Position } => !!player && !player.foreign && validPosition(player.position))
-        .map((player) => player.position));
+      position = await pickRenderedPlayer(map);
     } catch {
       // Continue with landmarks if player data is unavailable.
     }
