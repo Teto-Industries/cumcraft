@@ -105,7 +105,7 @@ const en: CreateProposalCopy = {
       caption: "Windmills, harvesters, bakery belts, moving doors, whatever.",
     },
     {
-      id: "7mEi3PvBw20",
+      id: "dtPl8w5gtG4",
       title: "Trains in Create",
       tag: "Overworld transport",
       caption: "Curved tracks, custom passenger & cargo trains, and stations.",
@@ -340,7 +340,7 @@ const ru: CreateProposalCopy = {
       caption: "Ветряки, комбайны, пекарни на лентах, подвижные ворота и всё такое.",
     },
     {
-      id: "7mEi3PvBw20",
+      id: "dtPl8w5gtG4",
       title: "Поезда в Create",
       tag: "Транспорт по миру",
       caption: "Плавные пути, свои пассажирские и грузовые составы и станции.",
