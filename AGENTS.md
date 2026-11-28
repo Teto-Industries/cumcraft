@@ -4,4 +4,4 @@
 - Keep documentation and plans concise, concrete, and editable.
 - Release notes cover only changes to the Minecraft client or server. Omit all CI, linting, and website changes, including the web map.
 
-The server described by this project deployed via dotfiles repo (https://github.com/sleroq/dotfiles ~/develop/other/dotfiles) and is accessible via `ssh cumserver`
+The server described by this project is deployed via dotfiles repo (https://github.com/sleroq/dotfiles, `~/develop/dotfiles`) on `slekek` (`ssh slekek`), tunneled via `ru-relay`, with the static website served from `cumserver`.
